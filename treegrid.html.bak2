@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="http://cdn-na.infragistics.com/igniteui/2015.2/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="http://cdn-na.infragistics.com/igniteui/2015.2/latest/css/structure/infragistics.css" rel="stylesheet" />
+    <link href="http://www.igniteui.com/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+    <script src="http://www.igniteui.com/js/angular.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="http://cdn-na.infragistics.com/igniteui/2015.2/latest/js/infragistics.core.js"></script>
+    <script src="http://cdn-na.infragistics.com/igniteui/2015.2/latest/js/infragistics.lob.js"></script>
+
+    <script src="http://cdn-na.infragistics.com/igniteui/2015.2/latest/js/extensions/igniteui-angular.js"></script>
+    <script type="text/javascript" src="js/js.cookie.js"></script>
+ 
+    <script type="text/javascript">
+     var online = Cookies.get('peaches');
+            if(typeof(online) !="undefined") {
+               userStub = $.parseJSON(online);                
+               person = userStub.firstname + ' ' + userStub.lastname;
+               $.ajax({
+               type: 'post',
+               data: { "info" : JSON.stringify(userStub) },
+               url: 'getuserindex.php',
+                dataType: 'json',
+                cache: false,
+                async: false,
+          success: function(data) {
+            var sampleApp = angular.module('sampleApp', ['igniteui-directives']);
+              sampleApp.controller('treeGridController', function ($scope) {
+              $scope.churchevents = [{"churchid":"43155","eventid":"341","commentid":null,"churchname":"Central Church of Christ","eventname":"Special Presentation","eventdate":"2015-12-16 06:00:00","score":"8","id":1,"events":[{"churchid":"43155","eventid":"341","commentid":null,"churchname":"Central Church of Christ","eventname":"Special Presentation","eventdate":"2015-12-16 06:00:00","score":"8","id":0}]},{"churchid":"43169","eventid":"268","commentid":null,"churchname":"Huntsville Central Seventh-day Adventist Church","eventname":"Forum - Discussion","eventdate":"2015-12-17 06:00:00","score":"5","id":1,"events":[{"churchid":"43169","eventid":"268","commentid":null,"churchname":"Huntsville Central Seventh-day Adventist Church","eventname":"Forum - Discussion","eventdate":"2015-12-17 06:00:00","score":"5","id":1},{"churchid":"43169","eventid":"265","commentid":null,"churchname":"Huntsville Central Seventh-day Adventist Church","eventname":"Main Worship Service","eventdate":"2015-12-17 06:00:00","score":"4","id":2}]},{"churchid":"23721","eventid":"414","commentid":null,"churchname":"Metropolitan Seventh Day Adventist Church","eventname":"Black History Remembrance Week","eventdate":"2016-02-01 07:00:00","score":"8","id":3,"events":[{"churchid":"23721","eventid":"414","commentid":null,"churchname":"Metropolitan Seventh Day Adventist Church","eventname":"Black History Remembrance Week","eventdate":"2016-02-01 07:00:00","score":"8","id":3}]},{"churchid":"43185","eventid":"348","commentid":null,"churchname":"New Life Seventh-day Adventist Church","eventname":"Special Presentation","eventdate":"2015-12-12 17:00:00","score":"9","id":4,"events":[{"churchid":"43185","eventid":"348","commentid":null,"churchname":"New Life Seventh-day Adventist Church","eventname":"Special Presentation","eventdate":"2015-12-12 17:00:00","score":"9","id":4}]},{"churchid":"28092","eventid":"118","commentid":null,"churchname":"Oakwood University Church","eventname":"Divine Worship Experience","eventdate":"2015-12-15 06:00:00","score":"7","id":5,"events":[{"churchid":"28092","eventid":"118","commentid":null,"churchname":"Oakwood University Church","eventname":"Divine Worship Experience","eventdate":"2015-12-15 06:00:00","score":"7","id":5},{"churchid":"28092","eventid":"122","commentid":null,"churchname":"Oakwood University Church","eventname":"Handel's Messiah","eventdate":"2015-12-12 17:00:00","score":"7","id":6},{"churchid":"28092","eventid":"119","commentid":null,"churchname":"Oakwood University Church","eventname":"Social Justice Symposium","eventdate":"2015-10-17 16:00:00","score":"9","id":7}]},{"churchid":"29523","eventid":"134","commentid":null,"churchname":"Pioneer Memorial SDA Church","eventname":"Concert","eventdate":"2015-12-12 17:00:00","score":"9","id":8,"events":[{"churchid":"29523","eventid":"134","commentid":null,"churchname":"Pioneer Memorial SDA Church","eventname":"Concert","eventdate":"2015-12-12 17:00:00","score":"9","id":8}]},{"churchid":"33536","eventid":"254","commentid":null,"churchname":"Sligo Seventh-day Adventist Church","eventname":"Forum - Discussion","eventdate":"2015-12-12 17:00:00","score":"8","id":9,"events":[{"churchid":"33536","eventid":"254","commentid":null,"churchname":"Sligo Seventh-day Adventist Church","eventname":"Forum - Discussion","eventdate":"2015-12-12 17:00:00","score":"8","id":9},{"churchid":"33536","eventid":"252","commentid":null,"churchname":"Sligo Seventh-day Adventist Church","eventname":"Hour of Power","eventdate":"2015-12-12 17:00:00","score":"8","id":10}]},{"churchid":"36062","eventid":"232","commentid":null,"churchname":"St. Mark's Lutheran Church","eventname":"Concert","eventdate":"2015-12-13 17:00:00","score":"10","id":11,"events":[{"churchid":"36062","eventid":"232","commentid":null,"churchname":"St. Mark's Lutheran Church","eventname":"Concert","eventdate":"2015-12-13 17:00:00","score":"10","id":11}]},{"churchid":"39215","eventid":"140","commentid":null,"churchname":"Trinity United Methodist Church","eventname":"Special Presentation","eventdate":"2015-12-19 06:00:00","score":"9","id":12,"events":[{"churchid":"39215","eventid":"140","commentid":null,"churchname":"Trinity United Methodist Church","eventname":"Special Presentation","eventdate":"2015-12-19 06:00:00","score":"9","id":12},{"churchid":"39215","eventid":"141","commentid":null,"churchname":"Trinity United Methodist Church","eventname":"Concert","eventdate":"2015-12-14 01:00:00","score":"9","id":13}]}];
+             });
+           },
+       error: function(data) {
+       console.log(data.error);              
+           }
+       });
+     } else {
+     alert('Cookie has expired');	
+     }
+</script>
+</head>
+<body class="container">
+    <div class="push-down-xl" ng-app="sampleApp" ng-controller="treeGridController">
+        <div class="row">
+                <ig-tree-grid id="grid1"
+                              data-source="churchevents"
+                              width="100%"
+                              height="450px"
+                              primary-key="id"
+                              auto-commit="true"
+                              auto-generate-columns="false"
+                              child-data-key="events"
+                              render-expand-column="true">
+                    <columns>
+                        <column key="id" header-text="ID" width="100px" data-type="number"></column>
+                        <column key="churchname" header-text="Church" width="250px" data-type="string"></column>
+                        <column key="eventname" header-text="Event" width="260px" data-type="string"></column>
+                        <column key="eventdate" header-text="Date" width="250px" data-type="date"></column>
+                        <column key="score" header-text="Score" width="100px" data-type="number"></column>
+                    </columns>
+                </ig-tree-grid>
+        </div>
+    </div>
+</body>   
+</html>

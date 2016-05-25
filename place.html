@@ -1,0 +1,569 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="">
+	<head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=">
+		<title>Holy Tomatoes User Enrollment</title>
+    <style>
+      body {
+       background-image:url("images/bg5.jpeg");
+	   background-size: 100%;
+      }
+      .controls {
+        background-color: #fff;
+        border-radius: 2px;
+        border: 1px solid transparent;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        box-sizing: border-box;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        height: 32px;
+        margin-left: 17px;
+        margin-top: 16px;
+        outline: none;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+
+      .controls:focus {
+        border-color: #4d90fe;
+      }
+      input {height:25px;width:220px;background-color: #E8E5DF;}
+    </style>
+    <style type="text/css">
+        .text-input
+        {
+            height: 21px;
+            width: 306px;
+        }
+        .register-table
+        {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .register-table td, 
+        .register-table tr
+        {
+            margin: 0px;
+            padding: 2px;
+            border-spacing: 0px;
+            border-collapse: collapse;
+            font-family: Verdana;
+            font-size: 12px;
+        }
+        h3 
+        {
+            display: inline-block;
+            margin: 0px;
+        }
+        .appm
+         {
+         	color:white;
+         	font-family: verdana;
+            font-style: bold;
+            text-align: center;
+            background-color: maroon;
+            margin-left:10px;
+            margin-right: 10px;
+            margin-bottom: 12px; 
+            position: relative;
+         }
+         .churchPrompt {
+         	color:maroon;
+         	font-size:10pt;
+         	font-family:arial narrow;
+         	text-align:right;
+         	font-style: italic;
+         	padding-right: 3px;
+         }
+         .noScroll {
+          overflow: hidden;
+          position: fixed;	
+         }
+           #wuzzup {
+               width: 40%;
+          color: red;
+          height: 35px;
+          background-color:transparent;	
+          border: 1px solid navy;
+          text-align: center;
+          font-family: Avenir;
+          font-size: 14pt;
+          margin: 10%;
+          visibility: hidden;
+         }
+      </style>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&signed_in=true"></script>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxpasswordinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxbuttons.js"></script>
+     <script type="text/javascript" src="jq/jqwidgets/jqxexpander.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxvalidator.js"></script>
+    <script type="text/javascript" src="jq/scripts/demos.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxpasswordinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+     <script type="text/javascript" src="jq/jqwidgets/jqxinput.js"></script>
+     <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.base.css" type="text/css" />
+     <script type="text/javascript" src="js/js.cookie.js"></script>
+    <script type="text/javascript">
+    	var church= {"name":"","domain":"","street":"Adventist Blvd","city":"Huntsville","province":"AL","postalcode":"35896","country":"US","placeid":
+    	"","phone":"","website":"","vicinity":"here","address":"5500 Adventist Blvd","source":"","status":"ok","action":"","error":"","sql":"","id":0};
+    	var userStub= {"firstname":"","lastname":"","email":"","password":"","placeid":"","churchname":"","churchadmin":"","id":0};
+    	var place;
+    	var map;
+    	var marker;
+    	var ChurchData=[];
+    	var geocoder;
+    	var infowindow;
+    	var autocomplete;
+
+ </script>
+ 
+<script>
+// This sample uses the Place Autocomplete widget to allow the user to search
+// for and select a place. The sample then displays an info window containing
+// the place ID and other information about the place that the user has
+// selected.
+
+function initialize() {
+  var mapOptions = {
+ //   center: {lat: -33.8688, lng: 151.2195},
+    zoom: 13
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+   mapOptions);
+  var input = (document.getElementById('pac-input'));
+  autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  infowindow = new google.maps.InfoWindow();
+  marker = new google.maps.Marker({
+    map: map
+  });
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map, marker);
+  });
+
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    infowindow.close();
+    place = autocomplete.getPlace();
+    if (!place.geometry) {
+      return;
+    }
+   // Set the position of the marker using the place ID and location
+    marker.setPlace(/** @type {!google.maps.Place} */ ({
+      placeId: place.place_id,
+      location: place.geometry.location
+    }));
+    marker.setVisible(false);
+// stuff place data in JSON object
+    church.name = place.name;
+     church.placeid = place.place_id;
+     church.address = place.formatted_address;
+    ChurchData = church.address.split(",");
+    ChurchData.length = 5;
+    church.country = ChurchData[3];
+//    
+    if (place.website != null) {
+      church.website = $.trim(place.website);
+    }
+    else
+    {
+      church.website = '';
+    }
+//
+   if (place.formatted_phone_number != null) {
+      church.phone = $.trim(place.formatted_phone_number);
+    }
+    else
+    {
+      church.phone = '';
+    }
+//
+    var url = $.trim(church.website);
+    if(url != '' ) {
+     var domain = url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
+      church.domain = domain.replace('http://','').replace('https://','').split(/[/?#]/)[0];
+ // search church database for entry with domain name
+ // if found compare values with church object built from Google Map
+        var pkg = church;
+         pkg.source = "lookup";
+         pkg.domain = domain;
+         pkg.placeid = church.placeid;
+         $.ajax({
+            url: 'getchurchstub.php',
+           type: 'post',
+           data: {"info" : JSON.stringify(pkg)},
+           dataType: 'json',
+          success: function(data) {
+             if(data.status == 'ok') {
+              church = data;	
+              ChurchData[0] = $.trim(church.street);
+              ChurchData[1] = $.trim(church.city);
+              ChurchData[2] = $.trim(church.province);
+              ChurchData[3] = $.trim(church.country);
+              ChurchData[4] = $.trim(church.postalcode);
+              if($.trim(church.placeid) == '') {
+                church.placeid = pkg.placeid;	
+               }
+               if($.trim(church.domain) =='') {
+               	 church.domain = pkg.domain;
+               }
+               if($.trim(church.website) == '' || $.trim(church.website) == 'null') {
+               	church.website = pkg.website;
+               }
+               if($.trim(church.country) == '' || $.trim(church.country) == 'null') {
+               	 ChurchData[3] = pkg.country;
+               }
+             }
+               $('#church-data').show;
+               $('#map-canvas').show;
+               createform(); 
+          },
+          error: function(data) {
+          	alert('Error in Church Stub: ' + data.error);
+          }
+        });
+       }
+     else {
+     $('#church-data').show;
+     $('#map-canvas').show;
+     createform();
+     }
+ // end my stuff
+    infowindow.setContent('<div><strong>' + church.name + '</strong><br>' +
+         'Address: ' + church.address + '<br>' + 
+          'Phone: ' + church.phone+ '<br> Website: ' + church.website + '<br>'+ 'Place ID: ' + church.placeid +'</div>');
+    
+    infowindow.open(map, marker);
+    showmap();
+
+
+  });
+ }
+   google.maps.event.addDomListener(window, 'load', initialize);
+
+ </script>
+ <script type="text/javascript">
+     function showmap()
+      {
+        if (place.geometry.viewport) 
+         {
+          map.fitBounds(place.geometry.viewport);
+         } 
+        else
+         {
+      map.setCenter(place.geometry.location);
+      map.setZoom(12);
+          }
+    // Set the position of the marker using the place ID and location
+        marker.setPlace(/** @type {!google.maps.Place} */ ({
+         placeId: place.place_id,
+      location: place.geometry.location
+    }));
+    marker.setVisible(true);
+     }
+    </script>
+    
+    <script type="text/javascript">
+    	function createform()
+    	{
+    $("#church-data").append('<table id="ctable">');
+    $("#church-data").append('<form action="javascript:saveForm();" method="POST" id="cform">');
+   $("#church-data form").append('<div class="appm">Verify Church Data</div>');
+   $("#church-data form").append('<input type="hidden"  name="domain"  id="domain" value="" />');
+   $("#church-data form").append('<input type="hidden" name="placeid" id="placeid" value="" />');
+    $("#church-data form").append('<tr><td class="churchPrompt">Name:</td><td><input type="text" placeholder="Church Name" name="churchname" id="churchname" value="' + church.name + '"/></td></tr>');
+    $("#church-data form").append('</td></tr><tr><td class="churchPrompt">Address:</td><td><input type="text" placeholder="Street Address:" name="address" id="address" value="' + ChurchData[0] + '"/></td></tr>');
+   $("#church-data form").append('</td></tr><tr><td class="churchPrompt">City/Town:</td><td><input type="text" placeholder="City|Town:" name="city" id="city" value="' + ChurchData[1] +'"/></td></tr>');
+   $("#church-data form").append('</td></tr><tr><td class="churchPrompt">State/Province:</td><td><input type="text" placeholder="State|Province:" name="province" id="province" value="' + ChurchData[2] + '"/></td></tr>');
+   $("#church-data form").append('</td></tr><tr><td class="churchPrompt">Mail Code:</td><td><input type="text" placeholder="Postal|Mail|Zip Code:" name="mailcode" id="mailcode" value="' + ChurchData[4] + '"/></td></tr>');
+   $("#church-data form").append('</td></tr><tr><td class="churchPrompt">Country:</td><td><input type="text" placeholder="Country" name="country" id="country" value="' + ChurchData[3] +'"/></td></tr>');
+   $("#church-data form").append('</td></tr><tr><td class="churchPrompt">Telephone:</td><td><input type="text" placeholder="Telephone Number:" name="phone" id="phone" value="' + church.phone + '"/></td></tr>');
+   $("#church-data form").append('</td></tr><tr><td class="churchPrompt"><a href="'+ church.website + '" target="_blank">Website</a></td><td><input type="text" placeholder="Domain Name | Website" name="website" id="website" value="' + church.website + '"/></td></tr>');
+  $("#church-data form").append('<tr><td class="churchPrompt">Google Place ID:</td><td style="color:white;background-color:maroon;font-size:8pt;">' + $.trim(church.placeid) + '</td></tr>');
+  $("#church-data form").append('<tr><td class="churchPrompt">&nbsp;</td><td><div style="padding-top:8px;"><input type="submit" id="savebutton" value="Save" /></div></td></tr>'); 	
+   $("#church-data form").append('</form>'); 
+   $("church-data").append('</table>');
+   $('#church-data').css({"background-color": "#E8E5DF", "padding-top": "12px"});
+   $('#churchname').focus();		
+    	}
+   </script>
+   <script type="text/javascript">
+     	function saveForm() {
+    		if($.trim(church.placeid) != '') {
+ 		      var url = $.trim(church.website);
+   		      if(url != '' ) {
+ 		        var domain = url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
+                domain = domain.replace('http://','').replace('https://','').split(/[/?#]/)[0];
+                 $('#domain').val(domain);
+                 $('#placeid').val($.trim(church.placeid));
+                  church.domain = domain,
+                  church.name = $('#churchname').val();
+                  church.street = $('#church-data').find('input[name="address"]').val();
+                  church.city = $.trim($('#church-data').find('input[name="city"]').val());
+                  church.province = $.trim($('#church-data').find('input[name="province"]').val());
+                  church.postalcode = $.trim($('#church-data').find('input[name="mailcode"]').val());
+                  church.country = $.trim($('#church-data').find('input[name="country"]').val());
+                  church.phone = $('#church-data').find('input[name="phone"]').val()
+                  church.website = $('#church-data').find('input[name="website"]').val();
+  			      $.ajax({
+                   method: "POST",
+                   data: {'info': JSON.stringify(church)},
+                   url: 'putchurchstub.php',
+                   dataType: 'json',
+                   cache: false,
+                   success: function(data)
+                    {
+                     	if(data.status == 'ok') {
+                     	   clearVars();
+                     	   $('#wuzzup').html('<strong>Church Data Saved Successfully</strong>');	
+                           $('#church-data').hide(1000);
+                           $('#map-canvas').hide(1000);
+                     	 } else {
+                 	 	$('#wuzzup').css('border-color:red','visibility:visible');
+                 	 	$('#wuzzup').html('<b>Data Action Status: <i>' +data.status + '</i></b><br><b>Action: <i>' + data.action+ '</i></b><br><b>Error: <i>' + data.error + '</i></b>');
+       		       	    }
+                     },
+                 	error: function(data) {
+                 		$('#wuzzup').css('border-color:red','visibility:visible');
+                	    $('wuzzup').html('Houston! we have a problem');	
+                 	}
+                  }); //$.ajax
+   	          
+    		  }else {
+    		     alert('Cannot save record without a valid church Domain Name');	
+    		  } //url != ''   
+   		  }else {
+    	  alert('Cannot enroll a church without a Google Map Place ID');	
+    	} // placeid != ''
+     }	
+     function clearVars() {
+       church.id = 0;
+       church.name = "";
+       church.domain = "";
+       church.street = "";
+       church.city = "";
+       church.province = "";
+       church.postalcode = "";
+       church.country = "";
+       church.placeid = "";
+       church.phone = "";
+       church.website = "";
+       church.website = "";
+       $(ChurchData).each(function() {
+       	$(this).val("");
+       });
+     }
+   </script> 	
+  <script type="text/javascript">
+     	function registerMe() {
+                       userStub.firstname = $('#firstname').val();
+                       userStub.lastname = $('#lastname').val();
+                       if($.trim(church.name) != '') {
+                       	  userStub.churchname = church.name; 
+                       } else {
+                       userStub.churchname = $('#pac-input').val();
+                       }
+                       if($.trim(church.placeid) != '') {
+                       userStub.placeid = church.placeid;
+                       }
+                       userStub.password = $('#passwordInput').val();
+                       userStub.email = $('#emailInput').val();
+    	               $.ajax({
+                   type: 'post',
+                   data: { "info" : JSON.stringify(userStub) },
+                   url: 'enroll.php',
+                   dataType: 'json',
+                   cache: false,
+                   success: function(data)
+                    {
+                    	if(data.status == 'ok') {
+        	              Cookies.set('holytomatoes',$('#emailInput').val(),{ expires: 90 });
+        	              clearuserStub(true);
+                   	      $(location).attr('href', 'logon.html');	
+                    	 } else {
+ //                        	alert(data.status + ' - ' + data.action);
+ //                       	alert(data.sql);
+ //                       	alert(data.error);
+                  		 alert('!!** Unable to Enroll '+ userStub.firstname + ' ' + userStub.lastname);
+                 		$('#wuzzup').css({"border-color": "red", "visibility": "visible"});
+                 		$('#wuzzup').html('<b>Data Action Status: <i>' +data.status + '</i></b><br><b>Action: <i>' + data.action+ '</i></b><br><b>Error: <i>' + data.error + '</i></b>');
+       		
+                 	    }
+                    },
+                 	error: function(data) {
+                 		$('#wuzzup').css({"border-color": "red", "visibility": "visible"});
+                	    $('wuzzup').html('Houston! we have a problem');	
+                 	}
+                 });
+   	
+    	}
+ 	
+  </script>	
+  <script type="text/javascript">
+   	function clearuserStub(how) {
+   	    if(how == true) {
+   	    userStub.id = 0;
+        userStub.firstname = '';
+        userStub.lastname = '';
+        userStub.churchname = '';
+        userStub.placeid = ''
+        userStub.userpsw = '';
+        userStub.password = '';
+        userStub.churchadmin = false;
+   	    $('#firstname').val(userStub.firstname);
+        $('#lastname') .val(userStub.lastname);
+        $('#emailInput').val(userStub.email);
+        $('#passwordInput').val(userStub.password);
+        $('#passwordConfirmInput').val(userStub.password);
+        $('#pac-input').val(userStub.churchname);    
+        Cookies.set("peaches",JSON.stringify(userStub),{expires: 1});
+   	    }
+     }
+ 
+ 	// This function is called when the user clicks the UI button requesting
+// a reverse geocode.
+function geocodePlaceId(placeId) {
+   var map = new google.maps.Map(document.getElementById('church-data'), {
+    zoom: 8,
+  });
+  var ok = false;
+  var geocoder = new google.maps.Geocoder;
+  var infowindow = new google.maps.InfoWindow;geocoder.geocode({'placeId': placeId}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      if (results[0]) {
+        map.setZoom(11);
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+        });
+        infowindow.setContent(results[0].formatted_address);
+        infowindow.open(map, marker);
+        ok = true;
+      } else {
+        alert('No results found');
+      }
+    } else {
+      alert('Geocoder failed due to: ' + status);
+    }
+    return ok;
+  });
+}
+  </script>
+ </head>
+	<body>
+    <script type="text/javascript">
+      $(document).ready(function(){
+      	var online = Cookies.get('peaches');
+        if(typeof(online) !="undefined") {
+          userStub = $.parseJSON(online);                
+               $('#firstname').val(userStub.firstname);
+               $('#lastname') .val(userStub.lastname);
+               $('#emailInput').val(userStub.email);
+               $('#passwordInput').val(userStub.password);
+               $('#passwordConfirmInput').val(userStub.password);
+               $('#pac-input').val(userStub.churchname);    
+             }
+             if(userStub.id > 0) {
+             $('#sendButton').val("Update");
+             	church.name = userStub.churchname;
+             	church,placeid = userStub.placeid;
+             } else {
+              $('#sendButton').val("Enroll")	
+             }
+ //           $('#church-data').hide;
+ //           $('#map-canvas').hide;
+            $("#register").jqxExpander({ toggleMode: 'none', width: '300px', showArrow: false });
+            $('#sendButton').jqxButton({ width: 60, height: 25 });
+            $('#sendButton').on('click', function () {
+            if($('#testForm').jqxValidator('validate') == true)
+              registerMe();
+            });
+             $('.text-input').jqxInput({  });
+            // initialize validator.
+            $('#testForm').jqxValidator({
+                rules: [
+                       { input: '#firstname', message: 'First Name is required!', action: 'keyup, blur', rule: 'required' },
+                       { input: '#lastname', message: 'Last Name is required!', action: 'keyup, blur', rule: 'required' },
+                       { input: '#passwordInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
+                       { input: '#passwordInput', message: 'Your password must be between 4 and 12 characters!', action: 'keyup, blur', rule: 'length=4,12' },
+                       { input: '#passwordConfirmInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
+                       {
+                           input: '#passwordConfirmInput', message: 'Passwords doesn\'t match!', action: 'keyup, focus', rule: function (input, commit) {
+                               // call commit with false, when you are doing server validation and you want to display a validation error on this field. 
+                               if (input.val() === $('#passwordInput').val()) {
+                                   return true;
+                               }
+                               return false;
+                           }
+                       },
+                       { input: '#emailInput', message: 'E-mail is required!', action: 'keyup, blur', rule: 'required' },
+                       { input: '#emailInput', message: 'Invalid e-mail!', action: 'keyup', rule: 'email' }]
+            });
+        	$('#firstname').focus();
+ /*           if(userStub.id > 0) {
+              if($.trim(userStub.placeid) != '') {
+           	    if(geocodePlaceId(userStub.placeid) == true){
+           		  $('#map-canvas').css('border, 1px solid blue');
+           	     }
+             }
+           }*/
+      }
+     );
+   </script>
+   <div id="register">
+   	<div style="width: 320px;height: 24px;text-align: center;color: white;opacity:9;">
+      <h3>User Registration</h3>
+   </div>
+   <div id="testDiv" style="width:315px; border:none;overflow: hidden;background:transparent;">
+   	<form id="testForm" action="./" method="post">
+   	 <table class="register-table">
+   	<tr>
+   		<td> <input id="firstname" name="firstname" type="text" size="40" placeholder="First Name:" class="text-input"/></td>
+   	</tr>
+   	 <tr>
+   	 	<td><input id="lastname" name="lastname" type="text" size="40" placeholder="Last Name:" class="text-input"/>
+    </td>
+   	 </tr>
+   	 <tr>
+   	 	<td>  <input id="emailInput" name="emailInput" type="text" size="40"  placeholder="Email Address:" class="text-input"/>
+       </td>
+   	 </tr>
+   	 <tr>
+   	 	<td><input id="passwordInput" name="passwordInput" type="password" size="40" placeholder="Password:" class="text-input"/><br>
+     </td>
+   	 </tr>
+   	 <tr>
+   	 	<td><input id="passwordConfirmInput" type="password" size="40" placeholder="Confirm Password:" class="text-input"/><br>
+     </td>
+   	 </tr>
+  	 <tr>
+   	 	<td> <input id="pac-input" type="text" size="40" placeholder="Affilitated Church:" class="text-input"/></td>
+   	 </tr>
+    <tr>
+       <td colspan="2" style="text-align: center;"><input type="button" value="Register" id="sendButton" /></td>
+     </tr>
+     </table>
+   </form> <!--testForm-->
+   </div> <!--testDiv-->
+   </div> <!--register-->
+
+   <div id="church-data" style="float: left;border: 1px navy solid; height:398px; width:314px;padding-top:5px;"></div>
+  <div id="map-canvas" style="height: 400px;width: 440px;float:left; border: 1px navy solid; margin-left:10px;padding-top:5px;"</div>
+ <div>
+  	<div id="wuzzup">
+  		
+  	</div>
+
+</body>
+</html>

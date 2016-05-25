@@ -1,0 +1,67 @@
+function initialize() {
+  var mapOptions = {
+ //   center: {lat: -33.8688, lng: 151.2195},
+    zoom: 13
+  };
+  map = new google.maps.Map(document.getElementById('church-map'), mapOptions);
+  var input = (document.getElementById('pac-input'));
+  autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  infowindow = new google.maps.InfoWindow();
+  marker = new google.maps.Marker({
+    map: map
+  });
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map, marker);
+  });
+
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    infowindow.close();
+    place = autocomplete.getPlace();
+    if (!place.geometry) {
+      return;
+    }
+ // Set the position of the marker using the place ID and location
+    marker.setPlace(/** @type {!google.maps.Place} */ ({
+      placeId: place.place_id,
+      location: place.geometry.location
+    }));
+    marker.setVisible(false);
+// stuff place data in JSON object
+    church.name = place.name;
+     church.placeid = place.place_id;
+     church.address = place.formatted_address;
+    ChurchData = church.address.split(",");
+    ChurchData.length = 5;
+    church.country = ChurchData[3];
+//    
+    if (place.website != null) {
+      church.website = $.trim(place.website);
+    }
+    else
+    {
+      church.website = '';
+    }
+//
+   if (place.formatted_phone_number != null) {
+      church.phone = $.trim(place.formatted_phone_number);
+    }
+    else
+    {
+      church.phone = '';
+    }
+//
+    var url = $.trim(church.website);
+    if(url != '' ) {
+     var domain = url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
+      church.domain = domain.replace('http://','').replace('https://','').split(/[/?#]/)[0];
+          stuff = '<small><b>'+church.churchname+'</b><br>' + church.address + '<br>'+church.city + ',&nbsp;' + church.state+'&nbsp;'+church.zipcode+'</small>';
+            $('#churchname').html(stuff); 
+ 
+       }
+    });
+            google.maps.event.addDomListener(window, 'load', initialize);
+  }
+
+

@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Mouse Movements</title>
+		<script type="text/javascript" src="http://localhost/js/jquery.js"></script>
+        <script type="text/javascript" src="http://localhost/js/jquery-migrate.js"></script>
+	<style type="text/css">
+     div
+     {
+		border:1px solid red;
+		float:left;
+		width:200px;
+		height:200px;
+		margin:10px;
+		font-family:verdana,arial;
+		font-size:14px;
+		}
+		div#tip
+		{
+		position:absolute;
+		width:100px;
+		height:auto;
+	}
+</style>
+</head>
+	<body>
+<script type="text/javascript">$(document).ready(function () {  $('.hoverMe').hover(   function()   {  $('#tip').fadeIn('slow');   },    function()    {	
+     $('#tip').fadeOut('slow');    });
+        $('.hoverMe').mousemove(function(e)     {       var topPosition = e.pageY+5;       var leftPosition = e.pageX+5;       $('#tip').css(        {         'top' : topPosition+ 'px',         'left' : leftPosition +'px',
+         'color' : 'green',
+         'border-color' : 'navy'         });       });    });</script>
+
+<div id="tip" style="display:none;">I am tooltip for div id:tip</div>
+	<div class="hoverMe">I am Div #1</div>
+	<div>This div will not display a tooltip</div>
+	<div class="hoverMe">I am  Div #2</div>
+	</body>
+</html>

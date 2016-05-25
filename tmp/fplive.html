@@ -1,0 +1,141 @@
+
+<!doctype html>
+
+<html>
+
+<head>
+   <meta charset="utf-8">
+
+      <title>Flowplayer · Live stream</title>
+   
+   <!-- optimize mobile versions -->
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+      <!-- The "minimalist" skin - choose from: "minimalist.css", "functional.css", "playful.css" -->
+   <link rel="stylesheet" href="http://releases.flowplayer.org/5.5.2/skin/minimalist.css">
+   
+   <!-- Minimal styling for this standalone page, can be removed -->
+   <link rel="stylesheet" href="http://demos.flowplayer.org/media/css/demo.css">
+   <!-- Syntax highlighting of source code, can be removed -->
+   <link rel="stylesheet" href="http://demos.flowplayer.org/media/css/pygments.css">
+   
+<style>
+#content {
+  max-width: 720px; /* narrower for almost 4/3 aspect ratio */
+}
+.flowplayer {
+  background: #777;
+  margin-bottom: 20px;
+}
+
+.flowplayer.is-error .fp-message p {
+  font-size: 200%;
+  font-weight: bold;
+  color: #f00;
+}
+</style>
+
+      <!-- Flowplayer depends on jquery -->
+   <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+         <!-- Flowplayer library -->
+   <script src="http://releases.flowplayer.org/5.5.2/flowplayer.min.js"></script>
+   
+   
+<script>
+flowplayer.conf = {
+  live: true, // mandatory with live streams
+  rtmp: "rtmp://media.oakwood.edu/live",
+  ratio: 9/16,
+  splash: true
+};
+
+flowplayer(function (api, root) {
+  api.bind("load", function (e, api, video) {
+    $("#vtype").text(video.type);
+
+  // announce missing stream
+  }).bind("error", function (e, api, err) {
+    if (err.code === 4 || err.code === 9) {
+      $(".fp-message p", root).text("We are sorry, currently no live stream available.");
+    }
+  });
+});
+</script>
+
+</head>
+
+<body>
+
+   <div id="content">
+
+      <h1>Flowplayer · Live stream</h1>
+
+<div class="flowplayer play-button fixed-controls">
+
+   <video>
+<source type="application/x-mpegurl"
+        src="http://media.oakwood.edu:8080/hls-live/livepkgr/mobile/oubnwebcast/livestream.m3u8">
+<source type="video/flash" src="rtmp://media.oakwood.edu/live">
+   </video>
+
+</div>
+<!--
+<div class="info">
+  <p>Video type: <span id="vtype"></span></p>
+
+  <p>Live stream kindly provided by <a href="http://www.streamshow.it">StreamShow</a>.</p>
+</div>
+
+<div class="doc">
+  <p>You need to serve a HLS (html5) and an RTMP (Flash) stream.</p>
+
+  <p>With live streams it is mandatory to configure <code>live: true</code> or to add the
+  <code>is-live</code>
+  <a href="https://flowplayer.org/docs/skinning.html#configurable-states">state class</a>.
+
+  <p>WebKiT browsers reset the Flash engine on fullscreen toggle, therefore you will notice that in
+  Chrome there's a slight delay and the timer is reset, because the Flash engine must reconnect.</p>
+</div>
+
+<h2 id="head-setup">&lt;head/&gt;</h2>
+
+<h3 id="javascript-setup">&lt;script&gt;</h3>
+
+<p class="doc">The <code>live</code>
+<a href="https://flowplayer.org/docs/setup.html#config-options">option</a> can currently only be
+set globally or on a per player basis.</p>
+
+<div class="codebox"><figure class="code"><div class="highlight"><pre><span class="nx">flowplayer</span><span class="p">.</span><span class="nx">conf</span> <span class="o">=</span> <span class="p">{</span><br />  <span class="nx">live</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// mandatory with live streams</span><br />  <span class="nx">rtmp</span><span class="o">:</span> <span class="s2">&quot;rtmp://wms.shared.streamshow.it/telesanremo&quot;</span><span class="p">,</span><br />  <span class="nx">ratio</span><span class="o">:</span> <span class="mi">9</span><span class="o">/</span><span class="mi">16</span><span class="p">,</span><br />  <span class="nx">splash</span><span class="o">:</span> <span class="kc">true</span><br /><span class="p">};</span><br /></pre></div><br /><figcaption>JavaScript</figcaption></figure></div>
+
+
+<h2 id="html-setup">&lt;body/&gt;</h2>
+
+<div class="doc">
+  <p>Streams are picked in this order:</p>
+
+  <ol>
+     <li>HLS stream in the HTML5 engine in browsers which can play HLS</li>
+
+     <li>RTMP stream in the Flash engine</li>
+  </ol>
+</div>
+
+<div class="codebox"><figure class="code"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;flowplayer play-button fixed-controls&quot;</span><span class="nt">&gt;</span><br />&nbsp;<br />   <span class="nt">&lt;video&gt;</span><br /><span class="nt">&lt;source</span> <span class="na">type=</span><span class="s">&quot;application/x-mpegurl&quot;</span><br />        <span class="na">src=</span><span class="s">&quot;http://wms.shared.streamshow.it/telesanremo/telesanremo/playlist.m3u8&quot;</span><span class="nt">&gt;</span><br /><span class="nt">&lt;source</span> <span class="na">type=</span><span class="s">&quot;video/flash&quot;</span> <span class="na">src=</span><span class="s">&quot;telesanremo&quot;</span><span class="nt">&gt;</span><br />   <span class="nt">&lt;/video&gt;</span><br />&nbsp;<br /><span class="nt">&lt;/div&gt;</span><br /></pre></div><br /><figcaption>HTML</figcaption></figure></div>
+
+
+
+<div class="footer">
+  <p><a href="index.html">Demos in this section</a></p>
+
+  <hr>
+
+  <p><a href="http://demos.flowplayer.org">Flowplayer Demos+</a></p>
+
+  <hr>
+
+  <p><a href="https://flowplayer.org/demos/" target="_blank">Flowplayer Demos</a></p>
+</div>
+   </div> <!-- end content -->
+
+</body>
+</html>

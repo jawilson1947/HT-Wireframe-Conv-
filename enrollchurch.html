@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Church Admin Assignment</title>
+		<style>
+			.div1 {
+		   border: 1px solid blue;
+		   width: 26%;
+		   height: 300px;
+		   float: left;
+		   background: red;
+		   padding:4px;
+		   background-image: url(images/bg3.jpeg);
+		}
+		  .div2 {
+		   border: 1px solid red;
+		   width: 47%;
+		   height: 300px;
+		   float: left;
+		   background: blue;
+		   margin-left:1%;
+		   padding: 4px;
+		   background-image: url(images/bg4.jpeg);
+		   position: static;	
+		   margin-top: 20px;
+		   overflow:auto;	}
+		  .div3 {
+           display: block;
+           width: 30%;
+           border: 1px solid navy;
+           color: #FF0000;
+           height: 300px;
+           padding: 5px;
+           margin-top:20px;
+           clear: both;
+           float: left;
+           background-image: url(images/bg6.jpeg);		
+		}
+	.div4 {
+	       border: 1px solid green;
+		   width: 31%;
+		   height: 200px;
+		   float: left;
+		   background: yellow;
+		   margin-left:1%;
+		   padding: 4px;
+	       margin-top:20px;
+	       background-image: url(images/bgB.jpeg);
+	       white-space: nowrap;
+	       overflow: scroll;
+	       
+		}
+		.div1 {
+		width: 80%;
+		clear:both;
+		border: width:80%;
+		border: 1px solid red;	
+		clear: both;
+		height: 50px;
+		}
+     }
+     </style>
+	</head>
+	<body>
+	<div class="div1">
+		one
+	</div>
+	<div id="parent" style="clear:left;width:73%;float:left;padding-bottom:20px;overflow:scroll;">
+	<div id="child">
+	  <div class="div2">
+	 two
+     </div>
+     <div class="div2">
+	three
+     </div>
+   	
+	</div>	
+    <div id="child2" style="clear:both;overflow:scroll;white-space:nowrap;width:100%">
+     <div class="div4">
+	four
+    </div>
+     <div class="div4">
+	five
+     </div>
+     <div class="div4">
+	six
+    </div>  	
+    </div>
+  
+    </div><!--end parent-->
+    <div style="width:8%;border:1px solid green;height:540px;float:left;margin-top:20px;overflow:hidden;white-space:nowrap;">
+    	seven
+    </div>
+    <div class="div1">
+    	eight
+    </div>
+	</body>
+</html>

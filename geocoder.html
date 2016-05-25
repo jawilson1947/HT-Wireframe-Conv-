@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Find Location on Map with Place ID</title>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&signed_in=true"></script>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  
+<script type="text/javascript">
+   var geocoder;
+   var map;
+ 	// Initialize the map.
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 8,
+ //   center: {lat: 40.72, lng: -73.96}
+  });
+  geocoder = new google.maps.Geocoder;
+  infowindow = new google.maps.InfoWindow;
+
+  document.getElementById('getit').addEventListener('click', function() {
+    geocodePlaceId(geocoder, map, infowindow);
+  });
+}
+
+// This function is called when the user clicks the UI button requesting
+// a reverse geocode.
+function geocodePlaceId(geocoder, map, infowindow) {
+  var placeId = document.getElementById('place-id').value;
+  geocoder.geocode({'placeId': placeId}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      if (results[0]) {
+        map.setZoom(11);
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+        });
+        infowindow.setContent(results[0].formatted_address);
+        infowindow.open(map, marker);
+      } else {
+        window.alert('No results found');
+      }
+    } else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
+  });
+}
+	
+</script>		
+	</head>
+	<body>
+	 <script type="text/javascript">
+	 	$(document).ready(function()
+	 	 {
+	 	 	initMap();
+ 	 });
+	 </script>
+	 <div id="here">
+	 	<input type="text" id="place-id" type="text" size="30" name="place-id" placeholder= "Type Google Map Place ID" />
+	 	<input type="button" id ="getit" name="getit" value="Search"/>
+		 </div>
+   <div id="map" style="height: 400px;width: 440px;float:left; border: 1px navy solid; margin-left:10px;padding-top:5px;"</div>
+     
+	</body>
+</html>

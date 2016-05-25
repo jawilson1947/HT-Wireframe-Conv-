@@ -1,0 +1,800 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title> Holy Tomatoes | Home Page</title>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+		<link href="styles/style.css" type="text/css" rel="stylesheet">
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,900' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
+       
+      	<!--[if IE]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <style>
+      body {
+	   background-size: 70%;
+      }
+      </style>
+    <style type="text/css">
+         input {height:25px;width:220px;background-color: #E8E5DF;}
+      .text-input
+        {
+            height: 21px;
+            width: 306px;
+        }
+   
+        .register-table
+        {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .register-table td, 
+        .register-table tr
+        {
+            margin: 0px;
+            padding: 2px;
+            border-spacing: 0px;
+            border-collapse: collapse;
+            font-family: Verdana;
+            font-size: 12px;
+        }
+        h3 
+        {
+            display: inline-block;
+            margin: 0px;
+        }
+        .appm
+         {
+         	color:white;
+         	font-family: verdana;
+            font-style: bold;
+            text-align: center;
+            background-color: maroon;
+            margin-left:10px;
+            margin-right: 10px;
+            margin-bottom: 12px; 
+            position: relative;
+         }
+         .churchPrompt {
+         	color:maroon;
+         	font-size:10pt;
+         	font-family:arial narrow;
+         	text-align:right;
+         	font-style: italic;
+         	padding-right: 3px;
+         }
+         .noScroll {
+          overflow: hidden;
+          position: fixed;	
+         }
+           #wuzzup {
+               width: 40%;
+          color: red;
+          height: 35px;
+          background-color:transparent;	
+          border: 1px solid navy;
+          text-align: center;
+          font-family: Avenir;
+          font-size: 14pt;
+          margin: 10%;
+          visibility: hidden;
+         }
+      </style>
+    <meta name="keywords" content="jqxDocking, jQuery Docking, jQWidgets, Default Functionality" />
+    <meta name="description" content="jqxDocking is a widget which helps you to control and manage multiple windows and 
+
+    even the layout of your page. Each window which is part of jqxDocking can be dragged around the Web page, 
+
+    docked into docking zones, collapsed into a minimized state, expanded or pinned." />
+    <title id='Description'>jqxDocking represents a widget which enables you to manage and
+        layout multiple windows on a web page.</title>
+    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&signed_in=true"></script>
+    <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jq/scripts/demos.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxwindow.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxtooltip.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxtabs.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdocking.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxpanel.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxsplitter.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxpasswordinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxinput.js"></script>
+     <script type="text/javascript" src="jq/jqwidgets/globalization/globalize.js"></script>
+     <script type="text/javascript" src="js/js.cookie.js"></script>
+     <script type="text/javascript" src="jq/jqwidgets/jqxexpander.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxvalidator.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxradiobutton.js"></script>
+ 
+    <script type="text/javascript">
+    	var church= {"name":"","domain":"","street":"Adventist Blvd","city":"Huntsville","province":"AL","postalcode":"35896","country":"US","placeid":
+    	"","phone":"","website":"","vicinity":"here","address":"5500 Adventist Blvd","source":"","status":"ok","action":"","error":"","sql":"","id":0};
+    	var userStub= {"firstname":"","lastname":"","email":"","password":"","placeid":"","churchname":"","churchadmin":"","id":0,"churchid":0,"status":"ok","action":"","error":"","sql":""};
+    	var place;
+    	var map;
+    	var marker;
+    	var ChurchData=[];
+    	var geocoder;
+    	var infowindow;
+    	var autocomplete;
+
+ </script>
+ 
+<script>
+// This sample uses the Place Autocomplete widget to allow the user to search
+// for and select a place. The sample then displays an info window containing
+// the place ID and other information about the place that the user has
+// selected.
+
+function initialize() {
+  var mapOptions = {
+ //   center: {lat: -33.8688, lng: 151.2195},
+    zoom: 13
+  };
+ map = new google.maps.Map(document.getElementById('church-map'), mapOptions);
+  var input = (document.getElementById('pac-input'));
+  autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  infowindow = new google.maps.InfoWindow();
+  marker = new google.maps.Marker({
+    map: map
+  });
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map, marker);
+  });
+
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    infowindow.close();
+    place = autocomplete.getPlace();
+    if (!place.geometry) {
+      return;
+    }
+ // Set the position of the marker using the place ID and location
+    marker.setPlace(/** @type {!google.maps.Place} */ ({
+      placeId: place.place_id,
+      location: place.geometry.location
+    }));
+    marker.setVisible(false);
+// stuff place data in JSON object
+    church.name = place.name;
+     church.placeid = place.place_id;
+     church.address = place.formatted_address;
+    ChurchData = church.address.split(",");
+    ChurchData.length = 5;
+    church.country = ChurchData[3];
+    church.street = ChurchData[0];
+    church.city = ChurchData[1]
+    church.province = ChurchData[2]
+//    
+    if (place.website != null) {
+      church.website = $.trim(place.website);
+    }
+    else
+    {
+      church.website = '';
+    }
+//
+   if (place.formatted_phone_number != null) {
+      church.phone = $.trim(place.formatted_phone_number);
+    }
+    else
+    {
+      church.phone = '';
+    }
+//
+    var url = $.trim(church.website);
+    if(url != '' ) {
+     var domain = url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
+      church.domain = domain.replace('http://','').replace('https://','').split(/[/?#]/)[0];
+ // search church database for entry with domain name
+ // if found compare values with church object built from Google Map
+        var pkg = church;
+         pkg.source = "lookup";
+         pkg.domain = domain;
+         pkg.placeid = church.placeid;
+         $.ajax({
+            url: 'getchurchstub.php',
+           type: 'post',
+           data: {"info" : JSON.stringify(pkg)},
+           dataType: 'json',
+          success: function(data) {
+             if(data.status == 'ok') {
+              church = data;	
+              ChurchData[0] = $.trim(church.street);
+              ChurchData[1] = $.trim(church.city);
+              ChurchData[2] = $.trim(church.province);
+              ChurchData[3] = $.trim(church.country);
+              ChurchData[4] = $.trim(church.postalcode);
+              if($.trim(church.placeid) == '') {
+                church.placeid = pkg.placeid;	
+               }
+               if($.trim(church.domain) =='') {
+               	 church.domain = pkg.domain;
+               }
+               if($.trim(church.website) == '' || $.trim(church.website) == 'null') {
+               	church.website = pkg.website;
+               }
+               if($.trim(church.country) == '' || $.trim(church.country) == 'null') {
+               	 ChurchData[3] = pkg.country;
+               }
+             }
+  //             $('#church-data').show;
+  //             $('#map-canvas').show;
+               createform(); 
+          },
+          error: function(data) {
+          	alert('Error in Church Stub: ' + data.error);
+          }
+        });
+       }
+     else {
+ //    $('#church-data').show;
+ //    $('#map-canvas').show;
+     createform();
+     }
+ // end my stuff
+    infowindow.setContent('<div><strong>' + church.name + '</strong><br>' +
+         'Address: ' + church.address + '<br>' + 
+          'Phone: ' + church.phone+ '<br> Website: ' + church.website + '<br>'+ 'Place ID: ' + church.placeid +'</div>');
+    
+    infowindow.open(map, marker);
+    showmap();
+
+
+  });
+ }
+ 
+ </script>
+ <script type="text/javascript">
+     function showmap()
+      {
+        if (place.geometry.viewport) 
+         {
+          map.fitBounds(place.geometry.viewport);
+         } 
+        else
+         {
+      map.setCenter(place.geometry.location);
+      map.setZoom(12);
+          }
+    // Set the position of the marker using the place ID and location
+        marker.setPlace(/** @type {!google.maps.Place} */ ({
+         placeId: place.place_id,
+      location: place.geometry.location
+    }));
+    marker.setVisible(true);
+     }
+    </script>
+    
+    <script type="text/javascript">
+    	function createform()
+    	{
+    $("#church-data").append('<table id="ctable" class="register-table">');
+    $("#church-data").append('<form action="javascript:saveForm();" method="POST" id="cform">');
+   $("#church-data form").append('<div class="appm">Verify Church Data</div>');
+   $("#church-data form").append('<input type="hidden"  name="domain"  id="domain" value="" />');
+   $("#church-data form").append('<input type="hidden" name="placeid" id="placeid" value="" />');
+    $("#church-data form").append('<tr><td class="churchPrompt">Name:</td><td><input type="text" placeholder="Church Name" name="churchname" id="churchname" value="' + church.name + '"/></td></tr>');
+    $("#church-data form").append('</td></tr><tr><td class="churchPrompt">Address:</td><td><input type="text" placeholder="Street Address:" name="address" id="address" value="' + ChurchData[0] + '"/></td></tr>');
+   $("#church-data form").append('</td></tr><tr><td class="churchPrompt">City/Town:</td><td><input type="text" placeholder="City|Town:" name="city" id="city" value="' + ChurchData[1] +'"/></td></tr>');
+   $("#church-data form").append('</td></tr><tr><td class="churchPrompt">State/Province:</td><td><input type="text" placeholder="State|Province:" name="province" id="province" value="' + ChurchData[2] + '"/></td></tr>');
+   $("#church-data form").append('</td></tr><tr><td class="churchPrompt">Mail Code:</td><td><input type="text" placeholder="Postal|Mail|Zip Code:" name="mailcode" id="mailcode" value="' + ChurchData[4] + '"/></td></tr>');
+   $("#church-data form").append('</td></tr><tr><td class="churchPrompt">Country:</td><td><input type="text" placeholder="Country" name="country" id="country" value="' + ChurchData[3] +'"/></td></tr>');
+   $("#church-data form").append('</td></tr><tr><td class="churchPrompt">Telephone:</td><td><input type="text" placeholder="Telephone Number:" name="phone" id="phone" value="' + church.phone + '"/></td></tr>');
+   $("#church-data form").append('</td></tr><tr><td class="churchPrompt"><a href="'+ church.website + '" target="_blank">Website</a></td><td><input type="text" placeholder="Domain Name | Website" name="website" id="website" value="' + church.website + '"/></td></tr>');
+  $("#church-data form").append('<tr><td class="churchPrompt">Google Place ID:</td><td style="color:white;background-color:maroon;font-size:8pt;">' + $.trim(church.placeid) + '</td></tr>');
+  $("#church-data form").append('<tr><td class="churchPrompt">&nbsp;</td><td><div style="padding-top:8px;"><input type="submit" id="savebutton" value="Save" /></div></td></tr>'); 	
+   $("#church-data form").append('</form>'); 
+   $("church-data").append('</table>');
+   $('#church-data').css({"background-color": "#E8E5DF", "padding-top": "12px"});
+   $('#churchname').focus();		
+    	}
+   </script>
+   <script type="text/javascript">
+     	function saveForm() {
+    		if($.trim(church.placeid) != '') {
+ 		      var url = $.trim(church.website);
+   		      if(url != '' ) {
+ 		        var domain = url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
+                domain = domain.replace('http://','').replace('https://','').split(/[/?#]/)[0];
+                 $('#domain').val(domain);
+                 $('#placeid').val($.trim(church.placeid));
+                  church.domain = domain,
+                  church.name = $('#church-data').find('input[name="churchname"]').val();
+                  church.street = $('#church-data').find('input[name="address"]').val();
+                  church.city = $('#church-data').find('input[name="city"]').val();
+                  church.province = $('#church-data').find('input[name="province"]').val();
+                  church.postalcode = $('#church-data').find('input[name="mailcode"]').val();
+                  church.country = $('#church-data').find('input[name="country"]').val();
+                  church.phone = $('#church-data').find('input[name="phone"]').val()
+                  church.website = $('#church-data').find('input[name="website"]').val();
+  			      $.ajax({
+                   method: "POST",
+                   data: {'info': JSON.stringify(church)},
+                   url: 'putchurchstub.php',
+                   dataType: 'json',
+                   cache: false,
+                   success: function(data)
+                    {
+                     	if(data.status == 'ok') {
+                     	   clearVars();
+                     	   $('#wuzzup').html('<strong>Church Data Saved Successfully</strong>');	
+                           $('#church-data').hide(1000);
+                           $('#map-canvas').hide(1000);
+                     	 } else {
+                 	 	$('#wuzzup').css('border-color:red','visibility:visible');
+                 	 	$('#wuzzup').html('<b>Data Action Status: <i>' +data.status + '</i></b><br><b>Action: <i>' + data.action+ '</i></b><br><b>Error: <i>' + data.error + '</i></b>');
+       		       	    }
+                     },
+                 	error: function(data) {
+                 		$('#wuzzup').css('border-color:red','visibility:visible');
+                	    $('wuzzup').html('Houston! we have a problem');	
+                 	}
+                  }); //$.ajax
+   	          
+    		  }else {
+    		     alert('Cannot save record without a valid church Domain Name');	
+    		  } //url != ''   
+   		  }else {
+    	  alert('Cannot enroll a church without a Google Map Place ID');	
+    	} // placeid != ''
+     }	
+     function clearVars() {
+       church.id = 0;
+       church.name = "";
+       church.domain = "";
+       church.street = "";
+       church.city = "";
+       church.province = "";
+       church.postalcode = "";
+       church.country = "";
+       church.placeid = "";
+       church.phone = "";
+       church.website = "";
+       church.website = "";
+       $(ChurchData).each(function() {
+       	$(this).val("");
+       });
+     }
+   </script> 	
+  <script type="text/javascript">
+     	function registerMe() {
+                       userStub.firstname = $('#firstname').val();
+                       userStub.lastname = $('#lastname').val();
+                       if($.trim(church.name) != '') {
+                       	  userStub.churchname = church.name; 
+                       } else {
+                       userStub.churchname = $('#pac-input').val();
+                       }
+                       if($.trim(church.placeid) != '') {
+                       userStub.placeid = church.placeid;
+                       }
+                       userStub.password = $('#passwordInput').val();
+                       userStub.email = $('#emailInput').val();
+    	               $.ajax({
+                   type: 'post',
+                   data: { "info" : JSON.stringify(userStub) },
+                   url: 'enroll.php',
+                   dataType: 'json',
+                   cache: false,
+                   success: function(data)
+                    {
+                    	if(data.status == 'ok') {
+        	              Cookies.set('holytomatoes',$('#emailInput').val(),{ expires: 90 });
+        	              clearuserStub(true);
+                   	      $(location).attr('href', 'logon.html');	
+                    	 } else {
+ //                        	alert(data.status + ' - ' + data.action);
+ //                       	alert(data.sql);
+ //                       	alert(data.error);
+                  		 alert('!!** Unable to Enroll '+ userStub.firstname + ' ' + userStub.lastname);
+                 		$('#wuzzup').css({"border-color": "red", "visibility": "visible"});
+                 		$('#wuzzup').html('<b>Data Action Status: <i>' +data.status + '</i></b><br><b>Action: <i>' + data.action+ '</i></b><br><b>Error: <i>' + data.error + '</i></b>');
+       		
+                 	    }
+                    },
+                 	error: function(data) {
+                 		$('#wuzzup').css({"border-color": "red", "visibility": "visible"});
+                	    $('wuzzup').html('Houston! we have a problem');	
+                 	}
+                 });
+   	
+    	}
+ 	
+  </script>	
+  <script type="text/javascript">
+   	function clearuserStub(how) {
+   	    if(how == true) {
+   	    userStub.id = 0;
+        userStub.firstname = '';
+        userStub.lastname = '';
+        userStub.churchname = '';
+        userStub.placeid = ''
+        userStub.userpsw = '';
+        userStub.password = '';
+        userStub.churchadmin = false;
+   	    $('#firstname').val(userStub.firstname);
+        $('#lastname') .val(userStub.lastname);
+        $('#emailInput').val(userStub.email);
+        $('#passwordInput').val(userStub.password);
+        $('#passwordConfirmInput').val(userStub.password);
+        $('#pac-input').val(userStub.churchname);    
+        Cookies.set("peaches",JSON.stringify(userStub),{expires: 1});
+   	    }
+     }
+ 
+ 	// This function is called when the user clicks the UI button requesting
+// a reverse geocode.
+function geocodePlaceId(placeId) {
+   var map = new google.maps.Map(document.getElementById('user-church-map'), {
+    zoom: 8,
+  });
+  var ok = false;
+  var geocoder = new google.maps.Geocoder;
+  var infowindow = new google.maps.InfoWindow;geocoder.geocode({'placeId': placeId}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      if (results[0]) {
+        map.setZoom(11);
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+        });
+        infowindow.setContent(results[0].formatted_address);
+        infowindow.open(map, marker);
+        ok = true;
+      } else {
+        alert('No results found');
+      }
+    } else {
+      alert('Geocoder failed due to: ' + status);
+    }
+    return ok;
+  });
+}
+</script>
+</head>
+<body class='default'>
+ 	<header>
+   <div class="navbar">
+				<div class="navbar-top">
+                <div class="navbar-inner">
+                <div class="container">
+				<h1><a href="" id="logo"><img src="images/logo.png" alt="Holy Tomtatoes" /></a></h1>
+				
+				<nav id="main">
+                <a href="login.html" id="mobile-link" title="Login">Login</a> <a href="logon.html" id="menu-icon"></a>
+					<ul>
+						<li><a href="#" title="Home">Home</a></li>
+						<li><a href="register.html" title="Sign-Up">Sign-Up</a></li>
+						<li><a href="#" title="FAQ">FAQ</a></li>
+						<li><a href="#" title="Contact Us">Contact Us</a></li>
+                        <li><a href="logon.html" title="Login">Login</a></li>
+					</ul>
+				</nav>
+                
+                </div> <!--Container End -->
+                </div> <!--Navbar-inner End -->
+				</div> <!--Navbar-top End -->
+                </div> <!--Navbar End -->
+				
+			</header>	
+<br>
+      <table id = "container" style=" width: 60%; margin: 0px auto;">
+      <tr>
+      	
+        <td>
+     	   <div id='jqxWidget' style="float:left;">
+           <div id="docking">
+            <div>
+                <div id="window1" style="height: 220px;">
+                    <div>
+                        User Profile 
+                    </div>
+                   <div style="overflow: hidden;">
+                   
+   	                   
+                     <div id="cal" style="float: left; margin-right: 10px;">
+                     </div>
+                        <!-- <h3 style="text-align: center; color: #787878;"></h3>-->
+                        <div id="register" style="float: left; margin-left: 30px; text-align: center;margin-bottom:-6px;">
+                          <div>
+                          	<input id="pac-input" type="text" size="40" placeholder="Affilitated Church:" class="text-input"/>
+                          </div>
+                           <div id="testDiv" style="width:315px; border:none;overflow: hidden;background:transparent;">
+   	                         <form id="testForm" action="./" method="post">
+                              	 <table class="register-table">
+                                	<tr>
+   		                             <td> 
+   		                               <table>
+   		                               	<tr>
+   		                               	 <td><input id="firstname" name="firstname" type="text" size="40" placeholder="First Name:" class="text-input"/></td>
+   		                               	</tr>
+   		                                <tr>
+   	 	                                   <td><input id="lastname" name="lastname" type="text" size="40" placeholder="Last Name:" class="text-input"/></td>
+   	 	                                </tr>
+   	                                    <tr>
+   	 	                                 <td>  <input id="emailInput" name="emailInput" type="text" size="40"  placeholder="Email Address:" class="text-input"/></td>
+   	                                    </tr>
+   	                                    <tr>
+   	 	                                 <td><input id="passwordInput" name="passwordInput" type="password" size="40" placeholder="Password:" class="text-input"/></td>
+   	                                    </tr>
+   	                                    <tr>
+    		                              <td><input id="passwordConfirmInput" type="password" size="40" placeholder="Confirm Password:" class="text-input"/></td>
+  	                                    </tr>
+   	 	                               </table>
+    		                         </td><td valign="middle"><input type="button" value="Register" id="sendButton" /></td>
+    	                            </tr>
+   	                            </table> <!--register-table--> 
+                             </form><!--testForm-->
+                          </div><!--testDiv-->
+                        </div><!--register-->
+                      <div style="text-align: left; margin-left: 5px; margin-top: 10px; font-size: 10px; float: right; margin-right: 20px;">
+
+                       </div>
+                    </div>
+                </div>
+                <div id="window2" style="height: 220px">
+                    <div>
+                        Church Profile Information
+                    </div>
+                    <div style="overflow: hidden;">
+                        <div id="newsTbs">
+                            <ul style="margin-left: 30px">
+                                <li>Google Map</li>
+                                <li>Profile</li>
+                                <li>Our Listings</li>
+                            </ul>
+                            <div>
+                                <div id="church-map" style="padding: 3px; margin: 10px; width:  100%; height: 100%; float: left;">
+                                   <!-- <img src="jq/images/news_ie6.jpg" alt="IE6" title="IE6" />-->
+                                </div>
+                                <span style="font-size: 11px;">Microsoft is set to get a little more pushy ensuring
+                                    you have an up-to-date browser and will automatically update Internet Explorer...
+                                    <span style="font-size: 8px;">(BBC)</span> </span>
+                            </div>
+                            <div>
+                                <div style="padding: 3px; margin: 10px; width: 144px; height: 81px; float: left;">
+                                    <img src="jq/images/local.jpg" alt="Tennis" title="Tennis" />
+                                </div>
+                                <span style="font-size: 11px;">The High Court has dismissed a challenge to laws that
+                                    require immigrant spouses to be able to speak English in order to live in the UK...
+                                    <span style="font-size: 8px;">(BBC)</span> </span>
+                            </div>
+                            <div>
+                                <div style="padding: 3px; margin: 10px; width: 130px; height: 73px; float: left;">
+                                    <img src="jq/images/tennis.jpg" alt="Tennis" title="Tennis" />
+                                </div>
+                                <span style="font-size: 11px;">British number one Elena Baltacha says Judy Murray is
+                                    a "fantastic" appointment as Great Britain's new Fed Cup captain... <span style="font-size: 8px;">(BBC)</span> </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div id="window3" style="height: 220px">
+                    <div>
+                        User Church Location
+                    </div>
+                    <div style="overflow: hidden;">
+                        <div>
+                            <div style="padding-right: 20px;">
+                                <div  id="user-church-map" style="padding: 3px; width: 100%; height: 100%; float: left; margin: 10px;">
+                                    <!--<img src="jq/images/leo.jpg" alt="Leo" title="Leo" />-->
+                                </div>
+                             <!--   <h3 style="text-align: center; color: #787878;">Leo</h3>
+                                <span style="font-size: 11px">Individuals born under the zodiac sign of Leo are very
+                                good looking and have a healthy physique, with a broad forehead. Leo are very intelligent,
+                                extremely courageous, love their freedom and live by their own rules. Indulgence
+                                and extravagance is like second nature to them and they love to... </span>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="window4" style="height: 220px;">
+                    <div>
+                        Verify Church Location 
+                    </div>
+                    <div style="overflow: hidden;">
+                        <div id="t2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>	</td>
+	   <script type="text/javascript">
+        $(document).ready(function () {
+             google.maps.event.addDomListener(window, 'load', initialize);
+             var source = [
+                    'JavaScript Certification - Welcome to our network',
+                    'Business Challenges via Web take a part',
+                    'jQWidgets better web, less time. Take a tour',
+                    'Facebook - you have 7 new notifications',
+                    'Twitter - John Doe is following you. Look at his profile',
+                    'New videos, take a look at YouTube.com'
+            ];
+            
+            $('#docking').jqxDocking({ orientation: 'horizontal', width: 800, mode: 'docked' });
+            $('#docking').jqxDocking('disableWindowResize', 'window1');
+            $('#docking').jqxDocking('disableWindowResize', 'window2');
+            $('#docking').jqxDocking('disableWindowResize', 'window3');
+            $('#docking').jqxDocking('disableWindowResize', 'window4');
+  //          $('#calendar').jqxCalendar({  width: 180, height: 180 });
+            $('#newsTbs').jqxTabs({  width: 375, height: 200, selectedItem: 1 });
+  //          $('#listbox').jqxListBox({ source: source, width: 375, height: 181 });
+  //          $('#zodiak').jqxPanel({ width: 375, height: 180 });
+// initialize menu
+            $("#jqxMenu").jqxMenu({ width: '150px', height: '220px', mode: 'vertical'});
+            $("#jqxMenu").css('visibility', 'visible');
+// create checkboxes
+            $("#checkbox").jqxCheckBox({ checked: true});
+            $("#checkbox2").jqxCheckBox({});
+            $("#checkbox3").jqxCheckBox({});
+//
+     	var online = Cookies.get('peaches');
+        if(typeof(online) !="undefined") {
+          userStub = $.parseJSON(online);                
+               $('#firstname').val(userStub.firstname);
+               $('#lastname') .val(userStub.lastname);
+               $('#emailInput').val(userStub.email);
+               $('#passwordInput').val(userStub.password);
+               $('#passwordConfirmInput').val(userStub.password);
+               $('#pac-input').val(userStub.churchname);    
+             }
+             if(userStub.id > 0) {
+             $('#sendButton').val("Update");
+             	church.name = userStub.churchname;
+             	church,placeid = userStub.placeid;
+             } else {
+              $('#sendButton').val("Enroll")	
+             }
+ //           $('#church-data').hide;
+ //           $('#map-canvas').hide;
+            $("#register").jqxExpander({ toggleMode: 'none', width: '300px', showArrow: false });
+            $('#sendButton').jqxButton({ width: 60, height: 25 });
+            $('#sendButton').on('click', function () {
+            if($('#testForm').jqxValidator('validate') == true)
+              registerMe();
+            });
+             $('.text-input').jqxInput({  });
+            // initialize validator.
+            $('#testForm').jqxValidator({
+                rules: [
+                       { input: '#firstname', message: 'First Name is required!', action: 'keyup, blur', rule: 'required' },
+                       { input: '#lastname', message: 'Last Name is required!', action: 'keyup, blur', rule: 'required' },
+                       { input: '#passwordInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
+                       { input: '#passwordInput', message: 'Your password must be between 4 and 12 characters!', action: 'keyup, blur', rule: 'length=4,12' },
+                       { input: '#passwordConfirmInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
+                       {
+                           input: '#passwordConfirmInput', message: 'Passwords doesn\'t match!', action: 'keyup, focus', rule: function (input, commit) {
+                               // call commit with false, when you are doing server validation and you want to display a validation error on this field. 
+                               if (input.val() === $('#passwordInput').val()) {
+                                   return true;
+                               }
+                               return false;
+                           }
+                       },
+                       { input: '#emailInput', message: 'E-mail is required!', action: 'keyup, blur', rule: 'required' },
+                       { input: '#emailInput', message: 'Invalid e-mail!', action: 'keyup', rule: 'email' }]
+            });
+        	$('#firstname').focus();
+           if(userStub.id > 0) {
+              if($.trim(userStub.placeid) != '') {
+           	    if(geocodePlaceId(userStub.placeid) == true){
+           		  $('#user-church-map').css('border, 1px solid blue');
+           	     }
+             }
+           }
+      
+        });
+    </script>
+        <td style="vertical-align:text-top">
+           <div id='jqxMenu' style="visibility: hidden;">
+                <ul>
+                    <li>
+                        <img style='float: left; margin-right: 5px;' src='jq/images/mailIcon.png' /><span>Mail</span>
+                    </li>
+                    <li>
+                        <img style='float: left; margin-right: 5px;' src='jq/images/calendarIcon.png' /><span>Calendar</span>
+                    </li>
+                    <li>
+                        <img style='float: left; margin-right: 5px;' src='jq/images/contactsIcon.png' /><span>Contacts</span>
+                    </li>
+                    <li>
+                        <img style='float: left; margin-right: 5px;' src='jq/images/folder.png' /><span>
+                            <span>Inbox</span></span>
+                        <ul>
+                            <li>
+                                <img style='float: left; margin-right: 5px;' src='jq/images/folder.png' /><span>jQWidgets</span>
+                                <ul>
+                                    <li>
+                                        <img style='float: left; margin-right: 5px;' src='jq/images/folder.png' /><span>Admin</span>
+                                    </li>
+                                    <li>
+                                        <img style='float: left; margin-right: 5px;' src='jq/images/folder.png' /><span>Corporate</span>
+                                    </li>
+                                    <li>
+                                        <img style='float: left; margin-right: 5px;' src='jq/images/folder.png' /><span>Finance</span>
+                                    </li>
+                                    <li>
+                                        <img style='float: left; margin-right: 5px;' src='jq/images/folder.png' /><span>Other</span>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <img style='float: left; margin-right: 5px;' src='jq/images/folder.png' /><span>Personal</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <img style='float: left; margin-right: 5px;' src='jq/images/recycle.png' />
+                        <span>Deleted Items</span>
+                        <ul>
+                            <li>
+                                <img style='float: left; margin-right: 5px;' src='jq/images/folder.png' /><span>Today</span>
+                            </li>
+                            <li>
+                                <img style='float: left; margin-right: 5px;' src='jq/images/folder.png' /><span>Last
+                                    Week</span> </li>
+                            <li>
+                                <img style='float: left; margin-right: 5px;' src='jq/images/folder.png' /><span>Last
+                                    Month</span> </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <img style='float: left; margin-right: 5px;' src='jq/images/settings.png' /><span>Settings</span>
+                        <ul style="width: 230px;">
+                            <li>
+                                <div style='float: left; margin-right: 5px;' id='checkbox'>
+                                </div>
+                                Enable Auto-Save</li>
+                            <li>
+                                <div style='float: left; margin-right: 5px;' id='checkbox2'>
+                                </div>
+                                Send email as anonymous</li>
+                            <li>
+                                <div style='float: left; margin-right: 5px;' id='checkbox3'>
+                                </div>
+                                Save sent emails</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <img style='float: left; margin-right: 5px;' src='jq/images/notesIcon.png' /><span>Notes</span>
+                    </li>
+                    <li>
+                        <img style='float: left; margin-right: 5px;' src='jq/images/favorites.png' /><span>Favorites</span>
+                    </li>
+                </ul>
+    
+        </td>
+  </tr> 
+       </table>
+<br>
+        <div id="footer-ft">
+			<div class="wrap">
+                <nav>
+					<ul>
+						<li>2015 © HOLY TOMATOES</li>
+						<li><a href="#" title="Terms of Use">Terms of Use</a></li>
+                        <li><a href="#" title="Contact Us">Contact Us</a></li>
+						<li><a href="#" title="Privacy Policy">Privacy Policy</a></li>
+					</ul>
+					</ul>
+				</nav>
+    		</div>
+
+</body>
+</html>
+

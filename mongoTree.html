@@ -1,0 +1,134 @@
+<html>
+ <head>
+  <title>jQTree Grid for Mongo Document</title>
+   <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+   <script src="jqTree/tree.jquery.js"></script>  
+   <link rel="stylesheet" href="jqTree/jqtree.css">
+    <script type="text/javascript" src="js/js.cookie.js"></script>
+    <script type="text/javascript" src="jquery-dateFormat/dist/jquery-dateFormat.js"></script>
+         <link rel="stylesheet" href="node_modules/jquery-treegrid/styles.css">
+        <link rel="stylesheet" href="styles/default.min.css">
+        <link rel="stylesheet" href="node_modules/jquery-treegrid/css/jquery.treegrid.css">
+     <script type="text/javascript">
+var jData = [];
+var cCount = 0;
+var eCount = 0;
+var person = 'Nobody';
+var memberTag = '*';
+var webserver;
+</script>
+  </head>
+ <body>
+  <table>
+   <tr>
+    <td><div id="person"></div></td>
+    <td>&nbsp; - &nbsp;</td>
+    <td><div id="rcount"></div></td>
+    </tr>
+   <tr>
+    <td colspan ="3"> 
+  <div id="tree1"></div>
+  </td>
+  </tr>
+  <tr>
+   <td colspan="3"><div id="tfooter"></div></td>
+  </tr>
+  </table> 
+  <div id="result"></div>
+<script type="text/javascript">
+$(document).ready(function(){
+   var online = Cookies.get('peaches');
+   if(typeof(online) !="undefined") {
+      userStub = $.parseJSON(online);
+      person = userStub.firstname + ' ' + userStub.lastname;
+      webserver = userStub.webserver;
+      $.ajax({
+      crossdomain: true,
+      type: 'get',
+      url: webserver + ':8080/members/ratings/'+ userStub.id}).success(function(data) {
+         if(!isEmpty(data)) {
+            if(data.length >0){
+               data.sort(function(a,b){
+                  var nameA = a.churchname.toLowerCase(),nameB = b.churchname.toLowerCase();
+                  if(nameA > nameB) {
+                     return 1;
+                  } else if (nameA < nameB) {
+                    return -1;
+                  } else {
+                    return 0;
+                  }
+               });
+               buildTree(data);
+               $('#person').html("&nbsp; - &nbsp;" + userStub.firstname + " " + userStub.lastname + "'s rating history.");
+               $('#rcount').html('<i>' + cCount + ' churches visited - Total events rated: ' +eCount + ' </i>');
+               userStub.objectid = eCount;
+               $('#tree1').tree({
+                  data: jData,
+                  closedIcon : '+',
+                  openedIcon : '-',
+                  autoOpen: false
+               });
+               $('#tree1').bind('tree.click', function(event) {
+            // The clicked node is 'event.node'
+                  var node = event.node;
+                  console.log(node.id);
+               });
+               Cookies.set("peaches",JSON.stringify(userStub),{expires: 1});
+            } else {
+              console.log('Data Not Found ' + data.status);
+            }
+           } else {
+             console.log('Data Stack is empty -- Probably system error');
+           }
+       });  
+   } else {
+     alert('Cookie has expired. Please Refresh');
+   }
+   $('#result').hide();
+});
+</script>
+<script type="text/javascript">
+function buildTree(data) {
+  var id = 0;
+  var jNode;
+  var jChildNode;
+  var ChurchInCore = data[0].churchid;
+  if(data[0].churchid == userStub.churchid) {
+     jNode= {"id":1,"label": memberTag +data[0].churchname,"children":[]};
+  } else {
+    jNode= {"id":1,"label": data[0].churchname,"children":[]};
+  }
+  jChildNode = {"id":2, "label": data[0].eventname + ' on ' + $.format.date(data[0].eventdate, "MM/dd/yyyy hh:mm a") + ' | Score: ' + data[0].score};
+  jNode.children.push(jChildNode)
+  i = 2;
+  eCount = 1;
+  cCount = 1
+ for(i=1;i<data.length;i++){
+    if(data[i].churchid != ChurchInCore) {	
+      jData.push(jNode)	
+      id++;
+      cCount++;
+      eCount++	 
+      if(data[i].churchid == userStub.churchid) {
+      	jNode = {"id":id,"label": memberTag + data[i].churchname,"children":[]};
+      } else {
+         jNode= {"id":id,"label":data[i].churchname,"children":[]};
+      }
+      jChildNode = {"id":id,"label": data[i].eventname + ' on ' + $.format.date(data[i].eventdate, "MM/dd/yyyy hh:mm a") + ' | Score: ' + data[i].score};
+      jNode.children.push(jChildNode)
+      ChurchInCore = data[i].churchid;
+     } else {
+       id++; 
+       jChildNode = {"id":id,"label": data[i].eventname + ' on ' + $.format.date(data[i].eventdate, "MM/dd/yyyy hh:mm a") + ' | Score: ' + data[i].score};
+       jNode.children.push(jChildNode);
+       eCount++;
+     }
+   }
+  jData.push(jNode);
+}
+function isEmpty(str) {
+  return typeof str == 'string' && !str.trim() || typeof str == 'undefined' || str === null;
+}
+ </script>
+</body>
+</html>

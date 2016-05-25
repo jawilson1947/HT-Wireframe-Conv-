@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="http://cdn-na.infragistics.com/igniteui/2015.2/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="http://cdn-na.infragistics.com/igniteui/2015.2/latest/css/structure/infragistics.css" rel="stylesheet" />
+    <link href="http://www.igniteui.com/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+    <script src="http://www.igniteui.com/js/angular.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="http://cdn-na.infragistics.com/igniteui/2015.2/latest/js/infragistics.core.js"></script>
+    <script src="http://cdn-na.infragistics.com/igniteui/2015.2/latest/js/infragistics.lob.js"></script>
+
+    <script src="http://cdn-na.infragistics.com/igniteui/2015.2/latest/js/extensions/igniteui-angular.js"></script>
+  <script type="text/javascript" src="js/js.cookie.js"></script>
+ <script type="text/javascript">
+ 	       var online = Cookies.get('peaches');
+            if(typeof(online) !="undefined") {
+               userStub = $.parseJSON(online);                
+               person = userStub.firstname + ' ' + userStub.lastname;
+               $('#footer').html('<b><i>Church events rated by ' +person + '</b></i>');
+               $.ajax({
+               type: 'post',
+               data: { "info" : JSON.stringify(userStub) },
+               url: 'getuserindex.php',
+                dataType: 'json',
+                cache: false,
+                async: false,
+          success: function(data) {
+          	if($.type(data[0]['churchid']) === "undefined"){
+          		console.log('No Ratings....Sorry!');
+          	} else {
+            var sampleApp = angular.module('sampleApp', ['igniteui-directives']);
+            sampleApp.controller('treeGridController', function ($scope) {
+            $scope.tasks = data;
+             });
+          	}
+           },
+       error: function(data) {
+       console.log(data.error);              
+       }
+     });
+    } else {
+     alert('Cookie has expired. Unable to continue');	
+    }
+
+ </script>
+    <script type="text/javascript">
+    </script>
+</head>
+<body class="container">
+    <div class="push-down-xl" ng-app="sampleApp" ng-controller="treeGridController">
+        <div class="row">
+                <ig-tree-grid id="grid1"
+                              data-source="tasks"
+                              width="860px"
+                              height="450px"
+                              primary-key="id"
+                              auto-commit="true"
+                              auto-generate-columns="false"
+                              child-data-key="events"
+                              render-expand-column="true">
+                    <columns>
+                        <column key="id" header-text="ID" width="100px" data-type="number"></column>
+                        <column key="churchname" header-text="Church" width="250px" data-type="string"></column>
+                        <column key="eventname" header-text="Event" width="230px" data-type="string"></column>
+                        <column key="eventdate" header-text="Date" width="180px" data-type="date"></column>
+                        <column key="score" header-text="Score" width="100px" data-type="number"></column>
+                    </columns>
+                </ig-tree-grid>
+        </div>
+    </div>
+    <div id="footer" style="border:1px solid gray;text-align:center;height:30px;color:navy;margin-top:10px;">
+    	
+    </div>
+</body>   
+</html>

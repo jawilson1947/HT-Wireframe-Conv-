@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Detecting AJAX Requests</title>
+	</head>
+	<body>
+	<form>
+		<p>
+		 <input type="button" value="Load Data" />
+		</p>
+	</form>
+   <script type="text/javascript" src="../jquery.js"></script>
+   <script type="text/javascript" src="../jquery-migrate.js"></script> 
+   <script type="text/javascript">
+   	$(document).ready(function()
+   	 {
+   	  $('input:button').click(function()
+   	   {
+   	    $.get(
+   	     'check.php',
+   	     function(data)
+   	      {
+   	      	$('input:button').after(data);
+   	      }
+   	    );//$.get
+   	   }
+   	  );//$('input:button').click	
+   	 }
+   	);//(document).ready
+   </script> 
+	</body>
+</html>

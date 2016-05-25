@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<!--
+*
+* Copyright (C) 2014, bitmovin GmbH, All Rights Reserved
+*
+* Created on: 2014-12-02 14:00:00
+* Author:     bitmovin GmbH <dash-player@bitmovin.net>
+*
+* This source code and its use and distribution, is subject to the terms
+* and conditions of the applicable license agreement.
+*
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- bitdash player -->
+    <script type="text/javascript" src="bitdash.min.js"></script>
+
+    <!-- Chart Library http://smoothiecharts.org/LICENSE.txt -->
+    <script src="smoothie.js" type="text/javascript"></script>
+
+    <style type="text/css" media="screen">
+      h1{
+        text-align:     center;
+        text-transform: uppercase;
+        font-weight:    bold;
+        font:           44px/54px 'PT Sans', sans-serif;
+      }
+      h2 {
+        text-align:     center;
+        text-transform: uppercase;
+        font:           16px/26px 'PT Sans', sans-serif;
+        font-weight:    bold;
+      }
+      div#debugData h1 {
+        font:           16px/26px 'PT Sans', sans-serif;
+        font-weight:    bold;
+      }
+      p#version {
+        text-align:     center;
+      }
+      div#videoData {
+        width:          7em;
+        margin-right:   20px;
+        float:          right;
+      }
+      div#videoDataLabels {
+        width:          12em;
+        float:          left;
+      }
+      div#debugData {
+        box-shadow:     0 0 20px rgba(0,0,0,0.8);
+        font:           16px/26px 'PT Sans', sans-serif;
+        margin-left:    5%;
+        margin-top:     50px;
+        float:          left;
+      }
+      div#graphWrapper {
+        box-shadow:     0 0 20px rgba(0,0,0,0.8);
+        float:          left;
+        margin-left:    5%;
+        margin-top:     50px;
+        width:          60%;
+      }
+      .bitdash-html5-player-video-container{
+        box-shadow: 0 0 20px rgba(0,0,0,0.8);
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <h1>Demo Page</h1>
+      <h2>Using bitdash API functions for data monitoring!</h2>
+      <div id="wrapper">
+        <div id="player"></div>
+      </div>
+      <div id="debugData">
+        <h1>bitdash Data Monitoring</h1>
+        <p id="version">unkown version</p>
+        <div id="videoData">
+          <p>
+            <br>
+            <span id='audioBuffer'>0.0</span> [sec]<br>
+            <span id='videoBuffer'>0.0</span> [sec]<br>
+            <span id='resolution'>000 x 000</span><br>
+            <span id='audioBitrate'>0.0</span> [kbps]<br>
+            <span id='videoBitrate'>0.0</span> [kbps]<br>
+            <br>
+            <br>
+            <span id='dlAudioBitrate'>0.0</span> [kbps]<br>
+            <span id='dlVideoBitrate'>0.0</span> [kbps]<br>
+            <span id='dlResolution'>000 x 000</span><br>
+          </p>
+        </div>
+        <div id="videoDataLabels">
+          <p>
+            <strong>Playback Data</strong><br>
+            Audio Buffer Length:<br>
+            Video Buffer Length:<br>
+            Resolution:<br>
+            Audio Bitrate:<br>
+            Video Bitrate:<br>
+            <br>
+            <strong>Download Data</strong><br>
+            Audio Bitrate:<br>
+            Video Bitrate:<br>
+            Resolution:<br>
+          </p>
+        </div>
+      </div>
+      <div id="graphWrapper">
+        <h2>Video Bitrate Graph</h2>
+        <canvas id="graph"></canvas>
+      </div>
+    </center>
+
+    <script type="text/javascript">
+      window.graphTimeSeries = new TimeSeries();
+
+      var conf = {
+        key:       "cad0499497dd98b1ec6f05395f78ba39",
+        source:    {
+          mpd: 	     "http://ouc.live-s.cdn.bitgravity.com/cdn-live/_definst_/ouc/live/feed01/manifest.mpd",
+          mobilempd: "http://bitcdn-global1.bitmovin.com/content/sintel/sintel-mobile.mpd",
+          hls:       "http://ouc.live-s.cdn.bitgravity.com/cdn-live/_definst_/ouc/live/feed01/playlist.m3u8",
+          poster:    "http://www.oucsda.org/site/1/media/ouclive2.jpg"
+        },
+        playback: {
+          autoplay:  true,
+          muted:     false
+        },
+        style: {
+          width: '600px',
+          height: '250px'
+        },
+        events: {
+          onError: function(data) { 
+          	console.error("bitdash error: " + data.code + ": " + data.message);
+          },
+          onReady: function(obj)  { 
+          	console.log(this.getVersion() + ' onReady: ', obj);
+                document.getElementById('version').innerHTML = this.getVersion();
+          	startGraph();
+          }
+        }
+      };
+
+      var player = bitdash("player").setup(conf);
+
+      setInterval(function() {
+        var downloadedVideoData = player.getDownloadedVideoData();
+        var downloadedAudioData = player.getDownloadedAudioData();
+        var playbackVideoData   = player.getPlaybackVideoData();
+        var playbackAudioData   = player.getPlaybackAudioData();
+
+        var videoBitrateKbps    = Math.round(downloadedVideoData.bitrate / 10.24) / 100;
+
+        document.getElementById('audioBuffer').innerHTML      = player.getAudioBufferLength();
+        document.getElementById('videoBuffer').innerHTML      = player.getVideoBufferLength();
+        document.getElementById('resolution').innerHTML       = playbackVideoData.width + ' x ' + playbackVideoData.height;
+        document.getElementById('audioBitrate').innerHTML     = Math.round(playbackAudioData.bitrate / 10.24) / 100;
+        document.getElementById('videoBitrate').innerHTML     = Math.round(playbackVideoData.bitrate / 10.24) / 100;
+        document.getElementById('dlAudioBitrate').innerHTML   = Math.round(downloadedAudioData.bitrate / 10.24) / 100;
+        document.getElementById('dlResolution').innerHTML     = downloadedVideoData.width + ' x ' + downloadedVideoData.height;
+        document.getElementById('dlVideoBitrate').innerHTML   = videoBitrateKbps;
+
+        window.graphTimeSeries.append(new Date().getTime(), videoBitrateKbps);
+      }, 500);
+
+      var startGraph = function() {
+        var graph = document.getElementById('graph');
+
+        graph.width  = graph.parentNode.offsetWidth;
+        if (graph.width < 300) {
+          graph.width = 300;
+        }
+        graph.height = 306;
+
+        var smoothie = new SmoothieChart({
+          interpolation : 'step',
+          labels        : {
+            precision : 0,
+            fillStyle :'#000'
+          },
+          maxValue      : 6400,
+          minValue      : 0,
+          millisPerPixel: 100,
+          grid          : {
+            millisPerLine: 10000,
+            borderVisible: false,
+            fillStyle:'transparent'
+          }
+        });
+        smoothie.streamTo(graph, 500);
+
+        smoothie.addTimeSeries(window.graphTimeSeries, {
+          strokeStyle : 'rgb(0, 0, 0)',
+          lineWidth   : 3
+        });
+      };
+    </script>
+  </body>
+</html>

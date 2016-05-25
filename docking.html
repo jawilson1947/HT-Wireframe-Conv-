@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Docking Widget</title>
+	    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdocking.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxwindow.js"></script>
+</head>
+	<body>
+     <div id="docking">
+     	<div>
+     		<div id="window1">
+     			<div>header 1</div>
+     			<div>content 1</div>
+     		</div>
+     		<div id="window2">
+     			<div>header 2</div>
+     			<div>Content 2</div>
+     		</div>
+     	</div>
+     </div>
+     <script type="text/javascript">
+     	$(document).ready(function() {
+     		$("#docking").jqxDocking({ width: 300, theme: 'classic'});
+     		$("#docking").jqxDocking({floatingWindowOpacity: 0.4 });
+     		
+     	});
+     </script>
+	</body>
+</html>

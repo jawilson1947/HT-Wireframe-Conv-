@@ -1,0 +1,172 @@
+<?php
+ //enroll.php
+ include 'ChromePhp.php';
+ChromePhp::warn('enroll.php');
+ChromePhp::log($_SERVER);
+ChromePhp::warn('Running!');
+//if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+  $username = 'root';
+  $password = 'DanaDenyse32';
+  $dbname = 'ht';
+  $host = '127.0.0.1';
+//  if(isset($_POST["info"])) {
+                  $userStub = json_decode($_POST["info"]);
+  	              $userid = (int)$userStub->id;
+  	              $email = $userStub->email;
+            try {
+              $conn = new PDO("mysql:host=$host;dbname=$dbname",$username, $password);
+    	     if(!$conn) {
+                $userStub['status'] = "failure";
+                $userStub['action'] = "Connect Error";
+                $userStub['error'] = "Unable to Connect to MYSSQL";
+                $userStub['sql'] = "";
+                ChromePhp($userStub['error']);
+                echo json_encode($userStub);	
+    	    } else {     
+    	        try {
+    	        	ChromePhp::warn('Connection is Good');
+                    $conn = new PDO("mysql:host=$host;dbname=$dbname",$username, $password);
+                    $sql = "CALL getuserid(:email,@uid)";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bindParam(':email',$email, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $stmt->closeCursor();
+                    $r = $conn->query("select @uid as uid")->fetch(PDO::FETCH_ASSOC);
+                    if($r) { 
+                     $userStub->id = $r['uid'];
+                     if( empty($userStub->id)) {
+                       ChromePhp::warn('Adding '.$userStub->firstname.' '.$userStub->lastname);
+                       insertUser($conn,$userStub);
+                          } else {
+                       ChromePhp::warn('Updating '.$userStub->firstname.' '.$userStub->lastname);
+                       updateUser($conn,$userStub);
+                          }
+                    } else {
+                  $userStub->status = "no";
+                  $userStub->action = "User Enroll Attempt";
+                  $userStub->error = "Unable to qualify userId on first look";
+                  $userStub->sql = $sql;
+                  ChromePhp::warn($userStub->error);
+                  echo json_encode($userStub);
+               }                      
+              }  catch (PDOException $pe) {
+                $userStub->status = "no";
+                $userStub->action = "Enroll - Insert";
+                $userStub->error = $pe->getMessage;
+                $userStub->sql = $sql;
+                ChromePhp::warn('Fatal Error: '.$pe->getMessage);
+                echo json_encode($userStub);
+              }     
+    	  }
+       } catch (PDOException $pe) {
+        $status['status'] = "failure";
+        $status['action'] = "Catch Error";
+        $status['error'] = $pe->getMessage;
+        $status['sql'] = $sql;
+        ChromePhp::warn($pe-getMessage);
+        echo json_encode($status);	
+      }
+//  } else {
+//     $status['status'] = "isset failure";
+//     $status['action'] = "ISSET($_POST[info]";
+//     $status['error'] = "";
+//     $status['sql'] = "";
+//     ChromePhp::warn('isset failure');
+//     echo json_encode($status);	
+//   }//isset($_POST
+//}//isset($_SERVER
+   
+function insertUser($cn,$userStub) {
+ 	$firstname = $userStub->firstname;
+ 	$lastname = $userStub->lastname;
+ 	$churchname = $userStub->churchname;
+ 	$email = $userStub->email;
+ 	$placeid = $userStub->placeid;
+ 	$userpsw = $userStub->password;
+ 	$churchadmin = $userStub->churchadmin;
+ 	$churchid = $userStub->churchid;
+ 	if(empty($churchadmin)) { 
+ 	   $churchadmin = false; 
+ 	  } else { 
+ 	   $churchadmin = true;
+ 	  }
+ 	$userid=0;
+               try {
+ 	               $sql = "CALL saveuser(:fn,:ln,:cn,:pl,:ca,:pa,:em,:ci,@uid)";
+ 	               ChromePhp::warn($sql);
+ 	               $stmt = $cn->prepare($sql);
+ 	               $stmt->bindParam(':fn',$firstname,PDO::PARAM_STR,50);
+ 	               $stmt->bindParam(':ln',$lastname,PDO::PARAM_STR,50);
+ 	               $stmt->bindParam(':cn',$churchname,PDO::PARAM_STR,50);
+ 	               $stmt->bindParam(':pl',$placeid,PDO::PARAM_STR,50);
+ 	               $stmt->bindParam(':ca',$churchadmin,PDO::PARAM_BOOL);
+ 	               $stmt->bindParam(':pa',$userpsw,PDO::PARAM_STR,50);
+ 	               $stmt->bindParam(':em',$email,PDO::PARAM_STR,80);
+ 	               $stmt->bindParam(':ci',$churchid,PDO::PARAM_INT);
+                    $stmt->execute();
+                    $stmt->closeCursor();
+                    $r = $cn->query("select @uid as uid")->fetch(PDO::FETCH_ASSOC);
+                    $userStub->id = $r['uid'];
+                    $userStub->status = 'ok';
+                    $userStub->action = 'insert';
+                    $userStub->error = '';
+                    $userStub->sql = $sql;
+                   ChromePhp::warn('Insert Successful - New ID is '.$userStub->id);
+                    echo json_encode($userStub);
+                  } catch (PDOException $e) {
+                    $userStub->status = 'no';
+                    $userStub->action = 'insert';
+                    $userStub->error = $e->getMessage;
+                    $userStub->sql = $sql;
+                    echo json_encode($userStub);
+                    ChromePhp::warn($e->getMessage);
+                      }
+ }
+ function updateUser($cn,$userStub) {
+ 	$id = $userStub->id;
+	$firstname = $userStub->firstname;
+ 	$lastname = $userStub->lastname;
+ 	$churchname = $userStub->churchname;
+ 	$email = $userStub->email;
+ 	$placeid = $userStub->placeid;;
+ 	$userpsw = $userStub->password;
+ 	$churchadmin = $userStub-churchadmin;
+ 	$churchid = $userStub->churchid;
+ 	if(empty($churchadmin)) { 
+ 	   $churchadmin = false; 
+ 	  } else { 
+ 	   $churchadmin = true;
+ 	  }
+  	              try {
+ 	               $sql = "CALL smartsaveuser(:fn,:ln,:cn,:pl,:ca,:pa,:em,:ci,:uid)";
+ 	               ChromePhp::warn($sql);
+ 	               ChromePhp::warn("UserID is: ".$id);
+ 	               $stmt = $cn->prepare($sql);
+ 	               $stmt->bindParam(':fn',$firstname,PDO::PARAM_STR,50);
+ 	               $stmt->bindParam(':ln',$lastname,PDO::PARAM_STR,50);
+ 	               $stmt->bindParam(':cn',$churchname,PDO::PARAM_STR,50);
+ 	               $stmt->bindParam(':pl',$placeid,PDO::PARAM_STR,50);
+ 	               $stmt->bindParam(':ca',$churchadmin,PDO::PARAM_BOOL);
+ 	               $stmt->bindParam(':pa',$userpsw,PDO::PARAM_STR,50);
+ 	               $stmt->bindParam(':em',$email,PDO::PARAM_STR,80);
+  	               $stmt->bindParam(':ci',$churchid,PDO::PARAM_INT);
+	               $stmt->bindParam(':uid',$id,PDO::PARAM_INT);
+ 	               $stmt->execute();
+                    $stmt->closeCursor();
+                     $userStub->status = 'ok';
+                    $userStub->action = 'update';
+                    $userStub->error = '';
+                    $userStub->sql = $sql;
+                    ChromePhp::warn('Update Successful');
+                   echo json_encode($userStub);
+              } catch (PDOException $e) {
+                   $userStub->status = 'no';
+                    $userStub->action = 'smart insert';
+                    $userStub->error = $e->getMessage;
+                    $userStub->sql = $sql;
+                    echo json_encode($userStub);
+                    ChromePhp::warn($e->getMessage);
+              }
+ 
+ }
+?>

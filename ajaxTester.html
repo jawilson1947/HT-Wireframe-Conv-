@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Ajax - Node.js Tester</title>
+       <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&signed_in=true"></script>
+        <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="js/js.cookie.js"></script>
+         <script type="text/javascript">
+    	var church= {"name":"","domain":"","street":" ","city":"","province":"","postalcode":"","country":"US","placeid":
+    	"","phone":"","website":"","vicinity":"here","address":"","source":"","status":"ok","action":"","error":"","sql":"","id":0};
+    	var userStub= {"firstname":"","lastname":"","email":"","password":"","placeid":"","churchname":"","churchadmin":"","id":0,"churchid":0,"status":"ok","action":"","error":"","sql":"","objectid":""};
+       var ChurchEvents;
+       var ChurchRatings;
+       </script>
+       
+   	</head>
+	<body>
+    <div id="data">
+	     <form id="churchform" name="cform">
+     	<input type="hidden" name="churchid" id="churchid" />
+     	<input type= "hidden" name="domain" id = "domain" />
+     	<input type= "hidden" name = "PlaceID" id = "GoogleMap" />
+     	<input type= "hidden" name = "address" id = "address" />
+     	<input type= "hidden" name = "city" id = "city" />
+     	<input type= "hidden" name = "province" id = "province" />
+     	<input type= "hidden" name = "postalcode" id = "postalcode" />
+     	<input type= "hidden" name = "phone" id = "phone" />
+     	<input type= "hidden" name = "website" id="website" />
+     	<input type= "hidden" name = "country" id="country" />
+     	<input type= "hidden" name = "ChurchName" id = "ChurchName" />
+     </form>
+</div>
+<div id="warnings">
+</div>
+ <script type="text/javascript">
+     var online = Cookies.get('peaches');
+      var userStub = $.parseJSON(online);
+      if(typeof(online) == 'undefined') {
+      	alert('userStub not initialized');
+      	
+       }else {
+        $.ajax({
+     crossdomain: true,      
+        type: 'put',
+         url: 'http://192.168.0.45:8080/members/saverating/'+ JSON.stringify(userStub)}).success(function(data) {
+                   if(!isEmpty(data)) {
+                      ChurchEvents = data;
+                  	}
+                 });
+       }
+ function isEmpty(str) {
+  return typeof str == 'string' && !str.trim() || typeof str == 'undefined' || str === null;
+}
+  function BuildRatingProfile(data) {
+  	console.log(data);
+  }
+   </script>     
+	</body>
+</html>

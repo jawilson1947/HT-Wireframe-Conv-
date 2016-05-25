@@ -1,0 +1,157 @@
+<html lang="en">
+<head>
+    <title id="Description">GRID3.HTML</title>
+    <meta name="description" content="This sample demonstrates how we can bind jQWidgets TreeGrid widget to JSON Data by using jQWidgets DataAdapter plugin.">
+    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.base.css" type="text/css" />
+     <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.summer.css" type="text/css" />
+    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.office.css" type="text/css" />
+    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.orange.css" type="text/css" />
+    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.energyblue.css" type="text/css" />
+    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.arctic.css" type="text/css" />
+    <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdatatable.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxtreegrid.js"></script>
+ 
+     <script type="text/javascript" src="jq/jqwidgets/jqxlistbox.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxdropdownlist.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxtooltip.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxinput.js"></script> 
+ 
+    <script type="text/javascript" src="jq/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.edit.js"></script>  
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.selection.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxnumberinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="jq/scripts/demos.js"></script>
+    
+   <script type="text/javascript" src="js/js.cookie.js"></script>
+     <script type="text/javascript" src="jq/jqwidgets/jqxwindow.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxtooltip.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxtabs.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdocking.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxpanel.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxsplitter.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="js/js.cookie.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxexpander.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxvalidator.js"></script>
+     <script type="text/javascript" src="jq/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jq/scripts/json2.js"></script> 
+    <script type="text/javascript" src="jq/scripts/knockout-3.0.0.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxknockout.js"></script>
+    <script type="text/javascript" src= "jq/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdockpanel.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxangular.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdropdownbutton.js"></script>
+     <script type="text/javascript" src="jq/jqwidgets/jqxeditor.js"></script>
+     <script type="text/javascript" src="jq/jqwidgets/jqxdatatable.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxtreegrid.js"></script>   
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.columnsresize.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxdata.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxcombobox.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxnotification.js"></script>
+
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.sort.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.pager.js"></script> 
+    <script type="text/javascript" src="js/htlib.js"></script>
+ 
+
+<script type="text/javascript">
+        var genericdb = {"sql":"","presql":"","postsql":"","status":"","action":"lookup","error":"","source":"events.html"};
+        var RatingIndex = {"eventid":0,"eventname":"","churchname":"","churchid":0,"commentid":0,"ratingstack":"","eventdate":"","userid":0,"mode":"","status":"","error":"","sql":"","title":""};
+        var Question = {"eventdate":"","daterated":"","score":0,"ratingid":0,"categoryid":0,"category":"","eventid":0,"churchid":0,"userid":0,"rank":0,"VisitorOnly":false,"MemberOnly":false,"status":"","action":"","sql":"","mode":"","error":""};
+</script>
+ </head>
+<body class='default' id='user'>
+ <script type="text/javascript">
+        $(document).ready(function () {
+        $('#mainSplitter').jqxSplitter({ width: 850, height: 480, panels: [{ size: 300 }] });
+        var online = Cookies.get('peaches');
+            if(typeof(online) !="undefined") {
+               userStub = $.parseJSON(online);                
+               person = userStub.firstname + ' ' + userStub.lastname;
+               $.ajax({
+               type: 'post',
+               data: { "info" : JSON.stringify(userStub) },
+               url: 'getuserindex.php',
+                dataType: 'json',
+                cache: false,
+                async: false,
+          success: function(data) {
+             var source =
+            {
+                dataType: "json",
+                dataFields: [
+                    { name: 'churchname', type: 'string' },
+                    { name: 'EventName', type: 'string' },
+                    { name: 'ChurchID', type: 'number' },
+                    { name: 'EventID', type: 'number' },
+                    { name: 'CommentID', type: 'number' },
+                    { name: 'RatingStack', type: 'string' },
+                    { name: 'Score', type: 'number' },
+                    { name: 'id', type: 'number' },
+                    { name: 'eventdate', type: 'date' }
+                ],
+                hierarchy:
+                {
+                    root: 'children'
+                },
+                id: 'ChurchID',
+                localData: data
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            // create Tree Grid
+            $("#summaries").jqxTreeGrid(
+            {
+                width: 800,
+                source: dataAdapter,
+                sortable: true,
+                theme: 'arctic',
+                ready: function () {
+                    $("#summaries").jqxTreeGrid('expandRow', '2');
+                },
+                columns: [
+                  { text: 'Church Name', dataField: 'churchname', width: 200 },
+                  { text: 'Event Name', dataField: 'EventName', width: 120 },
+                  { text: 'Event Date', dataField: 'eventdate', cellsFormat: 'd', width: 120 },
+                  { text: 'Score', dataField: 'Score', width: 120 }
+                ]
+            });
+           },
+       error: function(data) {
+       console.log(data.error);              
+           }
+       });
+    } else {
+     alert('Cookie has expired. Unable to continue');	
+    }
+   });
+</script>
+<body class="default">
+        <div id="mainSplitter">
+            <div id = "summaries" class="splitter-panel">
+                Rating Summaries</div>
+            <div id="questions" class="splitter-panel">
+                Questions</div>
+        </div>
+    </div>
+<script type="text/javascript">
+ </script>	
+<div id="#warnings">
+ </div>
+ </body>
+</html>

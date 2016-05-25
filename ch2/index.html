@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>GetScript example</title>
+	</head>
+	<body>
+	 <p id="container">
+	 This text will be replaced with new text
+	 </p>
+	 <input type="button" class="loader" value="Load Script" />
+	 <input type="button" class="bold" value="Bold" />
+	 <input type="button" class="color" value="Change color" />
+	 <input type="button" class="change" value="Change text" />
+     <script type="text/javascript" src="jquery.js"></script>
+     <script type="text/javascript" src="jquery-migrate.js"></script>  
+     <script type="text/javascript">
+     	$(document).ready(function()
+     	 {
+     	   $('input:button:first').click(function(aaa)
+     	    {
+            $.ajax (
+             {
+             	url: 'new.js',
+             	dataType: 'script',
+             	success: function()
+             	 {
+             	 	alert('Go for it!');
+             	 	addEvents();
+             	 },
+             	error: function()
+             	{
+             		alert('Oops!');
+             	}
+             }
+            );// $.ajax
+//     	     $.getScript('new.js',function()
+//     	      {
+//     	      	alert('Script Loaded');
+//     	      	addEvents();
+//     	      }
+//     	     );//$.getScript('new.js'	
+     	    }
+     	   );//$('input:button:first').click
+     	 }
+     	 );//$(document).ready
+     	 
+     </script>
+	</body>
+</html>

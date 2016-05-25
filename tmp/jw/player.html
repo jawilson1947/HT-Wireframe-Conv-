@@ -1,0 +1,53 @@
+<!doctype html>
+
+<html>
+
+ <head>
+  <meta charset="utf-8">
+  <title>JW Player Live</title>
+  <script type="text/javascript" src="jwplayer.js"></script>
+  <script src="http://jwpsrv.com/library/mykey.js"></script>
+  <script type="text/javascript">jwplayer.key="r7k2hvg4Fllv75/Av04VI4UFqKIjV6zyGzzZ6A==";</script> 
+  </head>
+  <body>
+<div id="player">Loading the player...</div>
+<script type="text/javascript">
+    jwplayer("player").setup({
+   	sources: [{
+            file: "rtmp://[192.168.1.6:1935/live/myStream"
+        },]
+    });
+
+    	jwplayer("player").onError ( function(event) {
+			setTimeout(function()
+			{
+				jwplayer("player").play(true);
+			},2000);
+		}
+	);
+
+</script>   <div id="myElement">Loading the player...</div>
+<!-- 
+<div id='mediaplayer'></div>
+
+  <script type="text/javascript">
+  jwplayer('mediaplayer').setup({
+  'id': 'playerID',
+  'width': '640',
+  'height': '480',
+  'provider': 'rtmp',
+  'streamer': 'rtmp://192.168.3.137:1935/live',
+  'file': 'myStream',
+  'modes': [
+  {type: 'flash', src: 'player.flash.swf'},
+{type: 'html5', config:
+{
+'file': "http://192.168.3.137:1935/live/myStream/playlist.m3u8",
+provider: 'video'
+}
+}
+]
+});
+</script>-->
+ </body>
+</html>

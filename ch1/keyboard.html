@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Keyboard Shortcuts</title>
+		<script type="text/javascript" src="http://localhost/js/jquery.js"></script>
+        <script type="text/javascript" src="http://localhost/js/jquery-migrate.js"></script>
+	  <style type="text/css">
+	  	div
+	  	 {border: 1px solid navy; float:left; height:200px;
+	  	 margin:10px; width:220px;}
+	  </style>
+	</head>
+	<body>
+	 <script type="text/javascript">
+	 	$(document).ready(function()
+	 	 {
+//--
+	      var altPressed = false;
+	      $(document).keydown(function(event)
+	       {
+	       	if(event.which == 18)
+	       	 altpressed = true;
+	       	if(altpressed)
+	       	 {
+	           switch(event.which)
+	            {
+	             case 83://'S'
+	              $('div:first').slideToggle('slow');
+	               return false;
+	               break;
+	             case 71://'G'
+	              $('div:last').slideToggle('slow');
+	              return false;
+	              break;  
+	             case 66://'B'
+	              $('div').slideToggle('slow');
+	              return false;
+	              break; 	
+	            }//end switch
+	       	 }//if altpressed
+          
+           }//end
+	      );//$(document).keydown
+	     $(document).keyup(function(event)
+	      {
+	       if(event.which == 18) //Alt key 
+	        altpressed = false;
+	      }
+	     ); 
+//---	 	
+	 	});//$(document).ready(
+	 </script>
+       <div>
+       	You can toggle this div using Alt-S
+       </div>
+       <div>
+       	You can toggle this div using Alt+G
+       </div>
+       <p style="clear:both;">&nbsp;</p>
+       <p>Press Alt+B to toggle both divs</p>
+	</body>
+</html>

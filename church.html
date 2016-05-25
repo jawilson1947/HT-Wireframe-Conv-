@@ -1,0 +1,1040 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Church Data Sync</title>
+    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.base.css" type="text/css" />
+ <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.summer.css" type="text/css" />
+<link rel="stylesheet" href="jq/jqwidgets/styles/jqx.office.css" type="text/css" />
+<link rel="stylesheet" href="jq/jqwidgets/styles/jqx.orange.css" type="text/css" />
+<link rel="stylesheet" href="jq/jqwidgets/styles/jqx.energyblue.css" type="text/css" />
+<link rel="stylesheet" href="jq/jqwidgets/styles/jqx.arctic.css" type="text/css" />
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&signed_in=true"></script>
+    <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jq/scripts/demos.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxwindow.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxtooltip.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxtabs.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdocking.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxpanel.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxsplitter.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxpasswordinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="js/js.cookie.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxexpander.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxvalidator.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jq/scripts/json2.js"></script> 
+    <script type="text/javascript" src="jq/scripts/knockout-3.0.0.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxknockout.js"></script>
+    <script type="text/javascript" src= "jq/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdockpanel.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxangular.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdropdownbutton.js"></script>
+     <script type="text/javascript" src="jq/jqwidgets/jqxeditor.js"></script>
+    <script type="text/javascript" src="js/htlib.js"></script>
+ 
+    <script type="text/javascript" src="jq/jqwidgets/jqxdatatable.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxtreegrid.js"></script>   
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.selection.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.columnsresize.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxdata.js"></script> 
+ 
+
+
+
+<script type="text/javascript">
+    	var ChurchData = new Array("","","","","");
+    	var place;
+    	var map;
+    	var marker;
+    	var htChurchData = new Array("","","","","");
+    	var geocoder;
+    	var infowindow;
+    	var autocomplete;
+    	var church;
+    	var htchurch;
+    	var searchBox;
+     	church = {"name":"","domain":"","street":" ","city":"","province":"","postalcode":"","country":"US","placeid":
+    	"","phone":"","website":"","vicinity":"here","address":"","source":"","status":"ok","action":"","error":"","sql":"","id":0};
+    	htchurch = {"name":"","domain":"","street":" ","city":"","province":"","postalcode":"","country":"US","placeid":
+    	"","phone":"","website":"","vicinity":"here","address":"","source":"","status":"ok","action":"","error":"","sql":"","id":0};
+         var genericdb = {"sql":"","presql":"","postsql":"","status":"","action":"lookup","error":"","source":"events.html"};
+ 
+</script>    
+ <script type="text/javascript">
+
+function initialize() {
+  var mapOptions = {
+ //   center: {lat: -33.8688, lng: 151.2195},
+    zoom: 13
+  };
+  map = new google.maps.Map(document.getElementById('church-map'), mapOptions);
+  var input = (document.getElementById('pac-input'));
+  autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  infowindow = new google.maps.InfoWindow();
+  marker = new google.maps.Marker({
+    map: map
+  });
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map, marker);
+  });
+
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    infowindow.close();
+    place = autocomplete.getPlace();
+    if (!place.geometry) {
+      return;
+    }
+ // Set the position of the marker using the place ID and location
+    marker.setPlace(/** @type {!google.maps.Place} */ ({
+      placeId: place.place_id,
+      location: place.geometry.location
+    }));
+    marker.setVisible(false);
+// stuff place data in JSON object
+ if (($.inArray('church',place.types) != -1) || ($.inArray('place_of_worship',place.types) != -1)) {
+ 	clearVars();
+    church.name = place.name;
+    $('#ht-input').val(church.name);
+     church.placeid = place.place_id;
+    $('#ht-placeid-input').val( church.placeid);
+     church.address = place.formatted_address;
+    ChurchData = church.address.split(",");
+    ChurchData.length = 5;
+    church.country = ChurchData[3];
+    church.street = ChurchData[0];
+    church.city = ChurchData[1]
+    church.province = $.trim(ChurchData[2]);
+       zippy = church.province.split(" ");
+       if(zippy.length > 1) {
+       	 church.province = zippy[0];
+       	 ChurchData[2] = church.province;
+       	 church.postalcode = zippy[1];
+       	 ChurchData[4] = church.postalcode;
+       }
+//  //    
+    if (place.website != null) {
+      church.website = $.trim(place.website);
+    } else {
+      church.website = '';
+    }
+//
+   if (place.formatted_phone_number != null) {
+      church.phone = $.trim(place.formatted_phone_number);
+    } else {
+      church.phone = '';
+    }
+
+       var url = $.trim(church.website);
+    if(url != '' ) {
+     var domain = url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
+      church.domain = domain.replace('http://','').replace('https://','').split(/[/?#]/)[0];
+      $('#ht-domain-input').val(domain);
+      } else {
+      $('#ht-domain-input').val('');	
+      }
+          infowindow.setContent('<div><strong>' + church.name + '</strong><br>' +
+         'Address: ' + church.address + '<br>' + 
+          'Phone: ' + church.phone+ '<br> Website: ' + church.website + '<br>'+ 'Place ID: ' + church.placeid +'</div>');
+    
+    infowindow.open(map, marker);
+    showmap(place);
+    createGoogleForm();
+    clearHTVars();
+    createHTForm();
+ 
+/*
+      if(isEmpty(domain) ==false) {
+    
+           $.ajax({
+            url: 'getgooglechurch.php',
+           type: 'post',
+           data: {"info" : JSON.stringify(church)},
+           dataType: 'json',
+          success: function(data) {
+             if(data.status == 'ok') {
+             church.id = data.id;	
+             stuff = '<small><b>'+church.name+'</b><br>' + ChurchData[0] + '<br>'+ChurchData[1] + ',&nbsp;' + ChurchData[2]+'<br>'+ church.phone+'</small>';
+             $('#pac-input').val(church.name); 
+             createGoogleForm();
+             }else{
+             alert('Problem reconciling '+ church.name+' in HT database. Error: '+ data.error);	
+             }
+        },
+          error: function(data) {
+          	alert('Error in Church Stub: ' + data.error);
+          }
+        });
+      } else {
+  	  alert('Google Maps does not have a domain name for '+ church.name);
+      } */
+     } else {
+      alert(place.name + ' is not a valid church');
+      $('#pac-input').val('');
+     }
+    });
+   }
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+ </script>
+ <script type="text/javascript">
+     function showmap()
+      {
+        if (place.geometry.viewport) 
+         {
+          map.fitBounds(place.geometry.viewport);
+         } 
+        else
+         {
+      map.setCenter(place.geometry.location);
+      map.setZoom(12);
+          }
+    // Set the position of the marker using the place ID and location
+        marker.setPlace(/** @type {!google.maps.Place} */ ({
+         placeId: place.place_id,
+      location: place.geometry.location
+    }));
+    marker.setVisible(true);
+     }
+    </script>
+     <style>
+     	#church-map{
+     	 height:400px;
+     	 width: 400px;
+     	 border: solid 1px red;	
+     	 float: left;
+     	 padding: 4px; 
+     	 margin: 5px;   		
+     	}
+     	#church-data {
+     	  height:400;
+     	  width:400;
+     	  border: solid 1px blue;
+     	  float: left;	
+     	}
+     	#church-data{
+     	font-family: arial;
+     	font-size: 10pt;
+     	text-align: right;	
+     	}
+       .churchPrompt {
+         	color:maroon;
+         	font-size:10pt;
+         	font-family:arial narrow;
+         	text-align:right;
+         	font-style: italic;
+         	padding-right: 3px;
+         }
+         .appm
+         {
+         	color:white;
+         	font-family: verdana;
+            font-style: bold;
+            text-align: center;
+            background-color: maroon;
+            margin-left:10px;
+            margin-right: 10px;
+            margin-bottom: 12px; 
+            position: relative;
+         }
+         #warnings{
+          border:1px solid red;
+          text-align:center;
+          width: '100%';	
+         }
+      </style>
+	</head>
+	<body>
+	 <div id="toolbar">
+       <div id='jqxMenu' style='visibility: hidden; margin-left: 5px;'>
+                <ul>
+                    <li><a href="http://localhost">Home</a></li>
+                    <li>Solutions
+                        <ul style='width: 250px;'>
+                            <li><a href="#Education">Education</a></li>
+                            <li><a href="#Financial">Financial services</a></li>
+                            <li><a href="#Government">Government</a></li>
+                            <li><a href="#Manufacturing">Manufacturing</a></li>
+                            <li type='separator'></li>
+                            <li>Software Solutions
+                                <ul style='width: 220px;'>
+                                    <li><a href="#ConsumerPhoto">Consumer photo and video</a></li>
+                                    <li><a href="#Mobile">Mobile</a></li>
+                                    <li><a href="#RIA">Rich Internet applications</a></li>
+                                    <li><a href="#TechnicalCommunication">Technical communication</a></li>
+                                    <li><a href="#Training">Training and eLearning</a></li>
+                                    <li><a href="#WebConferencing">Web conferencing</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">All industries and solutions</a></li>
+                        </ul>
+                    </li>
+                    <li>Products
+                        <ul>
+                            <li><a href="#PCProducts">PC products</a></li>
+                            <li><a href="#MobileProducts">Mobile products</a></li>
+                            <li><a href="#AllProducts">All products</a></li>
+                        </ul>
+                    </li>
+                    <li>Support
+                        <ul style='width: 200px;'>
+                            <li><a href="#SupportHome">Support home</a></li>
+                            <li><a href="#CustomerService">Customer Service</a></li>
+                            <li><a href="#KB">Knowledge base</a></li>
+                            <li><a href="#Books">Books</a></li>
+                            <li><a href="#Training">Training and certification</a></li>
+                            <li><a href="#SupportPrograms">Support programs</a></li>
+                            <li><a href="#Forums">Forums</a></li>
+                            <li><a href="#Documentation">Documentation</a></li>
+                            <li><a href="#Updates">Updates</a></li>
+                        </ul>
+                    </li>
+                    <li>Communities
+                        <ul style='width: 200px;'>
+                            <li><a href="#Designers">Designers</a></li>
+                            <li><a href="#Developers">Developers</a></li>
+                            <li><a href="#Educators">Educators and students</a></li>
+                            <li><a href="#Partners">Partners</a></li>
+                            <li type='separator'></li>
+                            <li>By resource
+                                <ul>
+                                    <li><a href="#Labs">Labs</a></li>
+                                    <li><a href="#TV">TV</a></li>
+                                    <li><a href="#Forums">Forums</a></li>
+                                    <li><a href="#Exchange">Exchange</a></li>
+                                    <li><a href="#Blogs">Blogs</a></li>
+                                    <li><a href="#Experience Design">Experience Design</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>Company
+                        <ul style='width: 180px;'>
+                            <li><a href="#About">About Us</a></li>
+                            <li><a href="#Press">Press</a></li>
+                            <li><a href="#Investor">Investor Relations</a></li>
+                            <li><a href="#CorporateAffairs">Corporate Affairs</a></li>
+                            <li><a href="#Careers">Careers</a></li>
+                            <li><a href="#Showcase">Showcase</a></li>
+                            <li><a href="#Events">Events</a></li>
+                            <li><a href="#ContactUs">Contact Us</a></li>
+                            <li><a href="#Become an affiliate">Become an affiliate</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+   <!--                     <div style='margin-left: 60px;  margin-top: 120px;'>
+                <div style='font-size: 16px; font-family: Verdana Arial;'>
+                    Settings
+                </div>
+                <div style='margin-top: 20px; font-size: 14px; font-family: Verdana Arial; float: left;'>
+                    <div id='animation' checked='checked'>Enable Animation</div>
+                    <div style='margin-top: 20px;' id='disabled'>Disabled</div>
+                </div>
+                <div style='margin-top: 20px; margin-left: 60px; font-size: 14px; font-family: Verdana Arial; float: left;'>
+                    <div id='hover' checked='checked'>Enable Hover</div>
+                    <div style='margin-top: 20px;' id='open' checked='checked'>Auto Open</div>
+                </div>
+                  <div style='margin-top: 20px; margin-left: 60px; font-size: 14px; font-family: Verdana Arial; float: left;'>
+                    <div id='topLevelArrows'>Show Top-Level Arrows</div>
+                </div>
+            </div>
+   -->
+	 </div><br>
+      <div id="master">
+      	<div id="googlemap">
+      	<div>
+       		<input id="pac-input" type="text" size="50" placeholder="Google Search">
+      	</div>
+      		<div id="church-map"></div>
+      		<table>
+      			<tr>
+      				<td  style="vertical-align:top"><div id="google-church-data" style="vertical-align:top"></div>
+                     </td>
+      				<td  style="vertical-align:top"><div id="ht-church-data" style="vertical-align:top">
+      					
+      				</div></td>
+      			</tr>
+      		</table>
+      	</div>
+      	<div id="htdata">
+      	<table>
+      		<tr>
+      			<td><input id="ht-input" type="text" size="50" placeholder = "Enter Church Name"></td>
+      			<td><div id="ht-churchid" style="border:1px solid red;text-align:center"</div></td>
+      			<td><div id="ht-name-search"><input type="button" value="Search by Name" /></div></td>
+      		</tr>
+      		<tr>
+      			<td><input id="ht-domain-input" type="text" size="50" placeholder = "Enter Church Domain"></td>
+      			<td><div id="ht-dvc" style="border:1px solid blue;text-align:center;width:40px"></div></td>
+     			<td><div id="ht-domain-search"><input type="button" value="Search by Domain" /></div></td>
+       		</tr>
+      		<tr>
+      			<td><input id="ht-placeid-input" type="text" size="50" placeholder = "Google Map PlaceID"></td>
+      			<td><div id="ht-drc" style="border:solid 1px green;text-align:center;width:40px"></div></td> 
+      			<td><div id="ht-placeid-search"><input type="button" value="Search by PlaceID" /></div></td>
+       		</tr>
+       		<tr>
+       			<td><input type="button" id="btn-getevents" value="Get Events" <input type="button" onclick="location.href='events.html'"/></td>
+       		</tr>
+      	</table>
+      	<div id="jqxgrid" style="border: solid 2px navy;padding:1px">    			
+   		</div>	
+       </div>
+      <div id="events">
+      	
+      </div>
+      <div id="categories">
+      	
+      </div>
+      <div id="datadump">
+      	
+      </div>
+      <div id="footer">
+          <a href="https://icons8.com" style="color:white">Icon pack by Icons8</a>     	
+      </div>
+      <div id="warnings">
+      	
+      </div>
+<script type="text/javascript">
+$(document).ready(function() {
+ $('#ht-name-search').click(function(){
+  if(isEmpty($('#ht-input').val()) == false) {
+   htchurch.name = $('#ht-input').val();
+   buildGrid();
+  } else {
+    alert('Gotta have some data to work with!');
+    $('#ht-input').focus();	
+  }  
+ });
+ 
+  $('#ht-domain-search').click(function(){
+  if(isEmpty($('#ht-domain-input').val()) == false) {
+   domain = $('#ht-domain-input').val();
+    GenericSearch('domain');
+  } else {
+    alert('Please enter a domain name');
+    $('#ht-domain-input').focus();	
+  }  
+ });
+ 
+  $('#ht-placeid-search').click(function(){
+  if(isEmpty($('#ht-placeid-input').val()) == false) {
+   placeid = $('#ht-input').val();
+   GenericSearch('placeid');
+  } else {
+    alert('Need a valid PlaceID');
+    $('#ht-input').focus();	
+  }  
+ });
+ 
+ $('#btn-getevents').click(function(){
+   
+  });
+  
+ 
+ 
+ 
+  // setup google map api search
+ map = new google.maps.Map(document.getElementById('church-map'), {
+ zoom: 13,
+ mapTypeId: google.maps.MapTypeId.ROADMAP
+  }); 
+  var input = document.getElementById('ht-input');
+  var searchBox = new google.maps.places.SearchBox(input);
+   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+   var markers = [];
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener('places_changed', function() {
+ var places = searchBox.getPlaces();
+
+ if (places.length == 0) {
+     return;
+  }
+
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+//    markers = [];
+ // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+    };
+
+      // Create a marker for each place.
+      markers.push(new google.maps.Marker({
+        map: map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+      }));
+ /*       if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+ 
+    map.fitBounds(bounds);
+    */
+     if (($.inArray('church',place.types) != -1) || ($.inArray('place_of_worship',place.types) != -1)) {
+ 	   clearVars();
+      church.name = place.name;
+      $("#ht-placeid-input").val(place.place_id);
+      var url = $.trim(place.website);
+      church.website = url;
+       if(url != '' ) {
+        var domain = url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0];
+        church.domain = domain.replace('http://','').replace('https://','').split(/[/?#]/)[0];
+        $('#ht-domain-input').val(domain);
+          } else {
+         $('#ht-domain-input').val('');	
+        }
+    $('#ht-input').val(church.name);
+     church.placeid = place.place_id;
+    $('#ht-placeid-input').val( church.placeid);
+     church.address = place.formatted_address;
+    ChurchData = church.address.split(",");
+    ChurchData.length = 5;
+    church.country = ChurchData[3];
+    church.street = ChurchData[0];
+    church.city = ChurchData[1]
+    church.province = $.trim(ChurchData[2]);
+       zippy = church.province.split(" ");
+       if(zippy.length > 1) {
+       	 church.province = zippy[0];
+       	 ChurchData[2] = church.province;
+       	 church.postalcode = zippy[1];
+       	 ChurchData[4] = church.postalcode;
+       }
+//  //    
+    if (place.website != null) {
+      church.website = $.trim(place.website);
+    } else {
+      church.website = '';
+    }
+//
+   if (place.formatted_phone_number != null) {
+      church.phone = $.trim(place.formatted_phone_number);
+    } else {
+      church.phone = '';
+    }
+        infowindow.setContent('<div><strong>' + church.name + '</strong><br>' +
+         'Address: ' + church.address + '<br>' + 
+          'Phone: ' + church.phone+ '<br> Website: ' + church.website + '<br>'+ 'Place ID: ' + church.placeid +'</div>');
+    
+    infowindow.open(map, marker);
+    showmap(place);
+    createGoogleForm();
+     clearHTVars();
+     createHTForm();
+   } else {
+      alert(church.name + ' is not a valid church');	
+   }
+  });
+});
+      		    
+      		    
+      		    
+                // Create a jqxMenu
+                $("#jqxMenu").jqxMenu({ width: '670', height: '30px'});
+                $("#jqxMenu").css('visibility', 'visible');
+//                $("#disabled").jqxCheckBox({  width: '150px', height: '20px' });
+ //               $("#open").jqxCheckBox({  width: '150px', height: '20px' });
+ //               $("#hover").jqxCheckBox({  width: '150px', height: '20px' });
+ //               $("#topLevelArrows").jqxCheckBox({  width: '200px', height: '20px' });
+ //               $("#animation").jqxCheckBox({  width: '150px', height: '20px' });
+
+                $("#animation").on('change', function (event) {
+                    var value = event.args.checked;
+                    // enable or disable the menu's animation.
+                    if (!value) {
+                        $("#jqxMenu").jqxMenu({ animationShowDuration: 0, animationHideDuration: 0, animationShowDelay: 0 });
+                    }
+                    else {
+                        $("#jqxMenu").jqxMenu({ animationShowDuration: 300, animationHideDuration: 200, animationShowDelay: 200 });
+                    }
+                });
+
+                $("#disabled").on('change', function (event) {
+                    var value = event.args.checked;
+                    // enable or disable the menu
+                    if (!value) {
+                        $("#jqxMenu").jqxMenu({ disabled: false });
+                    }
+                    else {
+                        $("#jqxMenu").jqxMenu({ disabled: true });
+                    }
+                });
+
+                $("#hover").on('change', function (event) {
+                    var value = event.args.checked;
+                    // enable or disable the menu's hover effect.
+                    if (!value) {
+                        $("#jqxMenu").jqxMenu({ enableHover: false });
+                    }
+                    else {
+                        $("#jqxMenu").jqxMenu({ enableHover: true });
+                    }
+                });
+
+                $("#open").on('change', function (event) {
+                    var value = event.args.checked;
+                    // enable or disable the opening of the top level menu items when the user hovers them.
+                    if (!value) {
+                        $("#jqxMenu").jqxMenu({ autoOpen: false });
+                    }
+                    else {
+                        $("#jqxMenu").jqxMenu({ autoOpen: true });
+                    }
+                });
+                $("#topLevelArrows").on('change', function (event) {
+                    var value = event.args.checked;
+                    // enable or disable the opening of the top level menu items when the user hovers them.
+                    if (!value) {
+                        $("#jqxMenu").jqxMenu({ showTopLevelArrows: false });
+                    }
+                    else {
+                        $("#jqxMenu").jqxMenu({ showTopLevelArrows: true });
+                    }
+                });
+        		
+      	});
+      </script>
+         <script type="text/javascript">
+    	function createGoogleForm()
+    	{
+    $('#google-church-data').html('&nbsp;');
+    $("#google-church-data").append('<table id="ctable">');
+    $("#google-church-data").append('<form action="javascript:copyGoogleForm();" method="POST" id="googleform">');
+   $("#google-church-data form").append('<div class="appm">Google Church Data</div>');
+   $("#google-church-data form").append('<input type="hidden"  name="domain"  id="g-domain" value="" />');
+   $("#church-data form").append('<input type="hidden" name="placeid" id="g-placeid" value="" />');
+    $("#google-church-data form").append('<tr><td class="churchPrompt">Name:</td><td><input type="text" placeholder="Church Name" name="churchname" id="g-churchname" value="' + church.name + '"/></td></tr>');
+    $("#google-church-data form").append('</td></tr><tr><td class="churchPrompt">Address:</td><td><input type="text" placeholder="Street Address:" name="address" id="g-address" value="' + ChurchData[0] + '"/></td></tr>');
+   $("#google-church-data form").append('</td></tr><tr><td class="churchPrompt">City/Town:</td><td><input type="text" placeholder="City|Town:" name="city" id="g-city" value="' + ChurchData[1] +'"/></td></tr>');
+   $("#google-church-data form").append('</td></tr><tr><td class="churchPrompt">State/Province:</td><td><input type="text" placeholder="State|Province:" name="province" id="g-province" value="' + ChurchData[2] + '"/></td></tr>');
+   $("#google-church-data form").append('</td></tr><tr><td class="churchPrompt">Mail Code:</td><td><input type="text" placeholder="Postal|Mail|Zip Code:" name="postalcode" id="g-postalcode" value="' + ChurchData[4] + '"/></td></tr>');
+   $("#google-church-data form").append('</td></tr><tr><td class="churchPrompt">Country:</td><td><input type="text" placeholder="Country" name="country" id="g-country" value="' + ChurchData[3] +'"/></td></tr>');
+   $("#google-church-data form").append('</td></tr><tr><td class="churchPrompt">Telephone:</td><td><input type="text" placeholder="Telephone Number:" name="g-phone" id="g-phone" value="' + church.phone + '"/></td></tr>');
+   $("#google-church-data form").append('</td></tr><tr><td class="churchPrompt"><a href="'+ church.website + '" target="_blank">Website</a></td><td><input type="text" placeholder="Domain Name | Website" name="website" id="g-website" value="' + church.website + '"/></td></tr>');
+  $("#google-church-data form").append('<tr><td class="churchPrompt">Google Place ID:</td><td style="color:white;background-color:maroon;font-size:8pt;">' + $.trim(church.placeid) + '</td></tr>');
+   $("#google-church-data form").append('</td></tr><tr><td class="churchPrompt">Domain Name:</td><td><input type="text" placeholder="Domain Name | Website" name="domain" id="g-domain" value="' + church.domain + '"/></td></tr>');
+    $("#google-church-data form").append('<tr><td class="churchPrompt">&nbsp;</td><td><div style="padding-top:8px;"><input type="submit" id="savebutton" value="Copy Data ->" /></div></td></tr>'); 	
+   $("#google-church-data form").append('</form>'); 
+   $("#google-church-data").append('</table>');
+   $('#google-church-data').css({"background-color": "#E8E5DF", "padding-top": "12px"});
+   $('#churchname').focus();
+    	}
+    	
+    	function copyGoogleForm(){
+    		var ok = true;
+    		if(htchurch.id > 0 ) {
+    		  if(confirm('Data exists in target form, Overwrite?') == false ) {
+    		  ok = false;	
+    		  }
+    		}
+    	   if(ok == false) {
+    	   	$('#warnings').html('<b>Copy Aborted</b>');
+    	   } else {
+//          htchurch.domain = church.domain;
+//          htchurch.address = $('#g-address').val();
+//          htchurch.city = $('#g-city').val();	
+//          htchurch.province = $('#g-province').val();
+//          htchurch.postalcode = $('#g-postalcode').val();
+//          htchurch.country = $('#g-country').val();
+//          htchurch.phone = $('#g-phone').val();
+ //         htchurch.website = $('#g-website').val();
+          htchurch.placeid = church.placeid;
+//          for(i=0;i<ChurchData.length;i++){
+//           htChurchData[i] = $.trim(ChurchData[i]);
+//          }
+//      	  $('#ht-churchname').val($.trim($('#g-churchname').val()));
+ //     	  $('#ht-address').val($.trim($('#g-address').val()));
+//      	  $('#ht-city').val($.trim($('#g-city').val()));
+//      	  $('#ht-province').val($.trim($('#g-province').val()));
+//      	  $('#ht-postalcode').val($.trim($('#g-postalcode').val()));
+//      	  $('#ht-country').val($.trim($('#g-country').val()));
+//      	  $('#ht-phone').val($.trim($('#g-phone').val()));
+//      	  $('#ht-website').val($.trim($('#g-website').val()));
+      	      $('#ht-placeid').val(htchurch.placeid);
+//      	  $('#ht-domain').val(htchurch.domain);	
+//      	  $('#ht-dvc').html('&nbsp;');
+//      	  $('#ht-drc').html('&nbsp;');
+//      	  $('#ht-placeid').val(church.placeid);
+        	  $('#ht-churchname').focus();
+      }
+   	}
+
+   function clearVars() {
+       church.id = 0;
+       church.name = "";
+       church.domain = "";
+       church.street = "";
+       church.city = "";
+       church.province = "";
+       church.postalcode = "";
+       htchurch.country = "";
+       church.placeid = "";
+       church.phone = "";
+       church.website = "";
+       church.website = "";
+       $(ChurchData).each(function() {
+       	$(this).val("");
+       });
+     }
+function geocodePlaceId(placeId) {
+   var map = new google.maps.Map(document.getElementById('church-map'), {
+    zoom: 8,
+  });
+  var ok = true;
+  var geocoder = new google.maps.Geocoder;
+  var infowindow = new google.maps.InfoWindow;geocoder.geocode({'placeId': placeId}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      if (results[0]) {
+        map.setZoom(11);
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+        });
+        infowindow.setContent(results[0].formatted_address);
+        infowindow.open(map, marker);
+        ok = true;
+      } else {
+        alert('No Geocode results found');
+        ok = false;
+      }
+    } else {
+      alert('Geocoder failed due to: ' + status);
+      ok = false;
+    }
+    return ok;
+  });
+}	
+	
+ </script>
+ <script type="text/javascript">
+ 
+    	function createHTForm()
+    	{
+    $('#ht-church-data').html('&nbsp;');		
+    $("#ht-church-data").append('<table id="ctable">');
+    $("#ht-church-data").append('<form action="javascript:saveHTForm();" method="POST" id="hform">');
+   $("#ht-church-data form").append('<input type="hidden"  name="drc"  id="drc"/>');
+   $("#ht-church-data form").append('<input type="hidden" name="dec" id="dec" />');
+   $("#ht-church-data form").append('<div class="appm">HT Church Data</div>');
+    $("#ht-church-data form").append('<tr><td class="churchPrompt">Name:</td><td><input type="text" placeholder="Church Name" name="churchname" id="ht-churchname"/></td></tr>');
+    $("#ht-church-data form").append('</td></tr><tr><td class="churchPrompt">Address:</td><td><input type="text" placeholder="Street Address:" name="address" id="ht-address"/></td></tr>');
+   $("#ht-church-data form").append('</td></tr><tr><td class="churchPrompt">City/Town:</td><td><input type="text" placeholder="City|Town:" name="city" id="ht-city"/></td></tr>');
+   $("#ht-church-data form").append('</td></tr><tr><td class="churchPrompt">State/Province:</td><td><input type="text" placeholder="State|Province:" name="province" id="ht-province"/></td></tr>');
+   $("#ht-church-data form").append('</td></tr><tr><td class="churchPrompt">Mail Code:</td><td><input type="text" placeholder="Postal|Mail|Zip Code:" name="postalcode" id="ht-postalcode"/></td></tr>');
+   $("#ht-church-data form").append('</td></tr><tr><td class="churchPrompt">Country:</td><td><input type="text" placeholder="Country" name="country" id="ht-country"/></td></tr>');
+   $("#ht-church-data form").append('</td></tr><tr><td class="churchPrompt">Telephone:</td><td><input type="text" placeholder="Telephone Number:" name="phone" id="ht-phone"/></td></tr>');
+   $("#ht-church-data form").append('</td></tr><tr><td class="churchPrompt">Website:</td><td><input type="text" placeholder="Domain Name | Website" name="website" id="ht-website"/></td></tr>');
+  $("#ht-church-data form").append('<tr><td class="churchPrompt">Google Map ID:</td><td><input type="text" placeholder="Google Map PlaceID" name="placeid" id="ht-placeid" readonly ></td></tr>');
+   $("#ht-church-data form").append('</td></tr><tr><td class="churchPrompt">Domain Name:</td><td><input type="text" placeholder="Domain Name:" name="domain" id="ht-domain"/></td></tr>');
+  $("#ht-church-data form").append('<tr><td class="churchPrompt">&nbsp;</td><td><div style="padding-top:8px;"><input type="submit" id="ht-savebutton" value="Save HT Data" /></div></td></tr>'); 	
+   $("#ht-ht-church-data form").append('</form>'); 
+   $("#ht-church-data").append('</table>');
+   $('#ht-church-data').css({"background-color": "#E8E5DF", "padding-top": "12px"});
+   $('#ht-dvc').html('&nbsp;');	
+   $('#ht-drc').html('&nbsp;');
+   $('#ht-churchname').focus();	
+  	}
+  
+     	function saveHTForm() {
+            htchurch.domain = $('#ht-church-data').find('input[name="domain"]').val();
+            htchurch.placeid = $('#ht-church-data').find('input[name="placeid"]').val();
+    		if(isEmpty(htchurch.placeid) == false) {
+   		      if(isEmpty(htchurch.domain) == false) {
+                  htchurch.name =  $('#ht-church-data').find('input[name="churchname"]').val();
+                  htchurch.street = $('#ht-church-data').find('input[name="address"]').val();
+                  htchurch.city = $.trim($('#ht-church-data').find('input[name="city"]').val());
+                  htchurch.province = $.trim($('#ht-church-data').find('input[name="province"]').val());
+                  htchurch.postalcode = $.trim($('#ht-church-data').find('input[name="postalcode"]').val());
+                  htchurch.country = $.trim($('#ht-church-data').find('input[name="country"]').val());
+                  htchurch.phone = $('#ht-church-data').find('input[name="phone"]').val()
+                  htchurch.website = $('#ht-church-data').find('input[name="website"]').val();
+  			      $.ajax({
+                   method: "POST",
+                   data: {'info': JSON.stringify(htchurch)},
+                   url: 'putchurchstub.php',
+                   dataType: 'json',
+                   cache: false,
+                   success: function(data)
+                    {
+                     	if(data.status == 'ok') {
+                     	   clearVars();
+                     	   $('#warnings').html('<strong>Church Data Saved Successfully</strong>');	
+ //                          $('#ht-church-data').hide(1000);
+                      	 } else {
+                 	 	$('#warnings').css('border-color:red','visibility:visible');
+                 	 	$('#warnings').html('<b>Data Action Status: <i>' +data.status + '</i></b><br><b>Action: <i>' + data.action+ '</i></b><br><b>Error: <i>' + data.error + '</i></b>');
+       		       	    }
+                     },
+                 	error: function(data) {
+                 		$('#warnings').css('border-color:red','visibility:visible');
+                	    $('warnings').html('Houston! we have a problem');	
+                 	}
+                  }); //$.ajax
+   	          
+    		  }else {
+    		     alert('Cannot save record without a valid church Domain Name');	
+    		  } //url != ''   
+   		  }else {
+    	  alert('Cannot save church without a Google Map Place ID');	
+    	} // placeid != ''
+     }	
+     function clearHTVars() {
+       htchurch.id = 0;
+       htchurch.name = "";
+       htchurch.domain = "";
+       htchurch.street = "";
+       htchurch.city = "";
+       htchurch.province = "";
+       htchurch.postalcode = "";
+       htchurch.country = "";
+       htchurch.placeid = "";
+       htchurch.phone = "";
+       htchurch.website = "";
+       $(htChurchData).each(function() {
+       	$(this).val("");
+       });
+     }
+    </script>
+    <script type="text/javascript"> 
+          function showmap(place)
+      {
+        if (place.geometry.viewport) 
+         {
+          map.fitBounds(place.geometry.viewport);
+         } 
+        else
+         {
+      map.setCenter(place.geometry.location);
+      map.setZoom(12);
+          }
+    // Set the position of the marker using the place ID and location
+        marker.setPlace(/** @type {!google.maps.Place} */ ({
+         placeId: place.place_id,
+      location: place.geometry.location
+    }));
+    marker.setVisible(true);
+     }
+    </script>
+    <script type="text/javascript">
+       function buildGrid() {
+  			      $.ajax({
+                   method: "POST",
+                   data: {'info': JSON.stringify(htchurch)},
+                   url: 'getchurch.php',
+                   dataType: 'json',
+                   cache: false,
+                   success: function(data)
+                    {
+                     	if(data[0].status == 'ok') {
+                     var source = 
+                    {
+                datatype: "json",
+                datafields: [
+                    { name: 'churchname', type: 'string' },
+                    { name: 'address', type: 'string' },
+                    { name: 'city', type: 'string' },
+                    { name: 'province', type: 'string' },
+                    { name: 'postalcode', type: 'string' },
+                    { name: 'country', type: 'string' },
+                    { name: 'phone', type: 'string' },
+                    { name: 'website', type: 'string' },
+                    { name: 'domain', type: 'string' },
+                    { name: 'placeid', type: 'string' },
+                    { name: 'dvc', type: 'bool'},
+                    { name: 'drc', type: 'bool'},
+                    { name: 'id', type: 'number'}
+                   
+                ],
+                localdata: data,
+                updaterow: function (rowid, rowdata, commit) {
+                    commit(true);
+                }
+            };
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            $("#jqxgrid").jqxGrid(
+            {
+                width: '1250',
+                height: '300',
+                theme: 'energyblue',
+                source: dataAdapter,
+                columnsresize: true,
+                columns: [
+                    { text: 'Church Name', datafield: 'churchname', width: 220 },
+                    { text: 'Address', datafield: 'address', width: 250},
+                    { text: 'City', datafield: 'city', width: 120 },
+                    { text: 'State', datafield: 'province', width: 60 },
+                    { text: 'Mail Code', datafield: 'postalcode', width: 100},
+                    { text: 'Country', datafield: 'country', width: 100,
+                    cellsRenderer: function (rowKey, dataField, value, data) {
+                      switch (value) {
+                      	case '':
+                      	   return "<div style='margin: 0px 20px;'><img style='margin-top: 3px;' width='16' height='16' src='jq/images/usa.png'/></div>";
+                          case "United States":
+                              return "<div style='margin: 0px 20px;'><img style='margin-top: 3px;' width='16' height='16' src='jq/images/usa.png'/></div>";
+                          case "United Kingdom":
+                              return "<div style='margin: 0px 20px;'><img style='margin-top: 3px;' width='16' height='16' src='jq/images/uk.png'/></div>";
+                          }
+                        }
+                    },
+                    { text: 'Domain Name', datafield: 'domain', width: 200},
+                    { text: 'Google Place ID', datafield: 'placeid', width: 200}
+                ]
+            });
+
+            $("#ht-churchname").jqxInput({height: 23});
+            $("#ht-address").jqxInput({ height: 23});
+            $("#ht-city").jqxInput({ height: 23});
+            $("#ht-province").jqxInput({ height: 23});
+            $("#ht-country").jqxInput({ height: 23});
+//            $("#splitter").jqxSplitter({ width: 850, height: 400, panels: [{ min: 150, size: 330 }, { min: 250 }] });
+            $('#jqxgrid').on('rowselect', function (event) {
+                // event arguments.
+                var args = event.args;
+                // selected row.
+                var row = event.args.row;
+                // update inputs.
+                createHTForm();
+                htchurch=row;
+                $("#churchid").val(row.id);
+                $("#ht-churchname").val(row.churchname);
+                $("#ht-address").val(row.address);
+                $("#ht-city").val(row.city);
+                $("#ht-province").val(row.province);
+                $("#ht-country").val(row.country);
+                $("#ht-postalcode").val(row.postalcode);
+                $("#ht-phone").val(row.phone);
+                $("#ht-website").val(row.website);
+                $("#ht-placeid").val(row.placeid);
+                $("#ht-domain").val(row.domain);
+                $("#drc").val(row.drc);
+                $("#dvc").val(row.dvc);
+                $("#ht-input").val(row.churchname);
+                $('#ht-domain-input').val(row.domain);
+                $('#ht-placeid-input').val(row.placeid);
+                setflags(row.id,row.dvc,row.drc);
+                if(isEmpty(row.placeid) == false) {
+                  geocodePlaceId(row.placeid);	
+                }
+                $("#ht-churchname").focus();
+            });
+            $("#ht-savebutton").jqxButton({  width: 70, height: 23 });
+            $("#ht-savebutton").click(function () {
+                var row = $('#jqxgrid').jqxGrid('getselectedrowindex');
+                var rowid = $("#jqxgrid").jqxGrid('getrowid', row);
+                 htchurch.name = $("#ht-churchname").val();
+                 htchurch.address = $("#ht-address").val();
+                 htchurch.city = $("#ht-city").val();
+                 htchurch.province = $("#ht-province").val();
+                 htchurch.country = $("#ht-country").val();
+                 htchurch.postalcode = $("#ht-postalcode").val();
+                 htchurch.phone = $("#ht-phone").val();
+                 htchurch.website = $("#ht-website").val();
+                 htchurch.placeid = $("#ht-placeid").val();
+                 htchurch.domain = $("#ht-domain").val();
+                 htchurch.country = $("#ht-country").val();
+                $("#jqxgrid").jqxGrid('updaterow', rowid, htchurch);
+                saveHTForm();
+            });
+         } else {
+          	$('#warnings').css('border-color:red','visibility:visible');
+         	$('#warnings').html('<b>Data Action Status: <i>' +data.status + '</i></b><br><b></i></b>');
+         	   alert(htchurch.name + ' not found!');
+       		     }
+             },
+          	error: function(data) {
+      		 $('#warnings').css('border-color:red','visibility:visible');
+      	     $('warnings').html('Houston! we have a problem');	
+                 	}
+       }); //$.ajax
+      }   
+      function setflags(cid,dvc,drc) {
+       var stuff = '<span style="font-family:verdana;font-size:12pt;color:blue"><b>' + cid + '</b></span>';
+      	$('#ht-churchid').html(stuff);
+       if(dvc == false) {
+       	 stuff = '<img src="images/record-23.png" title="Default Events Created" width="24">';
+      	  $('ht-dvc').html(stuff);
+        } else {
+      	 stuff = '<img src="images/record-24.png" title="Default Events Created" width="24">';
+      	 $('#ht-dvc').html(stuff);
+       }
+      if(drc == false) {
+      	 stuff = '<img src="images/record-23.png" title="Default Events Created" width="24">';
+       	  $('ht-drc').html(stuff);
+       } else {
+      	 stuff = '<img src="images/record-24.png" title="Default Ratings Created" width="24">';
+      	 $('#ht-drc').html(stuff);
+      }
+    }
+    function genericSearch(mode) {
+    genericdb.sql = "select churchname, domain, address,city, state as province,address,phone,zipcode as postalcode,ChurchID as id,country,website,DefaultEventsCreated as dvc,DefaultRatingsCreated as drc,EventRatingCount as erc,GoogleMapPlaceID as placeid,MemberCount as mc,'ok' as status from ht.tblchurch where ~ ='@'";
+   switch(mode) {
+    case 'domain':
+     pkg.sql.replace('~','domain');
+     pkg.sql.replace('@',$('#ht-domain-input').val());
+     break;
+    case 'placeid':
+     pkg.sql.replace('~','GoogleMapPlaceID');
+     pkg.sql.replace('@',$('#ht-placeid-input').val());
+     break;
+     }
+  
+           $.ajax({
+            url: 'genericDB.php',
+           type: 'post',
+           data: {"info" : JSON.stringify(pkg)},
+           dataType: 'json',
+          success: function(data) {
+             if(data.status[0] == 'ok') {
+             htchurch= data;	
+             $('#ht-input').val(htchurch.name);
+             $('#ht-placeid-input').val(ht.church.placeid); 
+             $('#warnings').html('<b><i>' + htchurch.name + ' Found!</i></b>');
+             createHTForm();
+             $('#ht-churchid').val(htchurch.id);
+             }else{
+              $('#ht-churchid').html('&nbsp;');	
+              alert(htchurch.name + ' not found in HT Database');
+             }
+        },
+          error: function(data) {
+          	alert('Error in Generic Search Engine: ' + data.error);
+          }
+        });
+  
+    }
+    </script>
+	</body>
+</html>

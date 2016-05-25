@@ -1,0 +1,182 @@
+{
+	"ownertype": "member",
+	"aggregate": 0,
+	"userid": 0,
+	"survey": [{
+		"section": "Church Philosophy",
+		"rank": 1,
+		"tagline": "(As relayed by church leaders)",
+		"questions": [{
+			"question": "Clear Vision",
+			"label": "a",
+			"score": 0,
+			"rank": 1,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Encourages Self Study",
+			"label": "b",
+			"score": 0,
+			"rank": 2,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Discipleship Process",
+			"label": "c",
+			"score": 0,
+			"rank": 3,
+			"tooltip": "",
+			"description": ""
+		}],
+		"aggregate": 0
+	}, {
+		"section": "Church Personality",
+		"rank": 2,
+		"tagline": "",
+		"questions": [{
+			"question": "Inclusiveness",
+			"label": "a",
+			"score": 0,
+			"rank": 1,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Welcoming/Friendliness",
+			"label": "b",
+			"score": 0,
+			"rank": 2,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Diversity",
+			"label": "c",
+			"score": 0,
+			"rank": 3,
+			"tooltip": "",
+			"description": ""
+		}],
+		"aggregate": 0
+	}, {
+		"section": "Environment",
+		"rank": 3,
+		"tagline": "",
+		"questions": [{
+			"question": "Parking",
+			"label": "a",
+			"score": 0,
+			"rank": 1,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Facilities",
+			"label": "b",
+			"score": 0,
+			"rank": 2,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Space",
+			"label": "c",
+			"score": 0,
+			"rank": 3,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Location",
+			"label": "d",
+			"score": 0,
+			"rank": 4,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Signage",
+			"label": "e",
+			"score": 0,
+			"rank": 5,
+			"tooltip": "",
+			"description": ""
+		}],
+		"aggregate": 0
+	}, {
+		"section": "Amenities",
+		"rank": 4,
+		"tagline": "",
+		"questions": [{
+			"question": "Wi-Fi",
+			"label": "a",
+			"score": 0,
+			"rank": 1,
+			"tooltip": "",
+			"description": ""
+		}],
+		"aggregate": 0
+	}, {
+		"section": "Active Ministries",
+		"rank": 5,
+		"tagline": "",
+		"questions": [{
+			"question": "Evangelism",
+			"label": "a",
+			"score": 0,
+			"rank": 1,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Community Outreach",
+			"label": "b",
+			"score": 0,
+			"rank": 2,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Community Impact",
+			"label": "c",
+			"score": 0,
+			"rank": 3,
+			"tooltip": "",
+			"description": ""
+		}],
+		"aggregate": 0
+	}, {
+		"section": "Main Worship Service",
+		"rank": 6,
+		"tagline": "",
+		"questions": [{
+			"question": "Flow of Service",
+			"label": "a",
+			"score": 0,
+			"rank": 1,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Relevance of Message",
+			"label": "b",
+			"score": 0,
+			"rank": 2,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Use of Time",
+			"label": "c",
+			"score": 0,
+			"rank": 3,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Effective use of Technology",
+			"label": "d",
+			"score": 0,
+			"rank": 4,
+			"tooltip": "",
+			"description": ""
+		}, {
+			"question": "Quality of Music",
+			"label": "e",
+			"score": 0,
+			"rank": 5,
+			"tooltip": "",
+			"description": ""
+		}],
+		"aggregate": 0
+	}]
+}

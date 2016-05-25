@@ -1,0 +1,400 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Holy Tomatoes Church Finder</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .controls {
+        background-color: #fff;
+        border-radius: 2px;
+        border: 1px solid transparent;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        box-sizing: border-box;
+        font-family: verdana;
+        font-size: 15px;
+        font-weight: 100;
+        height: 24px;
+        margin-left: 10px;
+        margin-top: 12px;
+        outline: none;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+        text-align: left;
+      }
+
+      .controls:focus {
+        border-color: #4d90fe;
+      }
+    </style>
+     <link type="text/css" rel="Stylesheet" href="jq/jqwidgets/styles/jqx.base.css" />
+   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&signed_in=true"></script>
+   <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+   <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+   <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxpasswordinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxtooltip.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxexpander.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxvalidator.js"></script>
+    <script type="text/javascript" src="jq/scripts/demos.js"></script>
+   <script type="text/javascript" src="jq/jqwidgets/jqxpasswordinput.js"></script>
+   <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+     <script type="text/javascript" src="jq/jqwidgets/jqxinput.js"></script>
+    <script type="text/javascript">
+    	var church= {"name":"OUC","domain":"ouc.org","street":"Adventist Blvd","city":"Huntsville","province":"AL","postalcode":"35896","country":"US","placeid":
+    	"ZDX1287f","phone":"","website":"","url":"","vicinity":"here","address":"5500 Adventist Blvd"};
+    	var place;
+    	var map;
+ </script>
+ <script>
+// This sample uses the Place Autocomplete widget to allow the user to search
+// for and select a place. The sample then displays an info window containing
+// the place ID and other information about the place that the user has
+// selected.
+
+function initialize() {
+  var mapOptions = {
+ //   center: {lat: -33.8688, lng: 151.2195},
+    zoom: 13
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+    mapOptions);
+
+  var input = /** @type {HTMLInputElement} */(
+      document.getElementById('pac-input'));
+
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+  var infowindow = new google.maps.InfoWindow();
+  var marker = new google.maps.Marker({
+    map: map
+  });
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map, marker);
+  });
+
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    infowindow.close();
+    place = autocomplete.getPlace();
+    if (!place.geometry) {
+      return;
+    }
+/**
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);
+    }
+*/
+    // Set the position of the marker using the place ID and location
+    marker.setPlace(/** @type {!google.maps.Place} */ ({
+      placeId: place.place_id,
+      location: place.geometry.location
+    }));
+    marker.setVisible(false);
+// stuff place data in JSON object
+    church.name = place.name;
+    church.placeid = place.place_id;
+    church.address = place.formatted_address;
+//    
+    if (place.website != null) {
+      church.website = place.website;
+    }
+    else
+    {
+      church.website = '';
+    }
+//
+   if (place.formatted_phone_number != null) {
+      church.phone = place.formatted_phone_number;
+    }
+    else
+    {
+      church.phone = '';
+    }
+//
+ // end my stuff
+    infowindow.setContent('<div><strong>' + church.name + '</strong><br>' +
+        'Place ID: ' + church.placeid + '<br>' + 'Address: ' + 
+        church.address + '<br>' + 'Website: ' + church.website + '<br>' +
+        'Phone: ' + church.phone+ '<br></div>');
+  //  infowindow.open(map, marker);
+       showmap();
+  });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+    <script type="text/javascript">
+     function showmap() {
+          $("#createAccount").jqxExpander({  toggleMode: 'none', width: '350px', showArrow: false });
+            // Create jqxInput.
+            $("#firstName").jqxInput({  width: '300px', height: '20px' });
+            $("#lastName").jqxInput({  width: '300px', height: '20px'});
+            $("#userName").jqxInput({  width: '300px', height: '20px' });
+            // Create jqxPasswordInput.
+            $("#password").jqxPasswordInput({  width: '300px', height: '20px', showStrength: true, showStrengthPosition: "right" });
+            $("#passwordConfirm").jqxPasswordInput({  width: '300px', height: '20px' });
+            // Create jqxDateTimeInpput.
+            $("#birthday").jqxDateTimeInput({  width: '300px', height: '20px' });
+            // Create jqxDropDownList.
+            var genders = ["male", "female"];
+            $("#gender").jqxDropDownList({  source: genders, selectedIndex: -1, width: '300px', height: '20px', promptText: "I am...", dropDownHeight: "50px" });
+            // Create jqxButton.
+            $("#submit").jqxButton({ theme: theme });
+            // Create jqxValidator.
+            $("#form").jqxValidator({
+                rules: [
+                        {
+                            input: "#firstName", message: "First name is required!", action: 'keyup, blur', rule: function (input, commit) {
+                                return input.val() != "" && input.val() != "First";
+                            }
+                        },
+                        {
+                            input: "#lastName", message: "Last name is required!", action: 'keyup, blur', rule: function (input, commit) {
+                                return input.val() != "" && input.val() != "Last";
+                            }
+                        },
+                        { input: "#userName", message: "Username is required!", action: 'keyup, blur', rule: 'required' },
+                        { input: "#password", message: "Password is required!", action: 'keyup, blur', rule: 'required' },
+                        { input: "#passwordConfirm", message: "Password is required!", action: 'keyup, blur', rule: 'required' },
+                        {
+                            input: "#passwordConfirm", message: "Passwords should match!", action: 'keyup, blur', rule: function (input, commit) {
+                                var firstPassword = $("#password").jqxPasswordInput('val');
+                                var secondPassword = $("#passwordConfirm").jqxPasswordInput('val');
+                                return firstPassword == secondPassword;
+                            }
+                        },
+                        {
+                            input: "#gender", message: "Gender is required!", action: 'blur', rule: function (input, commit) {
+                                var index = $("#gender").jqxDropDownList('getSelectedIndex');
+                                return index != -1;
+                            }
+                        }
+                ],  hintType: "label"
+            });
+            // Validate the Form.
+            $("#submit").click(function () {
+                $('#form').jqxValidator('validate');
+            });
+            // Update the jqxExpander's content if the validation is successful.
+            $('#form').on('validationSuccess', function (event) {
+                $("#createAccount").jqxExpander('setContent', '<span style="margin: 10px;">Account created.</span>');
+            });
+     }
+    </script>
+  </head>
+  <body>
+  <script type="text/javascript">
+     $(document).ready(function () {
+            $("#jqxPasswordInput").jqxPasswordInput({
+                width: 200, height: 25,  placeHolder: "Enter password:", showStrength: true, showStrengthPosition: "right",
+                // The passwordStrength enables you to override the built-in strength calculation.
+                passwordStrength: function (password, characters, defaultStrength) {
+                    var length = password.length;
+                    var letters = characters.letters;
+                    var numbers = characters.numbers;
+                    var specialKeys = characters.specialKeys;
+                    var strengthCoefficient = letters + numbers + 2 * specialKeys + letters * numbers * specialKeys;
+                    var strengthValue;
+                    if (length < 4) {
+                        strengthValue = "Too short";
+                    } else if (strengthCoefficient < 10) {
+                        strengthValue = "Weak";
+                    } else if (strengthCoefficient < 20) {
+                        strengthValue = "Fair";
+                    } else if (strengthCoefficient < 30) {
+                        strengthValue = "Good";
+                    } else {
+                        strengthValue = "Strong";
+                    };
+                    return strengthValue;
+                },
+                // The strengthTypeRenderer enables you to override the built-in rendering of the Strength tooltip.
+                strengthTypeRenderer: function (password, characters, defaultStrength) {
+                var length = password.length;
+                var letters = characters.letters;
+                var numbers = characters.numbers;
+                var specialKeys = characters.specialKeys;
+                var strengthCoefficient = letters + numbers + 2 * specialKeys + letters * numbers / 2 + length;
+                var strengthValue;
+                var color;
+                if (length < 8) {
+                    strengthValue = "Too short";
+                    color = "rgb(170, 0, 51)";
+                } else if (strengthCoefficient < 20) {
+                    strengthValue = "Weak";
+                    color = "rgb(170, 0, 51)";
+                } else if (strengthCoefficient < 30) {
+                    strengthValue = "Fair";
+                    color = "rgb(255, 204, 51)";
+                } else if (strengthCoefficient < 40) {
+                    strengthValue = "Good";
+                    color = "rgb(45, 152, 243)";
+                } else {
+                    strengthValue = "Strong";
+                    color = "rgb(118, 194, 97)";
+                };
+                return "<div style='font-style: italic; font-weight: bold; color: " + color + ";'>" + strengthValue + "</div>";
+            }
+            });
+        });
+
+   </script>
+  <form id="signup">
+  	<input id="firstname" class="controls type="text" placeholder="First Name:" /><br>
+  	<input id="lastname" class="controls type="text" placeholder="LastName:" /><br>
+ 	<input id="email" class="controls type="text" placeholder="Email:" /><br>
+ <input id="jqxPasswordInput" class="controls" type="password" placeholder="password:" /><br>
+   <input id="pac-input" class="controls" type="text"
+        placeholder="Affiliated Church:">
+    <input id="result" type="submit">    
+  </form>  
+  <hr>
+    <div id="church-data">
+     <form id="church" method="post" action = "javascript:SaveChurchData()">
+     	<table id="churchdatatable">
+   <!--  		<tr>
+     			<td style="text-align: right;">Preferred Church Name:</td>
+     			<td><input type="text" id="ChurchName" /></td>
+     		</tr>
+     	    <tr>
+     	    	<td style="text-align: right";>Street:</td>
+     	    	<td><input type="text" id="ChurchStreet" /></td>
+     	    </tr>	
+   	    <tr>
+     	    	<td style="text-align: right";>City/Town:</td>
+     	    	<td><input type="text" id="city" /></td>
+     	    </tr>	
+    	    <tr>
+     	    	<td style="text-align: right";>Postal/Mail/Zip Code:</td>
+     	    	<td><input type="text" id="mailcode" /></td>
+     	    </tr>	
+    	    <tr>
+     	    	<td style="text-align: right";>Country:</td>
+     	    	<td><input type="text" id="country" /></td>
+     	    </tr>	
+   	    <tr>
+     	    	<td style="text-align: right";>Telephone:</td>
+     	    	<td><input type="text" id="phone" /></td>
+     	    </tr>	
+     	    <tr>
+     	    	<td style="text-align: right";>Domain Name:</td>
+     	    	<td><input type="text" id="domain" /></td>
+     	    </tr>	
+    	    <tr>
+     	    	<td style="text-align: right";>Google Map Place ID:</td>
+     	    	<td><input type="text" id="placeid" /></td>
+     	    </tr>	
+   -->  	    
+      	</table>
+     </form>
+    </div>
+     <div id="createAccount" style="font-family: Verdana; font-size: 13px;">
+        <div>
+            Church Info
+        </div>
+        <div style="font-family: Verdana; font-size: 13px;">
+            <form id="form" style="overflow: hidden; margin: 10px;" action="./">
+                <table>
+                    <tr>
+                        <td colspan="2">First Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="firstName" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Last Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="lastName" />
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="2">Choose your username
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input id="userName" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Create a password
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input id="password" type="password" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Confirm your password
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input id="passwordConfirm" type="password" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Birthday
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div id="birthday">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Gender
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div id="gender">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input id="submit" type="button" value="Create account" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+<!--      <div id="map-canvas"></div>-->
+</body>
+</html>

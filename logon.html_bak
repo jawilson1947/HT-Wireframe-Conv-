@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+      <META HTTP-EQUIV="Expires" CONTENT="-1">
+    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxvalidator.js"></script>
+    <script type="text/javascript" src="jq/scripts/demos.js"></script>
+    <script type="text/javascript" src="js/js.cookie.js"></script>
+   <style type="text/css">
+        .demo-iframe {
+            border: none;
+            width: 600px;
+            height: 200px;
+            clear: both;
+            display: none;
+        }
+        .form #password, .form #username {
+            height: 24px;
+            margin-top: 5px;
+            width: 50%;
+            margin:4%;
+        }
+        .form #rememberme {
+            margin-top: 5px;
+            margin-bottom: 8px;
+            margin:4px;
+        }
+        .prompt {
+            margin-top: 10px; font-size: 10px;
+        } 
+        .viewport{
+  	margin:auto;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    width:24em;
+    height:22em;
+    margin-top: -11em; /*set to a negative number 1/2 of your height*/
+    margin-left: -12em; /*set to a negative number 1/2 of your width*/
+    border: 1px solid navy;
+    background-color:rgba(#B3CDDA);
+    }
+    input button {
+    	background-color: rgba(#B3CDDA);
+    }
+       .signin {
+          width: 51%;
+          color: white;
+          height: 35px;
+          background-color:#309DDC;	
+          border: 1px solid white;
+          text-align: center;
+          font-family: Avenir;
+          font-size: 14pt;
+          margin: 4%;
+          cursor: pointer;
+          margin-top: 18px;
+        }
+      input {
+         width:98%;
+         text-align : left;
+         background-color: transparent;
+         color: navy;
+        }
+        .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-family: "Arial Narrow";
+    font-size: 10px;
+    font-style: italic;
+    color: white;
+    display: table-cell;
+}
+     .loginInput {
+       margin-bottom: -30px;
+     }
+     .notice{
+       float:left;
+       overflow:hidden;	
+     }
+     #wuzzup {
+               width: 40%;
+          color: red;
+          height: 35px;
+          background-color:transparent;	
+          border: 1px solid navy;
+          text-align: center;
+          font-family: Avenir;
+          font-size: 14pt;
+          margin: 10%;
+          visibility: hidden;
+         }
+         #notice {
+         float:right;	
+         color:red;
+         font-family: verdana;
+         text-align: center;
+         font-style: bold;
+         font-size: 12pt;	
+         }
+      </style>
+      <script type="text/javascript">
+      	var userStub= {"firstname":"","lastname":"","email":"","password":"","placeid":"","churchname":"","churchadmin":"","id":0,"churchid":0,"status":" ","action":" ","error":" ","sql":" "};
+        function signUp() {
+          userStub.firstname ='';
+          userStub.lastname = '';
+          userStub.password = '';
+          userStub.placeid = '';
+          userStub.churchname = '';
+          userStub.churchadmin = false;
+      //    userStub.encryptedpassword = '';
+          userStub.id = 0;
+          Cookies.set("peaches",JSON.stringify(userStub),{expires: 1});
+         $(location).attr('href', 'register.html');	
+ 	        }
+       </script>
+</head>
+<body style="background-image:url(images/bg4.jpeg);background-size:100%;background-repeat:repeat-no">
+	
+   <script type="text/javascript">
+        $(document).ready(function () {
+               $('#username').focusin(function()
+                {
+                	$('#notice').html('');
+                	$('#notice').css('border,none');
+                }
+               );
+ //           $("#username, #password").addClass('jqx-input');
+ //           if (theme != '') {
+ //               $("#username, #password").addClass('jqx-input-' + theme);
+ //           }
+            $("#rememberme").jqxCheckBox({ width: 130});
+            $("#loginButton").jqxButton({theme: theme});
+
+            // add validation rules.
+            $('#form').jqxValidator({
+                rules: [
+                       { input: '#username', message: 'Email address is required!', action: 'keyup, blur', rule: 'required' },
+                       { input: '#username', message: 'Email appears to be invalid!', action: 'keyup, blur', rule: 'email' },
+                       { input: '#password', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
+                       { input: '#password', message: 'Your password must be between 4 and 18 characters!', action: 'keyup, blur', rule: 'length=4,18' }
+                ]
+                       
+            });
+            // validate form.
+             $("#loginButton").click(function () {
+                $('#form').jqxValidator('validate');
+            });
+             $("#form").on('validationSuccess', function () {
+                $("#form-iframe").fadeIn('fast');
+                 userStub.email = $('#username').val();
+                 userStub.password = $('#password').val();
+                 $.ajax({
+                   method: "POST",
+                   url: 'login.php',
+                   data: {"info" : JSON.stringify(userStub)},
+                   dataType: 'json',
+                   cache: false,
+                   success: function(data)
+                    {
+                    	if(data.status == 'ok') {
+                    	  $('#wuzzup').html(data.churchname);
+                    	  if($('#rememberme').val() == true) {
+       	                    Cookies.set('holytomatoes',$('#username').val(),{ expires: 90 });
+                     	  } else {
+                     	 	var HTCookie = Cookies.get('holytomatoes');
+                     	 	if(HTCookie != $('#username').val()) {
+         	                   Cookies.set('holytomatoes',$('#username').val(),{ expires: 90 }); 
+                     	 	}
+                     	  }
+                       	 userStub.firstname = data.firstname;
+                    	 userStub.lastname = data.lastname;
+                    	 userStub.churchname = data.churchname;
+                    	 userStub.placeid = data.placeid;
+                    	 userStub.churchadmin = data.churchadmin;
+//                    	 userStub.encryptedpassword = data.userpsw;
+                    	 userStub.email = $('#username').val();
+                    	 userStub.password = $('#password').val();
+                    	 userStub.id = data.id;
+                    	 userStub.churchid = data.churchid;
+                   	     Cookies.set("peaches",JSON.stringify(userStub),{expires: 1});
+                    	$(location).attr('href', 'index.html');	
+                     } else {
+                 		$('#notice').css("border:red 1px solid");
+                 		$('#notice').css("visibility:visible");
+                 		$('#notice').html($('#username').val() + '<br><h3> Not Found!</h3>');
+                 	    }
+                    },
+                 	error: function(data) {
+//                 		$('#wuzzup').css({border-color:red,visibility:visible});
+                 	    $('#notice').html('Houston! we have a problem');	
+                 	}
+                 });
+             });
+        });
+        function getUser() {
+         alert('Go Get '+$('#username').val());	
+        }
+    </script>
+     <div class="viewport">
+        <form class="form" id="form" method="post" target="form-iframe" action="login.php" style="width: 650px;">
+            <div style="margin-bottom:-8px;">
+               <div style="clear:left"><img src="images/logo.png"></div>
+             	<div id="notice"></div>
+            </div>
+           <div class="loginInput">
+                <input type="text" id="username" name="username" placeholder="Email address"/>
+            </div>
+            <div class="loginInput">
+          	    <input type="password" id="password" name="password" placeholder="Password"/>
+            </div>
+            <div style="margin-bottom:-12px;">
+             <input id="loginButton" type="submit" value="Login" class="signin"/>
+             </div>
+            <div name="rememberme" id="rememberme"><span style="text-align:center;"><small>Remember me </small>&nbsp; <a href="javascript:forgotpassword();">Forgot password</span></a>
+                &nbsp;<a id="enroll" href="register.html">Sign Up</a>
+            </div>
+           <div id="wuzzup">
+        	
+            </div>
+            <div style="display:none;">
+            <iframe id="form-iframe" name="form-iframe" class="demo-iframe" frameborder="0"></iframe>
+           	
+            </div>
+        </form>
+      </div>
+     </div>
+          <div class="footer">
+          2015 Digital Support Systems Inc. All rights reserved.
+        </div>
+   <div id="notice">
+       </div>
+ 
+</body>
+</html>

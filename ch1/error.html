@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Check for Missing Images</title>
+     	<script src="http://localhost/js/jquery.js"></script>
+       <script src="http://localhost/js/jquery-migrate.js"></script>
+      <style type="text/css">
+      	div
+      	 {
+      	 	border:1px solid blue;
+      	 	float: left;
+      	 }
+      	 img
+      	  { width:280px;
+      	    height:200px;
+      	    margin:10px;
+      	    border:1px solid red;
+      	  }     	    
+      </style>
+    </head>
+	<body>
+	<script type="text/javascript">
+		$(document).ready(function()
+		 {
+		  var images = ['HummingBird.JPG', 'JimWilson.JPG','steven.png','The Silmarillion.JPG',
+		  'The_Amazng_Spider_Man.jpeg','Thor.jpg','noImage.jpg','Gone.jpg'];
+		  var html = '';
+		  var imagefolder = 'http://localhost/images/';
+          var pic = '';
+		  $.each(images,function(key, value)
+		  {
+
+		  	html+= '<img src="'+imagefolder + value+'" title="'+value+'"/>';
+		  });
+		  $('#imageContainer').html(html);
+		  
+		  $('img').error(function()
+		    {
+		    	pic = $(this).attr("src");
+		    	$(this).replaceWith('<img src="http://localhost/images/app_store.png" title="Could not load image:' + pic +'">');
+		    });
+		 });
+		  	
+	</script>
+     <div id="imageContainer">
+     	
+     </div>
+	</body>
+</html>

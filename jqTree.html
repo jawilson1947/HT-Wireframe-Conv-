@@ -1,0 +1,150 @@
+<html>
+ <head>
+  <title>jQTree Grid for Holy Tomatoes Rating Page</title>
+   <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+   <script src="jqTree/tree.jquery.js"></script>  
+   <link rel="stylesheet" href="jqTree/jqtree.css">
+    <script type="text/javascript" src="js/js.cookie.js"></script>
+    <script type="text/javascript" src="jquery-dateFormat/dist/jquery-dateFormat.js"></script>
+         <link rel="stylesheet" href="node_modules/jquery-treegrid/styles.css">
+        <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
+        <link rel="stylesheet" href="node_modules/jquery-treegrid/css/jquery.treegrid.css">
+     <script type="text/javascript">
+ 
+ 
+ var odata = [
+    {
+        label: 'Central Church of Christ',
+        children: [
+            { label: 'Special Presentation',
+              children: [
+               {label: 'Music was great' },
+               {label: 'Sermon was good' },
+               {label: 'Folks were friendly'}
+              ]
+               }
+                    ]
+     },
+     {
+        label: 'Huntsville Central Seventh-day Adventist Church',
+        children: [
+            { label: 'Forum -Discussion' },
+            { label: 'Main Worship Service' }
+        ]
+    },
+  {
+        label: 'Kansas Avenue Seventh-day Adventist Church',
+        children: [
+            { label: 'Wilson & Co Christmans Concert' }
+        ]
+    }
+];
+var tdata = [];
+var jdata = [];
+</script>
+  </head>
+ <body>
+  <table>
+   <tr>
+    <td><div id="person"></div></td>
+    <td>&nbsp; - &nbsp;</td>
+    <td><div id="rcount"></div></td>
+    </tr>
+   <tr>
+    <td colspan ="3"> 
+  <div id="tree1"></div>
+  </td>
+  </tr>
+  <tr>
+   <td colspan="3"><div id="tfooter"></div></td>
+  </tr>
+  </table> 
+  <div id="result"></div>
+<script type="text/javascript">
+ $(document).ready(function(){ 
+            var eCount = 0;
+            var id = 0;
+ 	        var online = Cookies.get('peaches');
+            if(typeof(online) !="undefined") {
+               userStub = $.parseJSON(online);                
+               person = userStub.firstname + ' ' + userStub.lastname;
+               $.ajax({
+               type: 'post',
+               data: { "info" : JSON.stringify(userStub) },
+               url: 'getuserindex.php',
+                dataType: 'json',
+                cache: false,
+                async: false,
+          success: function(data) {
+          	if($.type(data[0]['churchid']) === "undefined"){
+          		console.log('No Ratings....Sorry!');
+          	} else {
+             for(i=0;i<data.length;i++) {
+     	     church = data[i].churchname;
+     	      
+     	      eCount++ ;
+              node = [];
+              node["label"] = church;
+              jNode= {"id":id,"label":church,"children":[]};
+              node["children"] = [];
+              jNode.children = [];
+              id ++;
+              childnode = []
+              childnode["label"] = data[i].eventname + ' on ' + $.format.date(data[i].eventdate, "MM/dd/yyyy hh:mm a") + ' | Score: ' + data[i].score;
+              node["children"].push(childnode);
+              jChildNode = {"id":id,"label":data[i].eventname + ' on ' + $.format.date(data[i].eventdate, "MM/dd/yyyy hh:mm a") + ' | Score: ' + data[i].score};
+              jNode.children.push(jChildNode);
+              id ++;
+   	    	  if(data[i]['events']!="undefined") { 
+     	        if(data[i]['events'].length > 0) {
+     	  	      for(j=0;j<data[i]['events'].length;j++){
+                    childnode =[]; 
+                    childnode["label"] = data[i]['events'][j].eventname + ' on ' + $.format.date(data[i]['events'][j].eventdate, "MM/dd/yyyy hh:mm a") + ' | Score: ' + data[i]['events'][j].score;
+                    jChildNode = {"id":id,"label":data[i]['events'][j].eventname + ' on ' + $.format.date(data[i]['events'][j].eventdate, "MM/dd/yyyy hh:mm a") + ' | Score: ' + data[i]['events'][j].score}; 
+                    node["children"].push(childnode);
+                    jNode.children.push(jChildNode);
+                    id ++; 
+     	  	        eCount++ ;
+     	    	   } //j < data[i][events]
+     	       	}// data.events length > 0
+     	      } //data[events] undefined ?	
+     	      tdata.push(node);
+     	      jdata.push(jNode);
+      	    }// i<data.length
+         }//else
+       $('#person').html("&nbsp; - &nbsp;" + userStub.firstname + " " + userStub.lastname + "'s rating history.");
+       $('#rcount').html('<i>' + data.length + ' churches visited - Total events rated: ' +eCount + ' </i>');	
+       },
+       error: function(data) {
+       console.log(data.error);              
+       }
+     });
+    } else {
+     alert('Cookie has expired. Please Refresh');	
+    }
+    for(i=0;i<tdata.length;i++) {
+    $('#result').append('<i>' + tdata[i]['label'] + '</i><br>');
+    for(j=0;j<tdata[i]['children'].length;j++) {
+      $('#result').append('&nbsp;&nbsp; - &nbsp;<small>' + tdata[i]['children'][j]['label'] + '</small><br>');	
+     }	
+    } 	
+    $('#tree1').tree({
+        data: jdata,
+        closedIcon : '+',
+        openedIcon : '-',
+        autoOpen: false
+    });
+});
+$('#tree1').bind(
+    'tree.click',
+    function(event) {
+        // The clicked node is 'event.node'
+        var node = event.node;
+        console.log(node.id);
+    }
+)
+$('#result').hide();
+</script>
+
+</body>
+</html>

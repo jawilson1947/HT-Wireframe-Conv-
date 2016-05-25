@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/JSON-js" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cors" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/jqTree" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/jquery-dateFormat" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/json-command" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/jsonparse" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/mongo-php-driver" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/mongodb-mva" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ng-grid" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/phpjs" vcs="Git" />
+  </component>
+</project>

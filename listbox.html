@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title id='Description'>This example shows how to popuplate a ListBox from JSON using Knockout.
+    </title>
+    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jq/scripts/json2.js"></script> 
+    <script type="text/javascript" src="jq/scripts/knockout-3.0.0.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxknockout.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="jq/scripts/demos.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var url = "data/churches.txt";
+
+            var viewModel = function () {
+                this.items = ko.observableArray();
+                var me = this;
+                $.ajax({
+                    datatype: 'json',
+                    url: "data/churches.txt"
+                }).done(function (data) {
+                    var jsonData = $.parseJSON(data);
+                    me.items(jsonData);
+                });
+            };
+
+            var model = new viewModel();
+
+            // prepare the data
+            var source =
+            {
+                datatype: "observablearray",
+                datafields: [
+                    { name: 'name' },
+                    { name: 'city' },
+                    { name: 'province'},
+                    { name: 'country' },
+                    { name: 'domain' },
+                ],
+                id: 'id',
+                localdata: model.items
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            $("#listbox").jqxListBox(
+            {
+                width: 266,
+                height: 300,
+                selectedIndex: 3,
+                multipleextended: true,
+                source: dataAdapter,
+                displayMember: 'name',
+                valueMember: 'domain'
+            });
+
+            ko.applyBindings(model);
+        });
+    </script>
+</head>
+<body class='default'>
+    <div id='jqxWidget'>
+        <div id="listbox">
+        </div>
+    </div>
+</body>
+</html>
+

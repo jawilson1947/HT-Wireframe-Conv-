@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="-1">
+    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.base.css" type="text/css"/>
+    <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxvalidator.js"></script>
+    <script type="text/javascript" src="jq/scripts/demos.js"></script>
+    <script type="text/jaascript" src="js/htlib.js"></script>
+    <script type="text/javascript" src="js/js.cookie.js"></script>
+    <script src="js/angular.min.js"></script>
+    <style type="text/css">
+        .demo-iframe {
+            border: none;
+            width: 600px;
+            height: 200px;
+            clear: both;
+            display: none;
+        }
+
+        .form #password, .form #username {
+            height: 24px;
+            margin-top: 5px;
+            width: 50%;
+            margin: 4%;
+        }
+
+        .form #rememberme {
+            margin-top: 5px;
+            margin-bottom: 8px;
+            margin: 4px;
+        }
+
+        .prompt {
+            margin-top: 10px;
+            font-size: 10px;
+        }
+
+        .viewport {
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 24em;
+            height: 22em;
+            margin-top: -11em; /*set to a negative number 1/2 of your height*/
+            margin-left: -12em; /*set to a negative number 1/2 of your width*/
+            border: 1px solid navy;
+            background-color: rgba(#B3CDDA);
+        }
+
+        input button {
+            background-color: rgba(#B3CDDA);
+        }
+
+        .signin {
+            width: 51%;
+            color: white;
+            height: 35px;
+            background-color: #309DDC;
+            border: 1px solid white;
+            text-align: center;
+            font-family: Avenir;
+            font-size: 14pt;
+            margin: 4%;
+            cursor: pointer;
+            margin-top: 18px;
+        }
+
+        input {
+            width: 98%;
+            text-align: left;
+            background-color: transparent;
+            color: navy;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-family: "Arial Narrow";
+            font-size: 10px;
+            font-style: italic;
+            color: white;
+            display: table-cell;
+        }
+
+        .loginInput {
+            margin-bottom: -30px;
+        }
+
+        .notice {
+            float: left;
+            overflow: hidden;
+        }
+
+        #wuzzup {
+            width: 40%;
+            color: red;
+            height: 35px;
+            background-color: transparent;
+            border: 1px solid navy;
+            text-align: center;
+            font-family: Avenir;
+            font-size: 14pt;
+            margin: 10%;
+            visibility: hidden;
+        }
+
+        #notice {
+            float: right;
+            color: red;
+            font-family: verdana;
+            text-align: center;
+            font-style: bold;
+            font-size: 12pt;
+        }
+    </style>
+    <script type="text/javascript">
+        //	  start Mixpanel -->
+        (function (e, b) {
+            if (!b.__SV) {
+                var a, f, i, g;
+                window.mixpanel = b;
+                b._i = [];
+                b.init = function (a, e, d) {
+                    function f(b, h) {
+                        var a = h.split(".");
+                        2 == a.length && (b = b[a[0]], h = a[1]);
+                        b[h] = function () {
+                            b.push([h].concat(Array.prototype.slice.call(arguments, 0)))
+                        }
+                    }
+
+                    var c = b;
+                    "undefined" !== typeof d ? c = b[d] = [] : d = "mixpanel";
+                    c.people = c.people || [];
+                    c.toString = function (b) {
+                        var a = "mixpanel";
+                        "mixpanel" !== d && (a += "." + d);
+                        b || (a += " (stub)");
+                        return a
+                    };
+                    c.people.toString = function () {
+                        return c.toString(1) + ".people (stub)"
+                    };
+                    i = "disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+                    for (g = 0; g < i.length; g++)f(c, i[g]);
+                    b._i.push([a, e, d])
+                };
+                b.__SV = 1.2;
+                a = e.createElement("script");
+                a.type = "text/javascript";
+                a.async = !0;
+                a.src = "undefined" !== typeof MIXPANEL_CUSTOM_LIB_URL ? MIXPANEL_CUSTOM_LIB_URL : "file:" === e.location.protocol && "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//) ? "https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js" : "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";
+                f = e.getElementsByTagName("script")[0];
+                f.parentNode.insertBefore(a, f)
+            }
+        })(document, window.mixpanel || []);
+        mixpanel.init("11d252c2a253967ce7afb3189854f9a5");
+        //
+        var userStub = {
+            "firstname": "",
+            "lastname": "",
+            "email": "",
+            "password": "",
+            "placeid": "",
+            "churchname": "",
+            "churchadmin": "",
+            "id": 0,
+            "churchid": 0,
+            "status": " ",
+            "action": " ",
+            "error": " ",
+            "sql": " ",
+            "objectid": "",
+            "webserver": ""
+        };
+        var webserver;
+
+
+        function signUp() {
+            userStub.firstname = '';
+            userStub.lastname = '';
+            userStub.password = '';
+            userStub.placeid = '';
+            userStub.churchname = '';
+            userStub.churchadmin = false;
+            //    userStub.encryptedpassword = '';
+            userStub.id = 0;
+            userStub.webserver = webserver;
+            updatePeaches();
+            $(location).attr('href', '/register.html');
+        }
+
+
+        function getHostName(url) {
+            var match = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
+            if (match != null && match.length > 2 && typeof match[2] === 'string' && match[2].length > 0) {
+                return match[2];
+            } else {
+                return null;
+            }
+        }
+        function isEmpty(str) {
+            return typeof str == 'string' && !str.trim() || typeof str == 'undefined' || str === null;
+        }
+
+    </script>
+    <script>
+        angular.module('ht-login', []).run(function() {
+            window.alert('Holy Tomatoes Login is Angularized');
+        });
+    </script>
+</head>
+<body ng-app="ht-login" style="background-image:url(images/bg4.jpeg);background-size:100%;background-repeat:repeat-no">
+<script type="text/javascript">
+    $(document).ready(function () {
+        mixpanel.track_links("#enroll", "Clicked Signup link");
+//          mixpanel.init("11d252c2a253967ce7afb3189854f9a5", { your: "config" }, "signups");
+        webserver = getHostName($(location).attr("href"));
+        if (webserver != null) {
+            webserver = "http://" + webserver;
+        } else {
+            webserver = "http://localhost"
+        }
+        console.log('webserver: ' + webserver);
+        userStub.webserver = webserver;
+        $('#username').focusin(function () {
+                    $('#notice').html('');
+                    $('#notice').css('border,none');
+                }
+        );
+        //           $("#username, #password").addClass('jqx-input');
+        //           if (theme != '') {
+        //               $("#username, #password").addClass('jqx-input-' + theme);
+        //           }
+        $("#rememberme").jqxCheckBox({width: 130});
+        $("#loginButton").jqxButton({theme: theme});
+
+        // add validation rules.
+        $('#form').jqxValidator({
+            rules: [
+                {input: '#username', message: 'Email address is required!', action: 'keyup, blur', rule: 'required'},
+                {input: '#username', message: 'Email appears to be invalid!', action: 'keyup, blur', rule: 'email'},
+                {input: '#password', message: 'Password is required!', action: 'keyup, blur', rule: 'required'},
+                {
+                    input: '#password',
+                    message: 'Your password must be between 4 and 18 characters!',
+                    action: 'keyup, blur',
+                    rule: 'length=4,18'
+                }
+            ]
+
+        });
+        // validate form.
+        $("#loginButton").click(function () {
+            $('#form').jqxValidator('validate');
+        });
+        $("#form").on('validationSuccess', function () {
+            login();
+        });
+    });
+    function getUser() {
+        alert('Go Get ' + $('#username').val());
+    }
+    function updatePeaches() {
+        Cookies.set("peaches", JSON.stringify(userStub), {expires: 1});
+    }
+    function login() {
+        $("#form-iframe").fadeIn('fast');
+        userStub.email = $('#username').val().toLowerCase();
+        userStub.password = $('#password').val();
+        userStub.status = "ok";
+        $.ajax({
+            crossdomain: true,
+            type: 'post',
+            data: userStub,
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            url: webserver + ':8080/members/login'
+        }).success(function (data) {
+            if (!isEmpty(data)) {
+                if (data.status == "ok") {
+                    $('#wuzzup').html(data.churchname);
+                    if ($('#rememberme').val() == true) {
+                        Cookies.set('holytomatoes', $('#username').val(), {expires: 90});
+                    } else {
+                        var HTCookie = Cookies.get('holytomatoes');
+                        if (HTCookie != $('#username').val()) {
+                            Cookies.set('holytomatoes', $('#username').val(), {expires: 90});
+                        }
+                    }
+                    userStub.firstname = data.firstname;
+                    userStub.lastname = data.lastname;
+                    userStub.churchname = data.churchname;
+                    userStub.placeid = data.placeid;
+                    userStub.churchadmin = data.churchadmin;
+                    userStub.email = $('#username').val();
+                    userStub.password = $('#password').val();
+                    userStub.id = data.userid;
+                    userStub.churchid = data.churchid;
+                    userStub.webserver = webserver;
+                    updatePeaches();
+                    $(location).attr('href', webserver + '/index.html');
+                } else {
+                    $('#notice').css("border:red 1px solid");
+                    $('#notice').css("visibility:visible");
+                    $('#notice').html($('#username').val() + '<br><h3>' + data.status + '</h3>');
+                }
+            } else {
+                alert('Data Access problem - No results returned');
+            }
+        });
+    }
+</script>
+<div class="viewport">
+    <form class="form" id="form" method="post" target="form-iframe" action="javascript:login()" style="width: 650px;">
+        <div style="margin-bottom:-8px;">
+            <div style="clear:left"><img src="images/logo.png"></div>
+            <div id="notice"></div>
+        </div>
+        <div class="loginInput">
+            <input type="text" id="username" name="username" placeholder="Email address"/>
+        </div>
+        <div class="loginInput">
+            <input type="password" id="password" name="password" placeholder="Password"/>
+        </div>
+        <div style="margin-bottom:-12px;">
+            <input id="loginButton" type="submit" value="Login" class="signin"/>
+        </div>
+        <div name="rememberme" id="rememberme"><span style="text-align:center;"><small>Remember me</small>&nbsp; <a
+                href="javascript:forgotpassword();">Forgot password</span></a>
+            &nbsp;<a id="enroll" href="javascript:signUp()">Sign Up</a>
+        </div>
+        <div id="wuzzup">
+
+        </div>
+        <div style="display:none;">
+            <iframe id="form-iframe" name="form-iframe" class="demo-iframe" frameborder="0"></iframe>
+
+        </div>
+    </form>
+</div>
+</div>
+<div class="footer">
+    2015 Digital Support Systems Inc. All rights reserved.
+</div>
+</body>
+</html>

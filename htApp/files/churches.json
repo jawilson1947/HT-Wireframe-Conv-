@@ -1,0 +1,705 @@
+{ "_id": "",
+"profile": {
+		"churchname": "Mount Zion Baptist",
+		"domain": "",
+		"address": "",
+		"city": "",
+		"state": "",
+		"zipcode": "",
+		"phone": "",
+		"created_on": "",
+		"updated_at": "",
+		"googlemapplaceid": "",
+		"country": "",
+		"churchid": 0,
+		"website": "",
+		"contactemail": ""
+	},
+	"stats": {
+		"membercount": 0,
+		"surveysample": 0,
+		"averageeventscore": 0,
+		"hasdefaultevents": 0,
+		"membersurveyscore": 0,
+		"peersurveyscore": 0
+	},
+	"membersurvey": {
+		"membercount": 0,
+		"validsample": 0
+	},
+	"peersurvey": {
+		"ownertype": "church",
+		"aggregate": 0,
+		"updated_at": "",
+		"survey": [{
+			"section": "Church Philosophy",
+			"rank": 1,
+			"tagline": "(As relayed by church leaders)",
+			"questions": [{
+				"question": "Clear Vision",
+				"label": "a",
+				"score": 0,
+				"rank": 1,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Encourages Self Study",
+				"label": "b",
+				"score": 0,
+				"rank": 2,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Discipleship Process",
+				"label": "c",
+				"score": 0,
+				"rank": 3,
+				"tooltip": "",
+				"description": ""
+			}],
+			"aggregate": 0
+		}, {
+			"section": "Church Personality",
+			"rank": 2,
+			"tagline": "",
+			"questions": [{
+				"question": "Inclusiveness",
+				"label": "a",
+				"score": 0,
+				"rank": 1,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Welcoming/Friendliness",
+				"label": "b",
+				"score": 0,
+				"rank": 2,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Diversity",
+				"label": "c",
+				"score": 0,
+				"rank": 3,
+				"tooltip": "",
+				"description": ""
+			}],
+			"aggregate": 0
+		}, {
+			"section": "Environment",
+			"rank": 3,
+			"tagline": "",
+			"questions": [{
+				"question": "Parking",
+				"label": "a",
+				"score": 0,
+				"rank": 1,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Facilities",
+				"label": "b",
+				"score": 0,
+				"rank": 2,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Space",
+				"label": "c",
+				"score": 0,
+				"rank": 3,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Location",
+				"label": "d",
+				"score": 0,
+				"rank": 4,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Signage",
+				"label": "e",
+				"score": 0,
+				"rank": 5,
+				"tooltip": "",
+				"description": ""
+			}],
+			"aggregate": 0
+		}, {
+			"section": "Amenities",
+			"rank": 4,
+			"tagline": "",
+			"questions": [{
+				"question": "Wi-Fi",
+				"label": "a",
+				"score": 0,
+				"rank": 1,
+				"tooltip": "",
+				"description": ""
+			}],
+			"aggregate": 0
+		}, {
+			"section": "Active Ministries",
+			"rank": 5,
+			"tagline": "",
+			"questions": [{
+				"question": "Evangelism",
+				"label": "a",
+				"score": 0,
+				"rank": 1,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Community Outreach",
+				"label": "b",
+				"score": 0,
+				"rank": 2,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Community Impact",
+				"label": "c",
+				"score": 0,
+				"rank": 3,
+				"tooltip": "",
+				"description": ""
+			}],
+			"aggregate": 0
+		}, {
+			"section": "Main Worship Service",
+			"rank": 6,
+			"tagline": "",
+			"questions": [{
+				"question": "Flow of Service",
+				"label": "a",
+				"score": 0,
+				"rank": 1,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Relevance of Message",
+				"label": "b",
+				"score": 0,
+				"rank": 2,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Use of Time",
+				"label": "c",
+				"score": 0,
+				"rank": 3,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Effective use of Technology",
+				"label": "d",
+				"score": 0,
+				"rank": 4,
+				"tooltip": "",
+				"description": ""
+			}, {
+				"question": "Quality of Music",
+				"label": "e",
+				"score": 0,
+				"rank": 5,
+				"tooltip": "",
+				"description": ""
+			}],
+			"aggregate": 0
+		}]
+	},
+	"events": [{
+		"_index": 1,
+		"eventid": 0,
+		"eventname": "Main Worship Service",
+		"rank": 1,
+		"interval": 7,
+		"default": 1,
+		"startdate": null,
+		"enddate": null,
+		"lastrating_at": "2016-02-02 16:22:15",
+		"created_on": "2016-02-02 16:22:14",
+		"averagescore": 0,
+		"ratingscount": 0,
+		"onlineevent": 0,
+		"hyperlink": "",
+		"enabled": 0,
+		"questions": [{
+			"question": "I was made to feel welcome",
+			"_index": 1,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 1,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "It is likely that I would return",
+			"_index": 2,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 2,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "I would recommend to someone else",
+			"_index": 3,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 3,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 4605
+		}, {
+			"question": "This is a place that I could join",
+			"_index": 4,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 4,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The music was engaging",
+			"_index": 5,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 5,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The sermon was timely",
+			"_index": 6,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 6,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The facilities were very comfortable",
+			"_index": 7,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 7,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The atmosphere was friendly",
+			"_index": 8,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 8,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "Online Experience was good",
+			"_index": 9,
+			"dtz": 1,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 9,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}]
+	}, {
+		"_index": 2,
+		"eventid": "483",
+		"eventname": "Special Presentation",
+		"rank": 2,
+		"interval": 1,
+		"default": 1,
+		"startdate": null,
+		"enddate": null,
+		"lastrating_at": "2016-02-02 16:22:15",
+		"created_on": "2016-02-02 16:22:14",
+		"averagescore": 0,
+		"ratingscount": 0,
+		"onlineevent": 0,
+		"hyperlink": "",
+		"enabled": 0,
+		"questions": [{
+			"question": "I was made to feel welcome",
+			"_index": 1,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 1,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "It is likely that I would return",
+			"_index": 2,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 2,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "I would recommend to someone else",
+			"_index": 3,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 3,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "This is a place that I could join",
+			"_index": 4,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 4,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The music was engaging",
+			"_index": 5,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 5,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The sermon was timely",
+			"_index": 6,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 6,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 4623
+		}, {
+			"question": "The facilities were very comfortable",
+			"_index": 7,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 7,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The atmosphere was friendly",
+			"_index": 8,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 8,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 4625
+		}, {
+			"question": "Online Experience was good",
+			"_index": 9,
+			"dtz": 1,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 9,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}]
+	}, {
+		"_index": 3,
+		"eventid": "484",
+		"eventname": "Concert",
+		"rank": 3,
+		"interval": 1,
+		"default": 1,
+		"startdate": null,
+		"enddate": null,
+		"lastrating_at": "2016-02-02 16:22:15",
+		"created_on": "2016-02-02 16:22:14",
+		"averagescore": 0,
+		"ratingscount": 0,
+		"onlineevent": 0,
+		"hyperlink": "",
+		"enabled": 0,
+		"questions": [{
+			"question": "I was made to feel welcome",
+			"_index": 1,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 1,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "It is likely that I would return",
+			"_index": 2,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 2,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "I would recommend to someone else",
+			"_index": 3,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 3,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "This is a place that I could join",
+			"_index": 4,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 4,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The music was engaging",
+			"_index": 5,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 5,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The sermon was timely",
+			"_index": 6,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 6,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The facilities were very comfortable",
+			"_index": 7,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 7,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The atmosphere was friendly",
+			"_index": 8,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 8,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "Online Experience was good",
+			"_index": 9,
+			"dtz": 1,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 9,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}]
+	}, {
+		"_index": 4,
+		"eventid": 0,
+		"eventname": "Forum - Discussion",
+		"rank": 4,
+		"interval": 1,
+		"default": 1,
+		"startdate": null,
+		"enddate": null,
+		"lastrating_at": "2016-02-02 16:22:15",
+		"created_on": "2016-02-02 16:22:14",
+		"averagescore": 0,
+		"ratingscount": 0,
+		"onlineevent": 0,
+		"hyperlink": "",
+		"enabled": 0,
+		"questions": [{
+			"question": "I was made to feel welcome",
+			"_index": 1,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 1,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "It is likely that I would return",
+			"_index": 2,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 2,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "I would recommend to someone else",
+			"_index": 3,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 3,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "This is a place that I could join",
+			"_index": 4,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 4,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The music was engaging",
+			"_index": 5,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 5,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The sermon was timely",
+			"_index": 6,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 6,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The facilities were very comfortable",
+			"_index": 7,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 7,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The atmosphere was friendly",
+			"_index": 8,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 8,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "Online Experience was good",
+			"_index": 9,
+			"dtz": 1,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 9,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}]
+	}, {
+		"_index": 5,
+		"eventid": 0,
+		"eventname": "Online Event",
+		"rank": 5,
+		"interval": 1,
+		"default": 1,
+		"startdate": null,
+		"enddate": null,
+		"lastrating_at": "2016-02-02 16:22:15",
+		"created_on": "2016-02-02 16:22:14",
+		"averagescore": 0,
+		"ratingscount": 0,
+		"onlineevent": 0,
+		"hyperlink": "",
+		"enabled": 0,
+		"questions": [{
+			"question": "I was made to feel welcome",
+			"_index": 1,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 1,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 4663
+		}, {
+			"question": "It is likely that I would return",
+			"_index": 2,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 2,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "I would recommend to someone else",
+			"_index": 3,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 3,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "This is a place that I could join",
+			"_index": 4,
+			"dtz": 0,
+			"visitoronly": 1,
+			"memberonly": 0,
+			"rank": 4,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The music was engaging",
+			"_index": 5,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 5,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The sermon was timely",
+			"_index": 6,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 6,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 4668
+		}, {
+			"question": "The facilities were very comfortable",
+			"_index": 7,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 7,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "The atmosphere was friendly",
+			"_index": 8,
+			"dtz": 0,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 8,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}, {
+			"question": "Online Experience was good",
+			"_index": 9,
+			"dtz": 1,
+			"visitoronly": 0,
+			"memberonly": 0,
+			"rank": 9,
+			"datecreated": "2016-01-29 21:04:59",
+			"categoryid": 0
+		}]
+	}]
+   }
+
+

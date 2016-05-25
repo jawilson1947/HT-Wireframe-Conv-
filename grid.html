@@ -1,0 +1,301 @@
+<html lang="en">
+<head>
+    <title id="Description">GRID.HTML</title>
+    <meta name="description" content="This sample demonstrates how we can bind jQWidgets TreeGrid widget to JSON Data by using jQWidgets DataAdapter plugin.">
+    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdatatable.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxtreegrid.js"></script>
+ 
+     <script type="text/javascript" src="jq/jqwidgets/jqxlistbox.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxdropdownlist.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxtooltip.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxinput.js"></script> 
+ 
+    <script type="text/javascript" src="jq/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.edit.js"></script>  
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.selection.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxnumberinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="jq/scripts/demos.js"></script>
+    
+    <script type="text/javascript" src="jq/scripts/demos.js"></script>
+   <script type="text/javascript" src="js/js.cookie.js"></script>
+   <script type="text/javascript">
+   	               var members;
+   </script>
+ </head>
+<body class='default' id='user'>
+    <script type="text/javascript">
+        $(document).ready(function () {
+         var online = Cookies.get('peaches');
+            if(typeof(online) !="undefined") {
+               userStub = $.parseJSON(online);                
+               person = userStub.firstname + ' ' + userStub.lastname;         
+               $.ajax({
+               type: 'post',
+               data: { "info" : JSON.stringify(userStub) },
+               url: 'getuserratingstats.php',
+                dataType: 'json',
+                cache: false,
+                async: false,
+          success: function(data) {
+          	members = data;
+          	alert(members['0']['churchid']);
+    	   console.log(data);
+                      },
+       error: function(data) {
+        console.log(data.error);              }
+              });
+              $("#treeGrid").on('cellbeginedit', function (event) {
+                var args = event.args;
+                $("#cellbegineditevent").text("Event Type: cellbeginedit, Column: " + args.datafield + ", Row: " + (1 + args.rowindex) + ", Value: " + args.value);
+            });
+
+            $("#treeGrid").on('cellendedit', function (event) {
+                var args = event.args;
+                $("#cellendeditevent").text("Event Type: cellendedit, Column: " + args.datafield + ", Row: " + (1 + args.rowindex) + ", Value: " + args.value);
+            });
+
+         
+            var source =
+            {
+                dataType: "json",
+                dataFields: [
+                    { name: 'churchid', type: 'number' },
+                    { name: 'churchname', type: 'string' },
+                    { name: 'city', type: 'string' },
+                    { name: 'country', type: 'string' },
+                    { name: 'eventname', type: 'string' },
+                    { name: 'eventdate', type: 'date' },
+                    { name: 'totalscore', type: 'number'},
+                    { name: 'category', type: 'string' },
+                    { name: 'score', type: 'number' },
+                    { name: 'expanded', type: 'bool' },
+                    { name: 'children', type: 'array' },
+                    { name: 'eventid', type: 'number' },
+                    { name: 'ratingid', type: 'number' }
+                 ],
+                hierarchy:
+                {
+                	root: 'children'
+               },
+                id: 'eventid',
+                localData: members
+            };
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            // create Tree Grid
+            $("#treeGrid").jqxTreeGrid(
+            {
+                width: 850,
+                height:600,
+                source: dataAdapter,
+                sortable: true,
+                pageable: true,
+                editable: true,
+                showToolbar: true,
+                altRows: true,
+                columnsResize: true,
+                sortable: true,
+                filterable: true,
+                filterMode: 'advanced',
+                icons: true,
+                ready: function() {
+                      $('#status').html('<h2>Ready!</h2>');
+//                    $("#treeGrid").jqxTreeGrid('expandRow', '3');
+//                    $("#treeGrid").jqxTreeGrid('expandRow', '350');
+                },
+                 pagerButtonsCount: 8,
+                toolbarHeight: 30,
+                renderToolbar: function(toolBar)
+                {
+                    var toTheme = function (className) {
+                        if (theme == "") return className;
+                        return className + " " + className + "-" + theme;
+                    }
+
+                    // appends buttons to the status bar.
+                    var container = $("<div style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
+                    var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
+                     var editButton = $(buttonTemplate);
+                    var deleteButton = $(buttonTemplate);
+                    var cancelButton = $(buttonTemplate);
+                    var updateButton = $(buttonTemplate);
+                    container.append(editButton);
+                    container.append(deleteButton);
+                    container.append(cancelButton);
+                    container.append(updateButton);
+
+                    toolBar.append(container);
+                     editButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
+                    editButton.find('div:first').addClass(toTheme('jqx-icon-edit'));
+                    editButton.jqxTooltip({ position: 'bottom', content: "Edit"});
+
+                    deleteButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
+                    deleteButton.find('div:first').addClass(toTheme('jqx-icon-delete'));
+                    deleteButton.jqxTooltip({ position: 'bottom', content: "Delete"});
+
+                    updateButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
+                    updateButton.find('div:first').addClass(toTheme('jqx-icon-save'));
+                    updateButton.jqxTooltip({ position: 'bottom', content: "Save Changes"});
+
+                    cancelButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
+                    cancelButton.find('div:first').addClass(toTheme('jqx-icon-cancel'));
+                    cancelButton.jqxTooltip({ position: 'bottom', content: "Cancel"});
+
+                    var updateButtons = function (action) {
+                        switch (action) {
+                            case "Select":
+                                deleteButton.jqxButton({ disabled: false });
+                                editButton.jqxButton({ disabled: false });
+                                cancelButton.jqxButton({ disabled: true });
+                                updateButton.jqxButton({ disabled: true });
+                                break;
+                            case "Unselect":
+                                deleteButton.jqxButton({ disabled: true });
+                                editButton.jqxButton({ disabled: true });
+                                cancelButton.jqxButton({ disabled: true });
+                                updateButton.jqxButton({ disabled: true });
+                                break;
+                            case "Edit":
+                                deleteButton.jqxButton({ disabled: true });
+                                editButton.jqxButton({ disabled: true });
+                                cancelButton.jqxButton({ disabled: false });
+                                updateButton.jqxButton({ disabled: false });
+                                break;
+                            case "End Edit":
+                                deleteButton.jqxButton({ disabled: false });
+                                editButton.jqxButton({ disabled: false });
+                                cancelButton.jqxButton({ disabled: true });
+                                updateButton.jqxButton({ disabled: true });
+                                break;
+
+                        }
+                    }
+
+                    var rowKey = null;
+                    $("#treeGrid").on('rowSelect', function (event) {
+                        var args = event.args;
+                        rowKey = args.key;
+                        updateButtons('Select');
+                    });
+                    $("#treeGrid").on('rowUnselect', function (event) {
+                        updateButtons('Unselect');
+                    });
+                    $("#treeGrid").on('rowEndEdit', function (event) {
+                        updateButtons('End Edit');
+                    });
+                    $("#treeGrid").on('rowBeginEdit', function (event) {
+                        updateButtons('Edit');
+                    });
+                    cancelButton.click(function (event) {
+                        if (!cancelButton.jqxButton('disabled')) {
+                            // cancel changes.
+                            $("#treeGrid").jqxTreeGrid('endRowEdit', rowKey, true);
+                        }
+                    });
+
+                    updateButton.click(function (event) {
+                        if (!updateButton.jqxButton('disabled')) {
+                            // save changes.
+                            $("#treeGrid").jqxTreeGrid('endRowEdit', rowKey, false);
+                        }
+                    });
+
+                    editButton.click(function () {
+                        if (!editButton.jqxButton('disabled')) {
+                            $("#treeGrid").jqxTreeGrid('beginRowEdit', rowKey);
+                            updateButtons('edit');
+
+                        }
+                    });
+                    deleteButton.click(function () {
+                        if (!deleteButton.jqxButton('disabled')) {
+                            var selection = $("#treeGrid").jqxTreeGrid('getSelection');
+                            if (selection.length > 1) {
+                                var keys = new Array();
+                                for (var i = 0; i < selection.length; i++) {
+                                    keys.push($("#treeGrid").jqxTreeGrid('getKey', selection[i]));
+                                }
+                                $("#treeGrid").jqxTreeGrid('deleteRow', keys);
+                            }
+                            else {
+                                $("#treeGrid").jqxTreeGrid('deleteRow', rowKey);
+                            }
+                            updateButtons('delete');
+
+                        }
+                    });
+                },
+               columns: [
+                  { text: 'Church Name', columnGroup: 'Name', dataField: 'churchname', width: '50%' ,
+                    cellsRenderer: function (rowKey, dataField, value, data) {
+                    	if (data.churchid == userStub.churchid) {
+                          return "<div style='margin: 0px 20px;'>"+ value+"<img style='margin-top: 3px;' width='16' height='16' src='jq/images/favorites.png'/></div>";
+                     }
+                  }
+},
+                  { text: 'Event Name', columnGroup: 'Name', dataField: 'eventname', width: '30%' ,
+                  },
+                  { text: 'Event Date', columnGroup: 'Name', dataField: 'eventdate', columnType: 'datetimeinput', width:'25%', align: 'right', cellsAlign: 'right', cellsFormat: 'd',
+                        validation: function (cell, value) {
+                          if (value == "")
+                             return true;
+
+                          var year = value.getFullYear();
+                          if (year >= 2017) {
+                              return { result: false, message: "Ship Date should be before 1/1/2017" };
+                          }
+                          return true;
+                      }
+                    
+                  },
+                  { text: 'Avg Score', columnGroup: 'Name', dataField: 'totalscore', width: '10%'},
+                  { text: 'Question', dataField: 'category', width: '50%'},
+                  { text: 'Score', dataField: 'score', width: '15%'},
+                  { text: 'City', dataField: 'city', width: '25%' },
+                  { text: 'Country', dataField: 'country', width: 63,
+                    cellsRenderer: function (rowKey, dataField, value, data) {
+                      switch (value) {
+                          case "United States":
+                              return "<div style='margin: 0px 20px;'><img style='margin-top: 3px;' width='16' height='16' src='jq/images/usa.png'/></div>";
+                          case "United Kingdom":
+                              return "<div style='margin: 0px 20px;'><img style='margin-top: 3px;' width='16' height='16' src='jq/images/uk.png'/></div>";
+                      }
+                  }
+               },
+               ],
+                columnGroups: [
+                  { text: person + "'s Event Ratings", name: 'Name' }
+                ]
+            });
+                 $( document ).ajaxComplete(function( event, xhr, settings ) {
+                    console.log(settings.url  + ' has completed');
+                    console.log( "<i>Triggered ajaxComplete handler. The result is " + xhr.responseText +"</i>");
+ 
+                }); 
+     } else {
+     	alert('Cannot Determine User data - Restart');
+     }
+   });
+</script>
+
+ <div id="treeGrid">
+         <div style="font-size: 12px; font-family: Verdana, Geneva, 'DejaVu Sans', sans-serif; margin-top: 30px;">
+            <div id="cellbegineditevent"></div>
+            <div style="margin-top: 10px;" id="cellendeditevent"></div>
+       </div>
+
+ </div>
+ <div id="status">
+ </div>
+ </body>
+</html>

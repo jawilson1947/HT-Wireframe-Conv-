@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Dragging</title>
+		<script type="text/javascript" src="http://localhost/js/jquery.js"></script>
+        <script type="text/javascript" src="http://localhost/js/jquery-migrate.js"></script>
+        <script type="text/javascript">
+          var mousex = 0, mousey = 0;
+          var divLeft, divTop;
+        </script>
+      <style type="text/css">
+      	.dragMe
+      	{
+      		background-color:#8FBC8F;
+      		border: 1px solid black;
+      		color: #FFF;
+      		float: left;
+      		font-family: verdana, arial;
+      		font-size: 14px;
+      		font-weight: bold;
+      		height: 100px;
+      		margin: 10px;
+      		text-align: center;
+      		width: 100px;
+      	}
+      </style>
+	</head>
+	<body>
+	<script type="text/javascript">
+		$(document).ready(function()
+         {
+          $('.dragMe').mousedown(function(e)
+             {
+             	var offset = $(this).offset();
+             	divLeft = parseInt(offset.left,10);
+             	divTop = parseInt(offset.top,10);
+             	mousey = e.pageY;
+             	mousex = e.pageX;
+             	$(this).bind('mousemove',dragElement);
+             }
+           );//('.dragMe').mousedown
+         }
+	);//$(document).ready
+	//
+	function dragElement(event)
+	{
+		var left = divLeft + (event.pageX - mousex);
+		var top = divTop + (event.pageY - mousey);
+		$(this).css(
+		 {
+		 	'top' : top + 'px',
+		 	'left' : left + 'px',
+		 	'position' : 'absolute'
+		 }
+		);//(this).css
+		return false;
+	 }// dragElement(event)
+	 
+	 $(document).mouseup(function()
+	   {
+	   	$('.dragMe').unbind('mousemove');
+	   }
+	 );//$(document).mouseup
+	 
+	</script>
+<div class="dragMe">
+	Drag Me
+</div>
+<div class="dragMe">
+	Drag Me too
+</div>
+	</body>
+</html>

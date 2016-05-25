@@ -1,0 +1,905 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--events.html-->
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Church Events Manager</title>
+ 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+		<link href="styles/ht.css" type="text/css" rel="stylesheet">
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,900' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="jq/jqwidgets/styles/jqx.base.css" type="text/css" />
+<link rel="stylesheet" href="jq/jqwidgets/styles/jqx.summer.css" type="text/css" />
+<link rel="stylesheet" href="jq/jqwidgets/styles/jqx.office.css" type="text/css" />
+<link rel="stylesheet" href="jq/jqwidgets/styles/jqx.orange.css" type="text/css" />
+<link rel="stylesheet" href="jq/jqwidgets/styles/jqx.energyblue.css" type="text/css" />
+<link rel="stylesheet" href="jq/jqwidgets/styles/jqx.arctic.css" type="text/css" />
+         <link rel="stylesheet" href="node_modules/jquery-treegrid/styles.css">
+        <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
+        <link rel="stylesheet" href="node_modules/jquery-treegrid/css/jquery.treegrid.css">
+
+
+
+
+       <style>
+    	}
+     	#churchlist{
+     	  margin:6px;
+     	  padding:4px;
+     	  border: solid 1px blue;
+     	}
+     	#warnings{
+     	font-family: verdana;
+     	font-size: 10pt;
+     	border:1px solid maroon;
+     	text-align: center;	
+     	}
+       #event-editcontrols {
+         	text-align:center;
+         	font-style: bold;
+         	font-family: verdana;
+         }
+         .appm
+         {
+         	color:white;
+         	font-family: verdana;
+            font-style: bold;
+            text-align: center;
+            background-color: #C03030;
+            margin-left:10px;
+            margin-right: 10px;
+            margin-bottom: 12px; 
+            position: relative;
+         }
+         #churchevents
+         {
+          border: 1px solid #C03030;
+          padding: 2px; 
+          width: '100%';
+          height: 100px; 
+	      margin-left: 1px;
+	      text-align: center;
+         }
+         button, select { text-align:center;
+         }
+         #notification{
+          text-align:right;
+          width:'100%';
+         }
+         #question-manager }
+         width: 850;
+         }
+      </style>
+     <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jq/scripts/demos.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxwindow.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdocking.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxpanel.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxsplitter.js"></script>
+     <script type="text/javascript" src="jq/jqwidgets/jqxlistbox.js"></script>
+   <script type="text/javascript" src="js/js.cookie.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxexpander.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jq/scripts/json2.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdockpanel.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxangular.js"></script>
+     <script type="text/javascript" src="jq/jqwidgets/jqxdatatable.js"></script>
+   <script type="text/javascript" src="jq/jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.selection.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.columnsresize.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxdata.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxcombobox.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxnotification.js"></script>
+   <script type="text/javascript" src="jq/jqwidgets/jqxmenu.js"></script>
+
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.sort.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.pager.js"></script> 
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.edit.js"></script> 
+   <script type="text/javascript" src="js/htlib.js"></script>
+ 
+
+<script type="text/javascript">
+        var genericdb = {"sql":"","presql":"","postsql":"","status":"","action":"lookup","error":"","source":"events.html"};
+        var ChurchEvent = {"defaultevent":"","EventID":0,"EventName":"","Recurring":"no","ChurchID":0,"rank":0,"startdate":"","enddate":"","interval":0,"Online":"no","Enabled":"yes","hyperlink":"","churchname":"","mode":"","status":"","error":"","sql":""};
+        var Question = {"CategoryID":0,"Category":"","EventID":0,"ChurchID":0,"DontTallyIfZero":"no","rank":0,"VisitorOnly":false,"MemberOnly":false,"status":"","action":"","sql":"","mode":"","error":""};
+ 	    var webserver;    
+function getHostName(url) {
+    var match = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
+    if (match != null && match.length > 2 && typeof match[2] === 'string' && match[2].length > 0) {
+    return match[2];
+    } else {
+      return null;
+    }
+}
+
+</script>    
+</head>
+<body>
+ <header>
+  <div class="navbar">
+   <div class="navbar-top">
+    <div class="navbar-inner">
+     <div class="container">
+	  <h1><a href="" id="logo"><img src="images/logo.png" alt="Holy Tomtatoes" /></a></h1>
+	  <nav id="main" width="100%">
+       <a href="login.html" id="mobile-link" title="Login">Login</a> <a href="logon.html" id="menu-icon"></a>
+	   <ul>
+		<li><a href="javascript:outahere(1);" title="Home">Home</a></li>
+		<li><a href="javascript:outahere(2);" title="Change basic user profile attributes">My Stub</a></li>
+		<li><a href="#" title="FAQ">FAQ</a></li>
+		<li><a href="#" title="Contact Us">Contact Us</a></li>
+        <li><a href="javascript:outahere(3);" title="Logout">Logout</a></li>
+	   </ul>
+	  </nav>
+	 </div> <!--container-->
+    </div> <!--Navbar-inner End -->
+   </div> <!--Navbar-top End -->
+  </div> <!--Navbar End -->
+ </header>			
+ <br>
+  <table width="100%">
+ 	<tr>
+ 		<td style="vertical-align:top" align="center"> <div id="churchlist"></div>
+        </td>
+ 		 <td><div id="mainSplitter">
+ <div>
+  <div id="firstNested">
+   <div>
+    <div id="secondNested">
+     <div id="churchevents">
+     </div>
+     <div id="event-edit-controls">
+     </div>
+    </div>
+   </div>
+   <div id="event-data">
+   </div>
+  </div>
+ </div>
+  <div>
+</div>
+</td>
+</tr>
+
+    </div></td>
+<td style="vertical-align:top">
+	<div id="event-editcontrols">
+</div></td>
+ 	</tr>
+ 	<tr>
+ 		<td>     <div id="options" style="float:left;">
+ 		  <div id="notification" dock="center">
+ 		  <div id="acv-button">
+ 		    <input type="button" value="Button" id="addchurchevent" />
+  		  </div>
+ 		  	
+ 		  </div>
+ 		</div>
+</td>
+ 		<td>   <div id="question-manager">
+     <div id="questions" style="width:100%;">
+     </div>
+<!--     <div id="question-data"</div>
+     </div>-->
+    </div>	
+</td>
+ 	</tr>
+ </table>
+       	<p>
+         <div id="footer-ft">
+			<div class="wrap">
+                <nav>
+					<ul>
+						<li>2015 © HOLY TOMATOES</li>
+						<li><a href="#" title="Terms of Use">Terms of Use</a></li>
+                        <li><a href="#" title="Contact Us">Contact Us</a></li>
+						<li><a href="#" title="Privacy Policy">Privacy Policy</a></li>
+					</ul>
+					</ul>
+				</nav>
+    		</div>
+         	<p>
+         </div>		
+    		<div id="warnings">
+    			
+    		</div>
+    		   		
+  <script type="text/javascript">
+ 
+$(document).ready(function() {
+    webserver = getHostName($(location).attr("href"));
+    if (webserver != null) {
+        webserver = "http://" + webserver;
+    } else {
+        webserver = "http://localhost"
+    }
+
+    $("#churchlist").jqxPanel({ width: 350, height: 300});
+             $('#mainSplitter').jqxSplitter({ theme: 'summer', width: 760, height: 300, orientation: 'horizontal', panels: [{ size: 300, collapsible: false }] });
+             $('#firstNested').jqxSplitter({ theme: 'arctic', width: '100%', height: '100%',  orientation: 'vertical', panels: [{ size: 300, collapsible: false}] });
+             $('#secondNested').jqxSplitter({ theme: 'energyblue', width: '100%', height: '100%',  orientation: 'horizontal', panels: [{ size: 150}] });
+             $("#options").jqxPanel({ width: 350, height: 300});
+             $('#question-manager').jqxPanel({ theme: 'summer', width: 760, height: 300 });
+             $("#addchurchevent").jqxButton({ width: '150'});
+
+
+             $("#addchurchevent").on('click', function () {
+      	      clearEventVars();
+      	      ChurchEvent.EventName = "New Event";
+      	      ChurchEvent.EventID = 0;
+      	      createEventDataForm();
+    	      ChurchEvent.mode="add";
+    	     $('#enabled').val(ChurchEvent.Enabled);
+     	     $('#eventname').val(ChurchEvent.EventName);
+     	     $('#startdate').jqxDateTimeInput('setDate', ChurchEvent.startdate);
+     	     $('#enddate').jqxDateTimeInput('setDate', ChurchEvent.enddate);
+     	     $('#hyperlink').val(ChurchEvent.hyperlink);
+     	     $('#interval').val(ChurchEvent.interval);
+     	     $('#online').val(ChurchEvent.Online);
+     	     $('#question-manager').hide();
+            });
+                 genericdb.sql = "select concat_ws(' | ',churchname, city,state) as church, ChurchID as id from ht.tblchurch where DefaultEventsCreated = true order by churchname";
+           $.ajax({
+            url: webserver+ '/churches/getevents/*',
+           type: 'post',
+           data: {"info" : JSON.stringify(genericdb)},
+           dataType: 'json',
+              async: false,
+           success: function(data) {
+               var source =
+                {
+                    datatype: "json",
+                    datafields: [
+                        { name: 'church' },
+                        { name: 'id' }
+                    ],
+                    localdata: data
+                };
+                var dataAdapter = new $.jqx.dataAdapter(source);
+                // Create a jqxComboBox
+                $("#churchlist").jqxComboBox({ selectedIndex: -1, source: dataAdapter, displayMember: "church", valueMember: "id", width: 350, height: 25});
+                $("#churchlist").on('select', function (event) {
+                    if (event.args) {
+                        var item = event.args.item;
+                        if (item) {
+                            var valueelement = $("<div></div>");
+                            valueelement.text("HT Church ID: " + item.value);
+                            var labelelement = $("<div></div>");
+                            labelelement.text("Church Name on File: " + item.label);
+                             ChurchEvent.ChurchID = item.value;
+                             ChurchEvent.churchname = item.label.split('|', 1)[0];
+                             clearEventVars();
+                             getEvents(item.label,item.value);
+                             clearEventVars();
+      	                     ChurchEvent.EventName = "New Event";
+      	                     ChurchEvent.EventID = 0;
+      	                     createEventDataForm();
+    	                     ChurchEvent.mode="add";
+    	                     $('#enabled').val(ChurchEvent.Enabled);
+     	                     $('#eventname').val(ChurchEvent.EventName);
+     	                     $('#startdate').jqxDateTimeInput('setDate', ChurchEvent.startdate);
+     	                     $('#enddate').jqxDateTimeInput('setDate', ChurchEvent.enddate);
+                    	     $('#hyperlink').val(ChurchEvent.hyperlink);
+     	                     $('#interval').val(ChurchEvent.interval);
+     	                     $('#online').val(ChurchEvent.Online);
+     	                     $('#question-manager').hide();
+                            $("#warnings").children().remove();
+                            $("#warnings").append(labelelement);
+                            $("#warnings").append(valueelement);
+                          }
+                    }
+                });
+               },
+          error: function(data) {
+                alert('Error in Generic Search Engine: ' + data.error);
+          }
+
+            });
+           $("#notification").jqxNotification({
+                width: 250, position: "bottom-left", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
+            });
+   // prevent form submission when enter is pressed
+           $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+             event.preventDefault();
+            return false;
+           }
+// force Return Key to next visible input on form           
+           $(document).on('keydown', 'input', function(e, ui) {
+            if(e.keyCode === 13){
+              e.preventDefault();
+             $(this).nextAll('input:visible').eq(0).focus();
+            }
+         });
+  });
+ 
+    });
+   </script>
+   <script type="text/javascript">
+    function getQuestions() {
+            $('#question-manager').show();
+   	        var newrow = function (i) {
+                var row = {};
+                row["CategoryID"] = 0;
+                row["EventID"] = ChurchEvent.EventID;
+                row["ChurchID"] = ChurchEvent.ChurchID;
+                row["Category"] = "enter new question here";
+                row["rank"] = $("#questions").jqxGrid('getdatainformation').rowscount + 1;
+                row["VisitorOnly"] = false;
+                row["MemberOnly"] = false;
+                row["DontTallyIfZero"] = false;
+                row['mode'] = true;
+                return row;
+            }
+                 
+           genericdb.sql = "select CategoryID, ChurchID, EventID, Category, DontTallyIfZero, rank, VisitorOnly, MemberOnly from ht.tblEventRatings where EventID = " + ChurchEvent.EventID + " order by rank";
+            $.ajax({
+            url: 'genericDB.php',
+           type: 'post',
+           data: {"info" : JSON.stringify(genericdb)},
+           dataType: 'json',
+              async: false,
+           success: function(data) {
+               var source =
+                {
+                    localdata: data,
+                    datatype: "json",
+                    datafields: [
+                        { name: 'CategoryID', type: 'number' },
+                        { name: 'EventID', type: 'number' },
+                        { name: 'ChurchID', type: 'number' },
+                        { name: 'rank', type: 'number'},
+                        { name: 'Category', type: 'string' },
+                        { name: 'DontTallyIfZero', type: 'bool' },
+                        { name: 'VisitorOnly', type: 'bool' },
+                        { name: 'MemberOnly', type: 'bool' },
+                        { name: 'changed', type: 'bool'}
+                                  ],
+                    addrow: function (rowid, rowdata, position, commit) {
+                    	console.log('Adding Question: '+ rowdata.Category);
+                    // synchronize with the server - send insert command
+                    // call commit with parameter true if the synchronization with the server is successful 
+                    //and with parameter false if the synchronization failed.
+                    // you can pass additional argument to the commit callback which represents the new ID if it is generated from a DB.
+ //                          $('#notification').html('&nbsp;Question Added!&nbsp;');
+ //                           $("#notification").jqxNotification("open");
+                     commit(true);
+                },
+                deleterow: function (rowid, commit) {
+                	console.log('Deleting Row: ' + rowid);
+                	var allrows = $('#questions').jqxGrid('getrows');
+                	var datarow = allrows[rowid];
+                	if(datarow.CategoryID > 0) {
+                	genericdb.sql= "delete from ht.tblEventRatings where CategoryID = "+datarow.CategoryID;
+                	genericdb.postsql = "delete from ht.tblUserRating where CategoryID = "+datarow.CategoryID;
+                	      $.ajax({
+                          url: 'genericDB.php',
+                         type: 'post',
+                         data: {"info" : JSON.stringify(genericdb)},
+                         dataType: 'json',
+                         async: false,
+                         success: function(data) {
+                            $('#notification').html('<div>&nbsp;Record Deleted!&nbsp;</div>');
+                            $("#notification").jqxNotification("open");
+                          commit(true);
+                         },
+                      error: function(data) {
+                            $('#notification').html('<div style="color:red">Record Not Deleted!</div>');
+                            $("#notification").jqxNotification("open");
+                            commit(false);
+                    }
+                    });
+                   }
+                    // synchronize with the server - send delete command
+                    // call commit with parameter true if the synchronization with the server is successful 
+                    //and with parameter false if the synchronization failed.
+
+                },
+                updaterow: function (rowid, newdata, commit) {
+                	console.log('Updating Question: ' +newdata['Category']);
+                	newdata['changed'] = true;
+                    // synchronize with the server - send update command
+                    // call commit with parameter true if the synchronization with the server is successful 
+                    // and with parameter false if the synchronization failed.
+ //                           $('#notification').html('&nbsp;Question Updated!&nbsp;');
+ //                           $("#notification").jqxNotification("open");
+                    commit(true);
+                }
+           };
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            $("#questions").jqxGrid(
+            {
+                width: '100%',
+                height: '300',
+                theme: 'office',
+                source: dataAdapter,
+                columnsresize: true,
+                 altrows: true,
+                 sortable: true,
+                 editable: true,
+                 showtoolbar: true,
+                 rendertoolbar: function (toolbar) {
+                    var me = this;
+                    var container = $("<div style='margin: 5px; text-align: center;'></div>");
+                    toolbar.append(container);
+                    container.append('<input id="addrowbutton" type="button" value="Add Question" />');
+                    container.append('<input style="margin-left: 5px;" id="deleterowbutton" type="button" value="Delete Selected" />');
+                    container.append('<input style="margin-left: 5px;" id="saveallbutton" type="button" value="Save All Changes" />');
+                    $("#addrowbutton").jqxButton();
+                    $("#deleterowbutton").jqxButton();
+                    $("#saveallbutton").jqxButton();
+                    // update row.
+                    $("#saveallbutton").off('click').on('click', function () {
+                        var allrows = $("#questions").jqxGrid('getrows');
+                        var saveCount = 0;
+                        var changeCount = 0;
+                        for(i=0;i<allrows.length;i++) {
+                        	if(allrows[i]['changed'] == true){
+                        		changeCount ++;
+                         	   Question.CategoryID = allrows[i]['CategoryID'];
+                        	   Question.EventID = allrows[i]['EventID'];
+                        	   Question.ChurchID = allrows[i]['ChurchID'];
+                        	   Question.Category = allrows[i]['Category'];
+                               Question.rank = allrows[i]['rank'];
+                               Question.VisitorOnly = allrows[i]['VisitorOnly'];
+                               Question.MemberOnly = allrows[i]['MemberOnly'];
+                               Question.DontTallyIfZero = allrows[i]['DontTallyIfZero'];
+                       	       console.log('Updating: '+ Question.Category);
+                	      $.ajax({
+                          url: 'savequestions.php',
+                         type: 'post',
+                         data: {"info" : JSON.stringify(Question)},
+                         dataType: 'json',
+                         async: false,
+                         success: function(data) {
+                           	if(data.status == 'ok') {
+                              allrows[i]['changed'] = false;
+                              saveCount++ ;
+                              allrows[i]['CategoryID'] = data.CategoryID;
+                            } else {
+                           	 $('#warnings').append('<div style="color:red">'+ Question.Category+ 'not updated!</div>');
+                            }	
+                         },
+                      error: function(data) {
+                            $('#warnings').html('<div style="color:red">' + Question.Category + ' Record Not updated!</div>');
+                            $('#warnings').append(data.error);
+                            commit(false);
+                         }
+                       }); //ajax
+               	      } //row changed?
+                     } // for i allrows
+                     if(saveCount == changeCount) {
+                          $('#notification').html('<div><i>'+ saveCount + ' questions saved!</i></div>');
+                          $("#notification").jqxNotification("open");
+                     } else {
+                     	 if(saveCount == 0 ) {
+                    	$('#warnings').append('<div style="color:red"><b><i>No questions were saved</i></b></div>');
+                     	 } else {
+                     	$('#warnings').append('<div style="color:red"><b><i>Only ' + saveCount + ' of ' + changeCount +' questions were saved</i></b></div>');
+                     	 }
+                     }
+                    }); // saveall button.onClick
+                    // create new row.
+                    $("#addrowbutton").off('click').on('click', function () {
+                    	var rowscount = $("#questions").jqxGrid('getdatainformation').rowscount;
+                    	if((rowscount+1) < 11) {
+                        var datarow = newrow();
+                        var commit = $("#questions").jqxGrid('addrow', null, datarow);
+                        } else {
+                         alert("Maximum of 10 rows exceeded");	
+                        }	
+                    });
+                    // delete row.
+                     $("#deleterowbutton").off('click').on('click', function () {
+                        var selectedrowindex = $("#questions").jqxGrid('getselectedrowindex');
+                        var rowscount = $("#questions").jqxGrid('getdatainformation').rowscount;
+                        if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+                          var id = $("#questions").jqxGrid('getrowid', selectedrowindex);
+                          qincore = $('#questions').jqxGrid('getrows')[id]['Category'];
+                   	      if(confirm('Really delete "'+qincore+'" ?')) {
+                            var commit = $("#questions").jqxGrid('deleterow', id);
+                          }
+                        }
+                     });
+                   },
+                   columns: [
+                    { text: 'Priority', datafield: 'rank', width: 80,  cellsalign: 'center', align: 'center'},
+                    { text: 'Question', datafield: 'Category', width: 350 ,
+                     cellsRenderer: function (rowKey, dataField, value, data) {
+                      if(data.CategoryID == 0) {
+                          return '<div style="color:orange;"><i>' + value + '</i></div>';
+                          }
+                        }
+                    },
+                    { text: 'Visitor Only',columntype: 'checkbox', datafield: 'VisitorOnly', width: 110, cellsalign: 'center', align: 'center' },
+                    { text: 'Member Only', columntype: 'checkbox', datafield: 'MemberOnly', width:110, cellsalign: 'center', align: 'center' },
+                    { text: 'Zero if N/A', columntype: 'checkbox', datafield: 'DontTallyIfZero', width: 110,  cellsalign: 'center', align: 'center'}
+
+                ]
+            });
+             $('#questions').off('rowselect').on('rowselect', function (event) {
+                // event arguments.
+                var args = event.args;
+                // selected row.
+                var row = event.args.row;
+                Question.CategoryID = row.CategoryID;
+                Question.Category = row.Category;
+                Question.EventID = row.EventID;
+                Question.ChurchID = row.ChurchID;
+                Question.rank = row.rank;
+                Question.DontTallyIfZero = row.DontTallyIfZero;
+                Question.VisitorOnly = row.VisitorOnly;
+                Question.MemberOnly = row.MemberOnly;
+            
+              });
+           },
+          	error: function(data) {
+      		 $('#warnings').css('border-color:red','visibility:visible');
+      	     $('warnings').html('Houston! we have a problem');	
+                 	}
+       }); 
+      }
+   </script>
+   <script type="text/javascript">
+   	  function genericSearch() {
+            $.ajax({
+            url: 'genericDB.php',
+           type: 'post',
+           data: {"info" : JSON.stringify(pkg)},
+           dataType: 'json',
+          success: function(data) {
+             if(data.status == 'ok') {
+             	$('#warnings').html('<div style="color:blue"> Search Successful</div>');
+             }else{
+              $('#warnings').html('<div style="color:red"><b><i> Not Found in HT Database </i></b></div>')
+             }
+        },
+          error: function(data) {
+          	alert('Error in Generic Search Engine: ' + data.error);
+          }
+        });
+      }
+    function getEvents(churchname,churchid) {
+//    	   $('#churchevents').children().remove();
+           genericdb.sql = "select EventName, EventID, Recurring,rank,startdate,`interval`,hyperlink,Online,Enabled,enddate,`default` from ht.tblEvents where ChurchID = " + churchid + " order by rank";
+           genericdb.postsql = "";
+            $.ajax({
+            url: 'genericDB.php',
+           type: 'post',
+           data: {"info" : JSON.stringify(genericdb)},
+           dataType: 'json',
+              async: false,
+           success: function(data) {
+               var source =
+                {
+                    datatype: "json",
+                    datafields: [
+                        { name: 'EventName', type: 'string'},
+                        { name: 'EventID', type: 'number' },
+                        { name: 'Recurring', type: 'bool' },
+                        { name: 'rank' , type: 'number' },
+                        { name: 'startdate', type: 'date' },
+                        { name: 'interval', type: 'number' },
+                        { name: 'hyperlink', type: 'string' },
+                        { name: 'Online' , type: 'bool'},
+                        { name: 'Enabled', type: 'bool'},
+                        { name: 'enddate', type: 'date'},
+                        { name: 'default', type: 'bool'}
+                    ],
+                    localdata: data
+                };
+                var dataAdapter = new $.jqx.dataAdapter(source);
+                // Create a jqxComboBox
+                $("#churchevents").jqxComboBox({ theme: 'office', selectedIndex: -1, source: dataAdapter, displayMember: "EventName",                
+                valueMember: "EventID", width: '100%', height: 18, autoDropDownHeight: true, renderer: function(index,label,value) {
+                var item = dataAdapter.records[index];
+                  if(item != null) {
+                   var label = '<div style="border:1px solid #C03030;margin-left:4px;">' + label + '</div>';
+                   return label;	
+                  } else {
+                   return '<div style="border:1px solid blue>Select Event</div>';
+                  }
+                 }
+                });
+                    $("#churchevents").off('select').on('select', function (event) {
+                    if (event.args) {
+                        var item = event.args.item;
+                        if (item) {
+                        	var DataInCore = item.originalItem;
+                            var valueelement = $("<div></div>");
+                            valueelement.text("Value: " + item.value);
+                            var labelelement = $("<div></div>");
+                            labelelement.text("Label: " + item.label);
+                            ChurchEvent.EventName = item.label;
+                            ChurchEvent.EventID = item.value;
+                            if(DataInCore.Enabled == false) {
+                              ChurchEvent.Enabled = "no"; 
+                            } else {
+                              ChurchEvent.Enabled = "yes";	
+                            }
+                            if(DataInCore.Online == false) {
+                              ChurchEvent.Online = "no"; 
+                            } else {
+                              ChurchEvent.Online = "yes";	
+                            }
+                            ChurchEvent.Recurring = DataInCore.Recurring;
+                            ChurchEvent.enddate = DataInCore.enddate;
+                            ChurchEvent.startdate = DataInCore.startdate;
+                            ChurchEvent.hyperlink = DataInCore.hyperlink;
+                            ChurchEvent.interval = DataInCore.interval;
+                            ChurchEvent.rank = DataInCore.rank;
+                            if(DataInCore.default == true) {
+                             ChurchEvent.defaultevent = ChurchEvent.EventName;
+                            } else {
+                              ChurchEvent.defaultevent = "";	
+                            } 
+                            createEventDataForm();
+                            getQuestions();
+                        }
+                    }
+                });
+              },
+          error: function(data) {
+                alert('Error in Generic Search Engine: ' + data.error);
+          }
+        });
+     }
+     function getRatings(churchid,eventname,eventid) {
+  // get event ratings 
+     alert(eventname + ' -> ' + eventid);  	 	
+     }
+    </script>
+    <script type="text/javascript">
+ 
+    	function createEventDataForm()
+    	{
+ //$("#dateTimeInput").jqxDateTimeInput({ formatString: "F", showTimeButton: true, width: '300px', height: '25px' }); 
+    var churchid = ChurchEvent.ChurchID;
+    var eventid = ChurchEvent.EventID;
+    var eventname = ChurchEvent.churchname + '- ' + ChurchEvent.EventName;		
+    $('#event-data').children().remove();		
+    $("#event-data").append('<table id="etable" style="margin-left:20px">');
+    $("#event-data").append('<form action="javascript:saveEventDataForm();" method="POST" id="eform">');
+    $("#event-data form").append('<input type="hidden"  name="eventid" value="'+eventid+'" />');
+    $("#event-data form").append('<input type="hidden"  name="churchid" value="'+churchid+'"/>');
+    $("#event-data form").append('<input type="hidden"  name="defaultevent" value="' + ChurchEvent.defaultevent +'" />');
+    $("#event-data form").append('<div style="text-align:center;color:#C03030;margin-bottom:6px" id="eform-title"><b><u>' + eventname + '</u></b></div>');
+    $("#event-data form").append('</td></tr><tr><td align="right"><i>Event enabled?:</i></td><td><input type="text" placeholder="Ready for Deployment?" name="enabled" id="enabled" value="yes" title="Is event available for rating?" /></td></tr>');
+    $("#event-data form").append('<tr><td align="right"><i>Event Name:</i></td><td><input type="text" placeholder="Name of Event" name="eventname" id="eventname" size="50" title="Name of event"/></td></tr>');
+    $("#event-data form").append('</td></tr><tr><td align="right"><i>Date Event Starts:</i></td><td><div id="startdate"></div></td></tr>');
+    $("#event-data form").append('</td></tr><tr><td align="right"><i>Date Event Ends:</i></td><td><div id="enddate"></div></td></tr>');
+    $("#event-data form").append('</td></tr><tr><td align="right"><i>Event occurs every ? days</i></td><td><input type="text" placeholder="Occurrence frequency" name="interval" id="interval" title="Number of days between each occurrence"/></td></tr>');
+    $("#event-data form").append('</td></tr><tr><td align="right"><i>Event Hyperlink:</i></td><td><input type="text" placeholder="Event hyperlink" name="hyperlink" id="hyperlink" title="url for the video file, if available"/></td></tr>');
+    $("#event-data form").append('</td></tr><tr><td align="right"><i>Online Event?:</i></td><td><input type="text" placeholder="Online event?" name="online" id="online" title="This is an online event only"/></td></tr>');
+    $("#event-data form").append('</td></tr><tr><td align="right"><i>Event Index:</i></td><td><input type="text" placeholder="Listing order" name="rank" id="rank" title="Event listing index"/></td></tr>');
+    $("#event-data form").append('<tr><td>&nbsp;</td><td><div style="padding-top:8px;"><input type="submit" id="savebutton" value="Save Event Data" /></div></td></tr>'); 	
+     $("#startdate").jqxDateTimeInput({ formatString: 'MM/dd/yyyy hh:mm:ss', showTimeButton: true, width: '150px' });
+    $("#enddate").jqxDateTimeInput({ formatString: 'MM/dd/yyyy hh:mm:ss', showTimeButton: true, width: '150px' });
+     $("#event-data form").append('</form>'); 
+    $("#event-data").append('</table>');
+    $('#event-data').css({"background-color": "#E8E5DF", "padding-top": "12px"});
+    $("#event-editcontrols").children().remove();
+    $("#event-editcontrols").append('<table id="eetable">');
+    $("#event-editcontrols").append('<tr><td align="center"><input type="button" id="btn-editevents" value="Edit" /></td></tr>');
+    $("#event-editcontrols").append('<tr><td align="center"><input type="button" id="btn-addevents" value="Add" /></td></tr>');
+    $("#event-editcontrols").append('<tr><td align="center"><input type="button" id="btn-zapevents" value="Remove" /></td></tr>');
+    $("#event-editcontrols").append('</table>');
+ // setup event handlers for  edit controls
+     $("#btn-editevents").on('click', function () {
+     	$('#enabled').val(ChurchEvent.Enabled);
+     	$('#eventname').val(ChurchEvent.EventName);
+     	$('#startdate').jqxDateTimeInput('setDate', ChurchEvent.startdate);
+     	$('#enddate').jqxDateTimeInput('setDate', ChurchEvent.enddate);
+//     	$('#recurring').val(ChurchEvent.Recurring); switch to true if interval is greater than 0
+     	$('#hyperlink').val(ChurchEvent.hyperlink);
+     	$('#interval').val(ChurchEvent.interval);
+     	$('#online').val(ChurchEvent.Online);
+     	$('#rank').val(ChurchEvent.rank);
+         eventname = ChurchEvent.churchname + '- ' + ChurchEvent.EventName;
+        $('#eform-title').html('<div style="text-align:center;color:#C03030;margin-bottom:6px" id="eform-title"><b><u>' + eventname + '</u></b></div>');		
+       	$('#question-manager').show();
+     	ChurchEvent.mode='updat';
+     	$('#warning').html('<b><i> Editing ' + ChurchEvent.churchname+ '- ' + ChurchEvent.EventName+ '</i></b>');
+     });
+
+    $("#btn-addevents").on('click', function () {
+      	clearEventVars();
+    	ChurchEvent.mode="add";
+    	ChurchEvent.EventName = "New Event";
+        eventname = ChurchEvent.churchname + '- ' + ChurchEvent.EventName;
+        $('#eform-title').html('<div style="text-align:center;color:#C03030;margin-bottom:6px" id="eform-title"><b><u>' + eventname + '</u></b></div>');		
+    	$('#enabled').val(ChurchEvent.Enabled);
+     	$('#eventname').val(ChurchEvent.EventName);
+     	$('#startdate').jqxDateTimeInput('setDate', ChurchEvent.startdate);
+     	$('#enddate').jqxDateTimeInput('setDate', ChurchEvent.enddate);
+     	$('#hyperlink').val(ChurchEvent.hyperlink);
+     	$('#interval').val(ChurchEvent.interval);
+     	$('#online').val(ChurchEvent.Online);
+     	ChurchEvent.EventID = 0;
+     	$('#question-manager').hide(1000);
+        });
+     $('#startdate').on('change', function() {
+           if(isEmpty($('#enddate').jqxDateTimeInput('getDate'))== true || $('#enddate').jqxDateTimeInput('getDate') < $('#startdate').jqxDateTimeInput('getDate')){
+              $('#enddate').jqxDateTimeInput('setDate',$('#startdate').jqxDateTimeInput('getDate'));                
+          $('#enddate').jqxDateTimeInput('setDate',$('#startdate').jqxDateTimeInput('getDate'));
+        }    	
+     });
+    $("#btn-zapevents").on('click', function () {
+    	if(ChurchEvent.EventID != 0) {
+    		if(isEmpty(ChurchEvent.defaultevent) != true) {
+    		  alert('I am not allowed to delete a default event... Sorry!');
+    		  return;	
+    		}
+    	  if(confirm('Are you sure you want to delete ' + ChurchEvent.EventName + '??')) {	
+            ChurchEvent.mode = 'delet';
+ 			      $.ajax({
+                   method: "POST",
+                   data: {'info': JSON.stringify(ChurchEvent)},
+                   url: 'saveevents.php',
+                   dataType: 'json',
+                   cache: false,
+                   async: false,
+                   success: function(data)
+                    {
+                     	 if(data.status == 'ok') {
+                     	   $('#notification').html('<div><strong>Church EventData '+ ChurchEvent.mode +'ed Successfully</strong></div>');
+                     	     ChurchEvent.EventID = 0;
+                             alert(ChurchEvent.EventName + ' event has been deleted successfully');
+                             getEvents(ChurchEvent.churchname,ChurchEvent.ChurchID);
+                   	         $('#btn-addevents').trigger('click');		
+                       	 } else {
+                       	 	if(data.status == 'children') {
+                       	 		alert(' Active events exist for "' + ChurchEvent.EventName + '" Cannot remove at this time');
+                       	 	} else {
+                 	 	  $('#warnings').html('<b>Data Action Status: <i>' +data.status + '</i></b><br><b>Action: <i>' + data.action+ '</i></b><br><b>Error: <i>' + data.error + '</i></b>');
+                       	    }
+       		       	     }
+                     },
+                 	error: function(data) {
+                	    $('warnings').html('Houston! we have a problem');	
+                 	}
+                  }); //$.ajax
+    	  } else {
+    	    alert('Event Deletion Cancelled');
+    	  }
+    	} else {
+    	clearEventVars();
+    	}
+ // check for children  	
+     });
+     $("#btn-editevents").trigger( "click" );
+     $('#eventname').focus();	
+//     $("#eform").enterAsTab({ 'allowSubmit': true});
+  	}
+ // var endDate = Date.parse('4/25/2015'); 
+//var currentDate = Date.now();
+//if (endDate >= currentDate) {
+ 
+     	function saveEventDataForm() {
+           ChurchEvent.EventName =  $('#event-data').find('input[name="eventname"]').val();
+             if(ChurchEvent.EventName.toLowerCase() == 'new event' || isEmpty(ChurchEvent.EventName)) {
+               alert('Please enter a valid Event name!')
+               return;
+             }
+             startDate = Date.now();
+             endDate = Date.now();
+            if(isEmpty($('#startdate').jqxDateTimeInput('getDate')) == false) {
+              ChurchEvent.startdate = $('#startdate').jqxDateTimeInput('getDate').toISOString().slice(0, 19).replace('T', ' ');
+              startDate = Date.parse($('#startdate').jqxDateTimeInput('getDate'));
+            }
+            if(isEmpty($('#enddate').jqxDateTimeInput('getDate')) == false) {
+              ChurchEvent.enddate = $('#enddate').jqxDateTimeInput('getDate').toISOString().slice(0, 19).replace('T', ' ');
+              endDate = Date.parse($('#enddate').jqxDateTimeInput('getDate'));
+            }
+  //           if(isEmpty($('#enddate').jqxDateTimeInput('getDate')) != true ) {
+   //            if(ChurchEvent.enddate < ChurchEvent.startdate) {
+    //           alert('End date cannot be earlier than the start date');	
+    //           return;
+  //            }
+ //           }
+            ChurchEvent.interval = $('#event-data').find('input[name="interval"]').val();
+            ChurchEvent.hyperlink = $.trim($('#event-data').find('input[name="hyperlink"]').val());
+            ChurchEvent.Online = $('#event-data').find('input[name="online"]').val();
+            ChurchEvent.rank = $('#event-data').find('input[name="rank"]').val()
+  			      $.ajax({
+                   method: "POST",
+                   data: {'info': JSON.stringify(ChurchEvent)},
+                   url: 'saveevents.php',
+                   dataType: 'json',
+                   cache: false,
+                   async: false,
+                   success: function(data)
+                    {
+                     	if(data.status == 'ok') {
+                     	   $('#notification').html('<div><strong>Church EventData '+ ChurchEvent.mode +'ed Successfully</strong></div>');
+                     	   ChurchEvent.EventID = data.EventID;
+                   	       ename = ChurchEvent.churchname + '- ' + ChurchEvent.EventName;		
+                           $('#eform-title').html('<div style="text-align:center;color:#C03030;margin-bottom:6px" id="eform-title"><b><u>' + ename + '</u></b></div>');		
+                           getEvents(ChurchEvent.churchname,ChurchEvent.ChurchID);
+      	                   ChurchEvent.mode='updat';
+                          getQuestions();
+//                           $('#btn-addevents').trigger('click');
+                             alert(ename + ' event has been saved successfully');
+                       	 } else {
+                 	 	  $('#warnings').html('<b>Data Action Status: <i>' +data.status + '</i></b><br><b>Action: <i>' + data.action+ '</i></b><br><b>Error: <i>' + data.error + '</i></b>');
+       		       	    }
+                     },
+                 	error: function(data) {
+                	    $('warnings').html('Houston! we have a problem');	
+                 	}
+                  }); //$.ajax
+   	          
+      }	
+     function clearEventVars() {
+       ChurchEvent.EventName= "";
+       ChurchEvent.startdate = null;
+       ChurchEvent.enddate = null;
+       ChurchEvent.rank = 0;
+       ChurchEvent.hyperlink = "";
+       ChurchEvent.Enabled = "yes";
+       ChurchEvent.Online= "no";
+       ChurchEvent.interval = 0;
+       ChurchEvent.defaultevent = "";
+     }
+      	 function outahere(option) {
+    	  if(userStub.status == 'changed' && userStub.churchid > 0) {
+       	    if(updateuserid() == false){
+       	     alert('Problem encountered with housekeeping!');
+       	    }
+    	  }
+    	  goodhousekeeping();
+       switch (option) { 
+	     case 1: 
+		  window.location.href = "index.html";	
+		   break;
+	    case 2: 
+		   window.location.href = "register.html";	
+		  break;
+	    case 3: 
+		  var Browser = navigator.appName;
+          var indexB = Browser.indexOf('Explorer');
+
+          if (indexB > 0) {
+            var indexV = navigator.userAgent.indexOf('MSIE') + 5;
+            var Version = navigator.userAgent.substring(indexV, indexV + 1);
+
+            if (Version >= 7) {
+              window.open('', '_self', '');
+              window.close();
+              }
+            else if (Version == 6) {
+              window.opener = null;
+             window.close();
+            }
+           else {
+             window.opener = '';
+             window.close();
+             }
+
+            }
+         else {
+          window.close();
+              }
+          break;
+	      default:
+		   alert('Email Tech Support');
+          }			
+      	}	
+   	function goodhousekeeping() {
+         userStub.status="";
+    	 Cookies.set("peaches",JSON.stringify(userStub),{expires: 1});
+    	}
+
+    </script>
+
+	</body>
+</html>

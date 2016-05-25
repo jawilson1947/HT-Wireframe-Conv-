@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title id="Description">jqxSlider directive for AngularJS</title>
+    <link rel="stylesheet" type="text/css" href="jq/jqwidgets/styles/jqx.base.css" />
+    <script type="text/javascript" src="jq/scripts/angular.min.js"></script>
+    <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxslider.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxangular.js"></script>
+    <script type="text/javascript" src="jq/scripts/demos.js"></script>
+    <script type="text/javascript">
+    </script>
+</head>
+<body>
+     <style type="text/css">
+        .colorBlock
+        {
+            border: 1px solid #aaa;
+            width: 200px;
+            height: 200px;
+            float: right;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+        }
+        .colorLabel
+        {
+            padding: 6px;           
+        }
+        .score {font-family:verdana;
+                font-size: 10px;
+                color: navy;
+                vertical-align: middle;
+                text-align: center;
+    </style>
+</head>
+<body class='default'>
+    <div style="width: 550px">
+        <div style="height: 180px;">
+            <div style="float: left">
+               <table>
+                <tr>
+                 <td>
+                      <span style="font-style: italic;">Rating Category 1</span>
+                      <div id='slider1'>
+                     </div>
+                  </td>
+                  <td>    
+                     <div id='score1' class="score"></div></td>
+                  </tr>
+                  <tr>
+                   <td>   
+                   <span style="font-style: italic;">Rating Category 2</span>
+                    <div id='slider2'>
+                     </div>
+                 </td>
+                <td>
+                 <div id='score2' class="score"></div>
+                </td>
+                </tr>
+                <tr>
+                <td>
+                <span style="font-style: italic;">Rating Category 3</span></span>
+                 <div id='slider3'>
+                   </div>
+                   </td>
+                   <td><div id='score3' class="score"></div></td></tr></table>
+
+            </div>
+            </div>
+        </div> 
+     </div>
+     <script type="text/javascript">
+      $(document).ready(function () {
+            $('#slider1').jqxSlider({ tooltip: true, mode: 'fixed' });
+            $('#slider2').jqxSlider({ tooltip: true, mode: 'fixed' });
+            $('#slider3').jqxSlider({ tooltip: true, mode: 'fixed'});
+
+            $('#slider1').on('change', function (event) {
+                $('#score1').html('<i>' +$('#slider1').jqxSlider('value')+'</i>');
+            });
+            $('#slider2').on('change', function (event) {
+               $('#score2').html('<i>' +$('#slider2').jqxSlider('value')+'</i>');
+            });
+            $('#slider3').on('change', function (event) {
+               $('#score3').html('<i>' +$('#slider3').jqxSlider('value')+'</i>');
+            });
+
+      });
+    </script>
+
+    </body>
+</html>
+

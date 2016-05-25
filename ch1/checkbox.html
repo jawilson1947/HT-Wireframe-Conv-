@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Select/Unselect Checkboxes</title>
+	   <script src="http://localhost/js/jquery.js"></script>
+       <script src="http://localhost/js/jquery-migrate.js"></script>
+       <style type="text/css">
+       	ul {background-color:#DCDCDC; list-style:none; margin:opt;
+       	padding:0pt; width:350px;}
+       	
+       	li { padding:10px;}
+       </style>
+	</head>
+	<body>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+		 $('#handle').click(function()
+		 {
+		   $('#selected').html('');
+		   if($(this).prop('checked') == true)
+			  $('.toggle').attr('checked','true');
+		   else
+		   $('.toggle').removeAttr('checked');
+		 }
+		); //('#handle').click
+   
+	   	  
+		 $('#getValue').click(function()
+		  { 
+			var values='';
+			if($('.toggle:checked').length) 
+		     {
+		      $('.toggle:checked').each(function()
+		       {
+		       	values+= $(this).next('label').html() + ' ,';
+		       }		      	
+		      );//$(.toggle:checked').each	
+		      $('#selected').html('Selected values are: ' + values);
+		     }
+		     else
+		      $('#selected').html('Nothing selected');
+	
+		  }
+	     ); //#getValue.click
+		 
+		}
+	   ); //$(document).ready 
+	</script>
+     <ul>
+     	<li> 
+     	 <input type="checkbox" id="handle">
+     	   <label for="handle">
+     	     <strong>Toggle All</strong>
+     	   </label>
+     	</li>
+     	<li>         <input type="checkbox" class="toggle"/>          <label>A Study in Scarlet</label>        </li>        <li>         <input type="checkbox" class="toggle"/>         <label>The Sign of the Four</label>        </li>        <li>         <input type="checkbox" class="toggle"/>         <label>The Adventures of Sherlock Holmes</label>        </li>        <li>         <input type="checkbox" class="toggle"/>         <label>The Valley of Fear</label>        </li>        <li>         <input type="checkbox" class="toggle"/>         <label>His Last Bow</label>        </li>        <li><input type="button" id="getValue" value="Get Selected Values"/>
+        </li>        <li id="selected"></li>
+     </ul>
+	</body>
+</html>

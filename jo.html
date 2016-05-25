@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Javascript OOPS</title>
+<script type="text/javascript">
+var Car = function() {
+ Car.prototype.honk = function() {
+		console.log("Honk Honk!");
+Car.prototype.make = 'Toyota';
+this.model = 'Prius C';
+this.modelyear = 2013;		
+		
+	};
+  }
+  
+</script>
+	</head>
+	<body>
+	<script type="text/javascript">
+		var toyota = new Car();
+		alert(toyota.make);
+ 	</script>
+	</body>
+</html>

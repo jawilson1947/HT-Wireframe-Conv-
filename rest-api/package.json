@@ -1,0 +1,17 @@
+{
+  "name": "rest-api",
+  "version": "1.0.0",
+  "description": "Restful API ",
+  "main": "express.test.js",
+  "scripts": {
+    "test": "mocha express.test.js"
+  },
+  "keywords": [
+    "restful"
+  ],
+  "author": "Jim",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}

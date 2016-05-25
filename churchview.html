@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title id='Description'>Holy Tomatoes Church Database Dump
+    </title>
+    <link rel="stylesheet" href="jq/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="jq/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.selection.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.columnsresize.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxgrid.pager.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxpanel.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="jq/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="jq/scripts/demos.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+  			      $.ajax({
+                   method: "POST",
+                   data: {'info': JSON.stringify({"sql":"select churchname,address,city,state as province,zipcode as postalcode,country,phone,website,domain,GoogleMapPlaceID as placeid from ht.tblchurch order by churchname LIMIT 1000","status":""})},
+                   url: 'genericDB.php',
+                   dataType: 'json',
+                   cache: false,
+                   success: function(data)
+                    {
+                     	if(data[0].status == 'ok') {
+                     var source = 
+                    {
+                datatype: "json",
+                datafields: [
+                    { name: 'churchname', type: 'string' },
+                    { name: 'address', type: 'string' },
+                    { name: 'city', type: 'string' },
+                    { name: 'province', type: 'string' },
+                    { name: 'postalcode', type: 'string' },
+                    { name: 'country', type: 'string' },
+                    { name: 'phone', type: 'string' },
+                    { name: 'website', type: 'string' },
+                    { name: 'domain', type: 'string' },
+                    { name: 'placeid', type: 'string' },
+                    { name: 'id', type: 'number'}
+                   
+                ],
+                localdata: data,
+                updaterow: function (rowid, rowdata, commit) {
+                    commit(true);
+                }
+            };
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            // create jqxgrid
+            $("#grid").jqxGrid(
+            {
+                source: dataAdapter,
+                width: 850,
+                pageable: true,
+                autorowheight: true,
+                autoheight: true,
+                altrows: true,
+                columns: [
+                  { text: 'Church Name', datafield: 'churchname', width: 150 },
+                  { text: 'address', datafield: 'address', width: 200 },
+                  { text: 'city', datafield: 'city', width: 80 },
+                  { text: 'State', datafield: 'province', width: 30 },
+                  { text: 'Country', datafield: 'country', width: 50}
+                ]
+            });
+          }
+        }
+      });
+    });
+
+    </script>
+ </head>

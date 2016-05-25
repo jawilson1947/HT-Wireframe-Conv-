@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Reading XML with jQuery</title>
+		<style type="text/css">
+			h1{ cursor:pointer;font-size:20px;color:navy;}
+			ul{ display:none; list-style:none; margin:0pt;padding:0pt;}
+			li{ color:maroon;}
+		</style>
+	</head>
+	<body>
+	 <div id="result">
+ </div>
+    <script type="text/javascript" src="../jquery.js"></script>
+     <script type="text/javascript" src="../jquery-migrate.js"></script> 
+     <script type="text/javascript">
+       $(document).ready(function ()        {         $('h1').live('click',function()          {            $(this).next('ul').toggle('fast');          });          $.ajax(            {             url: 'common.xml',             type: 'GET',             dataType: 'xml',             success: function(xml)             {              var str = '';              $(xml).find('book').each(function()               {                var book = $(this);                str+= '<h1>' + book.find('name').text() + '</h1>';                str+= '<ul>';
+                book.find('story').each(function()                {                 str+= '<li>';                 str+= $(this).find('title').text();                 str+= '</li>';                 });                str+= '</ul>';                });                $('#result').html(str);               }              });            });	   
+     </script> 
+	</body>
+</html>

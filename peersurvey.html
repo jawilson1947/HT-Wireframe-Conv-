@@ -1,0 +1,912 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Church Peer Survey</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
+    <link href="styles/ht.css" type="text/css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,900' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Arimo:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="node_modules/jquery-treegrid/styles.css">
+    <link rel="stylesheet" href="styles/default.min.css">
+    <link rel="stylesheet" href="node_modules/jquery-treegrid/css/jquery.treegrid.css">
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <style>
+        a {
+            font-size: 10pt;
+            font-family: Times Roman;
+        }
+
+        body {
+            background-size: 100%;
+        }
+
+        #userprofile {
+            border: 1px solid navy;
+            float: left;
+            width: '100%';
+        }
+
+        img {
+            width: 90;
+            height: 80px
+        }
+
+        input {
+            font-size: 12px;
+            font-family: Verdana;
+            border: none;
+
+        #churchratingcount {
+            border: solid 1px maroon;
+            text-align: right;
+            font-family: Times Roman;
+            font-size: 10pt;
+            color: navy;
+            padding-right: 3px;
+            vertical-align: top;
+        }
+
+        #churchname {
+            vertical-align: top;
+            text-align: right
+        }
+
+        #warnings {
+            width: '100%';
+            border: solid 1px red;
+            font-style: italic;
+        }
+
+        #rstatus {
+            font-family: Times Roman;
+            font-size: 10pt;
+            color: blue;
+            font-style: italic;
+        }
+
+        .regular {
+            font-family: Arial;
+            font-style: normal;
+            color: maroon;
+            font-size: 12px;
+            padding: 2px;
+            width: 400px;
+            height: 26px;
+            border: solid 1px #C03030;
+            box-shadow: inset 1px 1px 1px 0 #C03030;
+            transition: box-shadow 0.3s;
+        }
+
+        .regular input[type="text"]:focus,
+        .regular input[type="text"].focus {
+            box-shadow: inset 1px 1px 1px 0 #c9c9c9;
+        }
+
+        #user-survey {
+            padding: 4px;
+        }
+
+        .regular {
+            font-family: Arial;
+            font-style: normal;
+            color: maroon;
+            font-size: 12px;
+            padding: 2px;
+            width: 400px;
+            height: 26px;
+            border: solid 1px #C03030;
+            box-shadow: inset 1px 1px 1px 0 #C03030;
+            transition: box-shadow 0.3s;
+        }
+
+        .regular input[type="text"]:focus,
+        .regular input[type="text"].focus {
+            box-shadow: inset 1px 1px 1px 0 #c9c9c9;
+        }
+
+        .htbutton {
+            background: #3dc0c0;
+            background-image: -webkit-linear-gradient(top, #cdc0c0, #2980b9);
+            background-image: -moz-linear-gradient(top, #cdc0c0, #2980b9);
+            background-image: -ms-linear-gradient(top, #cdc0c0, #2980b9);
+            background-image: -o-linear-gradient(top, #cdc0c0, #2980b9);
+            background-image: linear-gradient(to bottom, #cdc0c0, #2980b9);
+            -webkit-border-radius: 10;
+            -moz-border-radius: 10;
+            border-radius: 10px;
+            font-family: Arial;
+            color: #ffffff;
+            font-size: 10px;
+            padding: 2px 4px 2px 2px;
+            text-decoration: none;
+            text-align: center
+        }
+
+        .htbutton:hover {
+            background: #3dc0c0;
+            background-image: -webkit-linear-gradient(top, #cdc0c0, #3498db);
+            background-image: -moz-linear-gradient(top, #cdc0c0, #3498db);
+            background-image: -ms-linear-gradient(top, #cdc0c0, #3498db);
+            background-image: -o-linear-gradient(top, #cdc0c0, #3498db);
+            background-image: linear-gradient(to bottom, #cdc0c0, #3498db);
+            text-decoration: none;
+        }
+
+        #commentstatus {
+            color: navy;
+            border: solid 1px black;
+            padding: 1px;
+            font-style: italic;
+            font-size: 8px;
+        }
+
+        #overall-score {
+            border: 1px solid #C03030;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        #church-surveys {
+            font-family: "Times Roman";
+        }
+        .tally {
+        border: 1px solid navy;
+        text-align: center;
+        font-style: italic;
+        font-family: verdana;
+        }
+     </style>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title id='Description'>jHoly Tomatoes Church Event Rating</title>
+        <link rel="stylesheet" href="css/rating.css">
+        <link rel="stylesheet" href="jqTree/jqtree.css">
+        <link rel="stylesheet" href="node_modules/jquery-treegrid/styles.css">
+        <link rel="stylesheet" href="styles/default.min.css">
+        <link rel="stylesheet" href="node_modules/jquery-treegrid/css/jquery.treegrid.css">
+        <link rel="stylesheet" href="jq2/jqwidgets/styles/jqx.base.css" type="text/css"/>
+        <link rel="stylesheet" href="jq2/jqwidgets/styles/jqx.arctic.css" type="text/css"/>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&signed_in=true"></script>
+        <script type="text/javascript" src="jq2/scripts/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="jq2/scripts/demos.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxcore.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxmenu.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxdata.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxtabs.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxwindow.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxloader.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxtooltip.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/globalization/globalize.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxdocking.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxscrollbar.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxbuttons.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxsplitter.js"></script>
+        <script type="text/javascript" src="js/js.cookie.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxdropdownlist.js"></script>
+        <script type="text/javascript" src="jqTree/tree.jquery.js"></script>
+        <script type="text/javascript" src="jquery-dateFormat/dist/jquery-dateFormat.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxcheckbox.js"></script>
+        <script type="text/javascript" src="jq2/scripts/json2.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxrating.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxpanel.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxtagcloud.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxdatatable.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxcheckbox.js"></script>
+        <script type="text/javascript" src="jq2/jqwidgets/jqxradiobutton.js"></script>
+        <
+        <script type="text/javascript">
+            var ArbitraryScore = 0;
+            var ArbitraryComment = "";
+            var PeerSurveyForm;
+            var PeerSurveys = [];
+            var Rating = function () {
+            };
+            Rating.prototype.jqx = function (elt) {
+                this.width = 350;
+                this.height = 34;
+                this.theme = 'artic';
+                this.jqxRating({width: this.width, height: this.height, theme: this.theme});
+                this.on('change', function (event) {
+                    data.score = event.value;
+                });
+            }
+            Rating.prototype.data = function () {
+                var question = '';
+                var score = 0;
+                var toolip = '';
+                var description = '';
+            }
+            var church = {
+                "name": "",
+                "domain": "",
+                "street": " ",
+                "city": "",
+                "province": "",
+                "postalcode": "",
+                "country": "US",
+                "placeid": "",
+                "phone": "",
+                "website": "",
+                "vicinity": "here",
+                "address": "",
+                "source": "",
+                "status": "ok",
+                "action": "",
+                "error": "",
+                "sql": "",
+                "id": 0,
+                "formatDomain": function (url) {
+                    if ($.trim(url) != '') {
+                        var d = url.replace('http://', '').replace('https://', '').replace('www.', '').split(/[/?#]/)[0];
+                        return (d.replace('http://', '').replace('https://', '').split(/[/?#]/)[0]);
+                    } else {
+                        return '';
+                    }
+                }
+            };
+            var userStub = {
+                "firstname": "",
+                "lastname": "",
+                "email": "",
+                "password": "",
+                "placeid": "",
+                "churchname": "",
+                "churchadmin": "",
+                "id": 0,
+                "churchid": 0,
+                "status": "ok",
+                "action": "",
+                "error": "",
+                "sql": "",
+                "objectid": "",
+                "webserver": ""
+            };
+            var thechurch = church;
+            var place;
+            var map;
+            var marker;
+            var ChurchData;
+            var geocoder;
+            var infowindow;
+            var autocomplete;
+            var online;
+            var webserver;
+            //
+            function isEmpty(str) {
+                return typeof str == 'string' && !str.trim() || typeof str == 'undefined' || str === null;
+            }
+
+        </script>
+        <script type="text/javascript">
+            function goodhousekeeping() {
+                userStub.status = "";
+                Cookies.set("peaches", JSON.stringify(userStub), {expires: 1});
+            }
+            //
+            function outahere(option) {
+                if (!isEmpty(userStub.status)) {
+                    if (updateuserid() == false) {
+                        alert('Problem encountered with housekeeping!');
+                        return;
+                    }
+                }
+                goodhousekeeping();
+                switch (option) {
+                    case 1:
+                        $(location).attr('href', 'index.html')
+                        break;
+                    case 2:
+                        $(location).attr('href', 'rating.html');
+                        break;
+                    case 3:
+                        var Browser = navigator.appName;
+                        var indexB = Browser.indexOf('Explorer');
+
+                        if (indexB > 0) {
+                            var indexV = navigator.userAgent.indexOf('MSIE') + 5;
+                            var Version = navigator.userAgent.substring(indexV, indexV + 1);
+
+                            if (Version >= 7) {
+                                window.open('', '_self', '');
+                                window.close();
+                            }
+                            else if (Version == 6) {
+                                window.opener = null;
+                                window.close();
+                            }
+                            else {
+                                window.opener = '';
+                                window.close();
+                            }
+
+                        }
+                        else {
+                            window.close();
+                        }
+                        break;
+                    default:
+                        alert('Email Tech Support');
+                }
+            }
+
+        </script>
+        <script type="text/javascript">
+            function showmap() {
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                }
+                else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(12);
+                }
+                // Set the position of the marker using the place ID and location
+                marker.setPlace(/** @type {!google.maps.Place} */ ({
+                    placeId: place.place_id,
+                    location: place.geometry.location
+                }));
+                marker.setVisible(true);
+            }
+            function BuildTagCloud(data) {
+                var source = {
+                    localdata: data,
+                    datatype: "array",
+                    datafields: [
+                        {name: 'churchname'},
+                        {name: 'churchid'}
+                    ]
+                }
+                var dataAdapter = new $.jqx.dataAdapter(source, {});
+                $('#church-surveys').jqxTagCloud({
+                    width: '300px',
+                    source: dataAdapter,
+                    displayMember: 'churchname',
+                    valueMember: 'churchid',
+                    fontSizeUnit: 'px',
+                    minFontSize: 8,
+                    maxFontSize: 20,
+                    minColor: '#00AA99',
+                    maxColor: '#FF0000'
+                });
+                $('#church-surveys').on('itemClick', function (event) {
+                    var churchid = event.args.value;
+                    var stubIndex = event.args.index;
+                    getPeerSurvey(churchid, userStub.id);
+                });
+            }
+        </script>
+        <script type="text/javascript">
+            function goodhousekeeping() {
+                userStub.status = "";
+                Cookies.set("peaches", JSON.stringify(userStub), {expires: 1});
+            }
+            //
+            function outahere(option) {
+                if (!isEmpty(userStub.status)) {
+                    if (updateuserid() == false) {
+                        alert('Problem encountered with housekeeping!');
+                        return;
+                    }
+                }
+                goodhousekeeping();
+                switch (option) {
+                    case 1:
+                        $(location).attr('href', 'index.html')
+                        break;
+                    case 2:
+                        $(location).attr('href', 'register.html');
+                        break;
+                    case 3:
+                        var Browser = navigator.appName;
+                        var indexB = Browser.indexOf('Explorer');
+
+                        if (indexB > 0) {
+                            var indexV = navigator.userAgent.indexOf('MSIE') + 5;
+                            var Version = navigator.userAgent.substring(indexV, indexV + 1);
+
+                            if (Version >= 7) {
+                                window.open('', '_self', '');
+                                window.close();
+                            }
+                            else if (Version == 6) {
+                                window.opener = null;
+                                window.close();
+                            }
+                            else {
+                                window.opener = '';
+                                window.close();
+                            }
+
+                        }
+                        else {
+                            window.close();
+                        }
+                        break;
+                    default:
+                        alert('Email Tech Support');
+                }
+            }
+            function isEmpty(str) {
+                return typeof str == 'string' && !str.trim() || typeof str == 'undefined' || str === null;
+            }
+
+        </script>
+    </head>
+<body>
+<header>
+    <div class="navbar">
+        <div class="navbar-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <h1><a href="" id="logo"><img src="images/logo.png" alt="Holy Tomtatoes"/></a></h1>
+
+                    <nav id="main" width="100%">
+                        <a href="login.html" id="mobile-link" title="Login">Login</a> <a href="login.html"
+                                                                                         id="menu-icon"></a>
+                        <ul>
+                            <li><a href="javascript:outahere(1);" title="Home">Home</a></li>
+                            <li><a href="javascript:outahere(2);" title="Change basic user profile attributes">My
+                                Stub</a></li>
+                            <li><a href="#" title="FAQ">FAQ</a></li>
+                            <li><a href="#" title="Contact Us">Contact Us</a></li>
+                            <li><a href="javascript:outahere(3);" title="Logout">Logout</a></li>
+                        </ul>
+                    </nav>
+
+                </div> <!--Container End -->
+            </div> <!--Navbar-inner End -->
+        </div> <!--Navbar-top End -->
+    </div> <!--Navbar End -->
+</header>
+<div id="userprofile">
+    <table id="usertable" width="100%">
+        <tr>
+            <td width="10%"> <!-- Cell 1 -->
+                <div>
+                    <img id="htuser" title="Holy Tomatoes User" height="81px" width="144px" align="center"
+                         src="server/php/files/blank.jpg">
+                </div>
+            </td>
+            <td width="25%"> <!-- Cell 2 -->
+                <table>
+                    <tr>
+                        <td>
+                            <div id="userinfo">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="rstatus">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="mychurch">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td width="5%"> <!-- Cell 3 -->
+                <table>
+                    <tr>
+                        <td>
+                            <div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+            <td width="30%" style="text-align:right"> <!-- Cell 4 -->
+                <table>
+                    <tr>
+                        <td>
+                            <div id="churchname">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="churchaddress">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="church-map">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td width="30%"> <!-- Cell 5 -->
+                <table>
+                    <tr>
+                        <td>
+                            <div id="churchratingcount">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="churchinput" style="vertical-align:top;float: left">
+    <input type="text" id="pac-input" placeholder="Rate a church" class="regular" size="60">
+</div>
+<div id="instant"></div>
+<br>
+<div id="splitContainer">
+    <div id="menu">
+    </div>
+    <div id="tabs">
+        <ul>
+            <li style="margin-left: 30px;">Philosophy</li>
+            <li>Personality</li>
+            <li>Environment</li>
+            <li>Amenities</li>
+            <li>Ministries</li>
+            <li>Worship</li>
+        </ul>
+            <div>
+                <table>
+                    <tr>
+                        <td align="right" width="50%">Clarity of vision</td>
+                        <td id="phi1" width="25%" align="right"></td>
+                        <td id="phi1-c" class="tally" width="25%" align="right"></td>
+                    </tr>
+                    <tr>
+                        <td valign="right" width="50%">Encourages self study</td>
+                        <td id="phi2"></td>
+                        <td id="phi2-c" class="tally"></td>
+                    </tr>
+                    <tr>
+                        <td valign="right" width="50%">Discipleship initiatives</td>
+                        <td id="phi3"></td>
+                        <td id="phi3-c" class="tally"></td>
+                    </tr>
+                    <tr>
+                        <td valign="right" width="50%">facilitates doctrinal enquiry</td>
+                        <td id="phi4"></td>
+                        <td id="phi4-c" class="tally"></td>
+                    </tr>
+                    <tr>
+                        <td valign="right" width="50%">Promotes open bible study</td>
+                        <td id="phi5"></td>
+                        <td id="phi5-c" class="tally"></td>
+                    </tr>
+                 </table>
+            </div>
+            <div>
+                Inclusiveness<br>
+                Ethnic Diversity<br>
+                Friendliness<br>
+                Visitor ministry<br>
+                Youth ministry<br>
+            </div>
+            <div>
+                Secure location<br>
+                Adequate parking<br>
+                Adequate classroom facilities<br>
+                Outdoor signage<br>
+                Overflow facilities<br>
+                Video surveillance<br>
+            </div>
+            <div>
+                Daycare facilities<br>
+                Assisted parking<br>
+                Proximic handicapped parking<br>
+                Sign language service<br>
+                Medical services<br>
+                Public Wi-Fi<br>
+                Kiosks
+            </div>
+            <div>
+                Evangelism<br>
+                Community outreach<br>
+                Community Impact
+            </div>
+            <div>
+                Flow of service<br>
+                Relevance of message<br>
+                Effecient use of time<br>
+                Effective use of technology<br>
+                Quality of music
+            </div>
+    </div>
+ </div>
+<div id="footer-ft">
+    <div class="wrap">
+        <nav>
+            <ul>
+                <li>2015 © HOLY TOMATOES</li>
+                <li><a href="#" title="Terms of Use">Terms of Use</a></li>
+                <li><a href="#" title="Contact Us">Contact Us</a></li>
+                <li><a href="#" title="Privacy Policy">Privacy Policy</a></li>
+                <li><a href="http://www.holytomatoes.info" title="about">About</a></li>
+            </ul>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div id="warnings"></div>
+<script type="text/javascript">
+    function getPeerSurvey(cid, uid) {
+        console.log(cid);
+        console.log(uid)
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        initializeGoogleMap();
+        online = Cookies.get('peaches');
+        if (typeof(online) != "undefined") {
+            userStub = $.parseJSON(online);
+            webserver = userStub.webserver;
+            if (isEmpty(webserver)) {
+                alert('Unable to determine WebServer Address - Reload Page');
+                $(location).attr('href', 'login.html');
+            }
+        } else {
+            alert('Problem with User Account, Your session has probably expired, please log back in');
+            $(location).attr('href', 'login.html');
+        }
+// get the form template and build questionnaire accordingly
+        $.ajax({
+            crossdomain: true,
+            type: 'get',
+            url: webserver + ':8080/members/peersurveyform'
+        }).success(function (data) {
+            if (!isEmpty(data)) {
+                PeerSurveyForm = data;
+                buildSurvey();
+            } else {
+                alert('Unable to retrieve Church Peer Template');
+                $(location).attr('href', 'index.html');
+            }
+        });
+//
+        $('#splitContainer').jqxSplitter({
+            height: 450,
+            width: '100%',
+            orientation: 'horizontal',
+            panels: [{collapsible: false, size: '30%'}, {size: '70%'}]
+        });
+//        $('#splitter').jqxSplitter({width: '100%', panels: [{size: "20%"}]});
+//        $('#user-surveys').jqxSplitter({width: "100%", panels: [{size: 200}]});
+        $("#tabs").jqxTabs({ width: '90%', height: 200, position: 'top'});
+        /*      $("#jqxRating").jqxRating({ width: 350, height: 35, theme: 'classic'});
+         $("#jqxRating").on('change', function (event) {
+         $("#rate").find('span').remove();
+         $("#rate").append('<span>' + event.value + '</span');
+         });
+         */
+        $("#instant").jqxRating({width: 100, height: 35, theme: 'arctic'});
+        $("#instant").on('change', function (e) {
+            ArbitraryScore = e.value;
+            $("#overall-score").html('<i><strong>&nbsp;' + ArbitraryScore + '&nbsp;</strong></i>');
+        });
+        $('#comments').html('<textarea rows="8" cols="100" id="opinion" placeholder = "Enter your your comments here (Max 300 characters)"></textarea>');
+        $('#opinion').on('keyup', function () {
+            var len = $(this).val().length;
+            len = 300 - len;
+            $('#commentstatus').html('<i>Characters Remaining: ' + len + '</i>');
+            $('#opinion').css({padding: '2px'});
+        });
+        $.ajax({
+            crossdomain: true,
+            type: 'get',
+            url: webserver + ':8080/members/peersurveystub/' + userStub.id
+        }).success(function (data) {
+            if (!isEmpty(data)) {
+                PeerSurveys = data;
+                if (PeerSurveys.peersurvey.churchid > 0) {
+                    var data = [];
+                    for (i = 0; i < PeerSurveys.length; i++) {
+                        item = {
+                            "churchname": PeerSurveys[i].peersurvey.churchname,
+                            "churchid": PeerSurveys[i].peersurvey.churchid
+                        };
+                        data.push(item)
+                    }
+                    BuildTagCloud(data);
+                    $('#warnings').html('<i>' + data.length + ' surveys found</i>');
+                } else {
+                    $('#arbitrary-rating').show();
+                    PeerSurveyForm = data;
+                }
+            }
+        });
+        $("#menu").jqxMenu({width: '150px', height: '220px', mode: 'vertical'});
+        $("menu").css('visibility', 'visible');
+
+        // create checkboxes
+        //      $("#checkbox").jqxCheckBox({ checked: true});
+        //      $("#checkbox2").jqxCheckBox({});
+        //       $("#checkbox3").jqxCheckBox({});
+
+
+        /*               var rat = new Rating($('#c11'));
+         objRate.push(rat);
+         rat.jqx({ width: 350, height: 35, theme: 'arctic'});
+         rat.jqx.on('change', function (event) {
+         objRateScore.push(event.value);
+         });
+         */
+    });
+</script>
+<script type="text/javascript">
+    function initializeGoogleMap() {
+        map = new google.maps.Map(document.getElementById('church-map'), {zoom: 13});
+        mapInput = (document.getElementById('pac-input'));
+        autocomplete = new google.maps.places.Autocomplete(mapInput);
+        autocomplete.bindTo('bounds', map);
+        infowindow = new google.maps.InfoWindow();
+        marker = new google.maps.Marker({map: map});
+        google.maps.event.addListener(marker, 'click', function () {
+            infowindow.open(map, marker);
+        });
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            infowindow.close();
+            place = autocomplete.getPlace();
+            if (!place.geometry) {
+                return;
+            }
+            // Set the position of the marker using the place ID and location
+            marker.setPlace(/** @type {!google.maps.Place} */ ({
+                placeId: place.place_id,
+                location: place.geometry.location
+            }));
+            marker.setVisible(false);
+            if (($.inArray('church', place.types) != -1) || ($.inArray('place_of_worship', place.types) != -1)) {
+
+// stuff place data in JSON object
+                userStub.churchname = place.name;
+                userStub.placeid = place.place_id;
+                church.name = place.name;
+                church.placeid = place.place_id;
+                church.address = place.formatted_address;
+                ChurchData = church.address.split(",");
+                ChurchData.length = 5;
+                church.country = $.trim(ChurchData[3]);
+                church.street = $.trim(ChurchData[0]);
+                church.city = $.trim(ChurchData[1]);
+                church.province = $.trim(ChurchData[2]);
+                zippy = church.province.split(" ");
+                if (zippy.length > 1) {
+                    church.province = zippy[0];
+                    church.postalcode = zippy[1];
+                }
+//
+
+//
+                if (place.website != null) {
+                    church.website = $.trim(place.website);
+                } else {
+                    church.website = '';
+                }
+//
+                if (place.formatted_phone_number != null) {
+                    church.phone = $.trim(place.formatted_phone_number);
+                } else {
+                    church.phone = '';
+                }
+//
+                var url = $.trim(church.website);
+                if (url != '') {
+                    var domain = url.replace('http://', '').replace('https://', '').replace('www.', '').split(/[/?#]/)[0];
+                    church.domain = domain.replace('http://', '').replace('https://', '').split(/[/?#]/)[0];
+                }
+                if (!isEmpty(church.domain)) {
+                    $('#domain').val(church.domain);
+                    $('#churchid').val(0);
+                    $('#GoogleMap').val(place.place_id);
+                    $('#address').val(church.street);
+                    $('#city').val(church.city);
+                    $('#province').val(church.province);
+                    $('#postalcode').val(church.postalcode);
+                    $('#phone').val(church.phone);
+                    $('#country').val(church.country);
+                    $('#website').val(church.website);
+                    $('#ChurchName').val(church.name);
+                    $.ajax({
+                        crossdomain: true,
+                        data: $('#churchform').serialize(),
+                        dataType: 'html',
+                        type: 'post',
+                        url: webserver + ':8080/churches/manage/register',
+                        success: function (data) {
+                            var result = JSON.parse(data);
+                            if (result.status == 'ok') {
+                                church.id = parseInt(result.churchid);
+                                userStub.churchid = parseInt(church.id);
+                                userStub.churchname = result.churchname;
+                                userStub.placeid = result.googlemapplaceid;
+                                userStub.status = "changed";
+                                stuff = '<small><b>' + church.name + '</b><br>' + ChurchData[0] + '<br>' + ChurchData[1] + ',&nbsp;' + ChurchData[2] + '<br>' + church.phone + '</small>';
+                                $('#warnings').html(stuff);
+                            } else {
+                                alert('Problem reconciling ' + church.name + ' in HT database. Error: ' + result.error);
+                                console.log(result.status);
+                                console.log(result.error);
+                                console.log(result.sql);
+                            }
+                        },
+                        error: function (result) {
+                            alert('Error in Church Google Map Lookup: ' + result.error);
+                        }
+                    });
+
+                    // end my stuff
+                    infowindow.setContent('<div><strong>' + church.name + '</strong><br>' +
+                            'Address: ' + church.address + '<br>' +
+                            'Phone: ' + church.phone + '<br> Website: ' + church.website + '<br>' + 'Place ID: ' + church.placeid + '</div>');
+                    $('#church-map').css('border', '1px solid navy');
+                    $('#warnings').html('Church Selected : <b><i>' + userStub.churchname + '</i></b>');
+                    $('#warnings').show();
+                    infowindow.open(map, marker);
+                    showmap();
+                } else {
+                    alert(church.name + ' does not have a valid domain name..Sorry!');
+                }
+            } else {
+                alert(place.name + ' does not appear to be a valid church');
+                $('#pac-input').val('');
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    function buildSurvey() {
+//philosophy section
+        $("#phi1").jqxRating({width: 100, height: 35, theme: 'arctic'});
+        $("#phi1").on('change', function (event) {
+            $("#phi1-c").find('span').remove();
+            $("#phi1-c").append('<span>' + event.value + '</span>');
+        });
+        $("#phi2").jqxRating({width: 100, height: 35, theme: 'arctic'});
+        $("#phi2").on('change', function (event) {
+            $("#phi2-c").find('span').remove();
+            $("#phi2-c").append('<span>' + event.value + '</span>');
+        });
+        $("#phi3").jqxRating({width: 100, height: 35, theme: 'arctic'});
+        $("#phi3").on('change', function (event) {
+            $("#phi3-c").find('span').remove();
+            $("#phi3-c").append('<span>' + event.value + '</span>');
+        });
+        $("#phi4").jqxRating({width: 100, height: 35, theme: 'arctic'});
+        $("#phi4").on('change', function (event) {
+            $("#phi4-c").find('span').remove();
+            $("#phi4-c").append('<span>' + event.value + '</span>');
+        });
+        $("#phi5").jqxRating({width: 100, height: 35, theme: 'arctic'});
+        $("#phi5").on('change', function (event) {
+            $("#phi5-c").find('span').remove();
+            $("#phi5-c").append('<span>' + event.value + '</span>');
+        });
+
+//personality section
+        /*
+                $("#per1").jqxRating({width: 100, height: 35, theme: 'arctic'});
+                $("#per2").jqxRating({width: 100, height: 35, theme: 'arctic'});
+                $("#per3").jqxRating({width: 100, height: 35, theme: 'arctic'});
+        */
+    }
+</script>
+</body>
+</html>

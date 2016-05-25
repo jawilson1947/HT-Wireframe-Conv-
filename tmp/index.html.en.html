@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+*
+* Copyright (C) 2014, bitmovin GmbH, All Rights Reserved
+*
+* Created on: 2015-02-06 14:00:00
+* Author:     bitmovin GmbH <dash-player@bitmovin.net>
+*
+* This source code and its use and distribution, is subject to the terms
+* and conditions of the applicable license agreement.
+*
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- bitdash player -->
+    <script type="text/javascript" src="bitdash.min.js"></script>
+
+  </head>
+  <body>
+    <center>
+      <h1>Demo Page for oucsda.org</h1>
+      <div id="wrapper">
+        <div id="player"></div>
+      </div>
+    </center>
+    <script type="text/javascript">
+      var conf = {
+        key:       "cad0499497dd98b1ec6f05395f78ba39",
+        source:    {
+           mpd:      "http://ouc.live-s.cdn.bitgravity.com/cdn-live/_definst_/ouc/live/feed03/manifest.mpd",
+          mobilempd: "http://bitcdn-global1.bitmovin.com/content/sintel/sintel-mobile.mpd",
+          hls:       "http://ouc.live-s.cdn.bitgravity.com/cdn-live/_definst_/ouc/live/feed03/playlist.m3u8",
+          poster:    "http://www.oucsda.org/site/1/images/Ouclive2.jpg"
+       },
+        playback: {
+          autoplay:  true,
+          muted:     false
+        },
+        style: {
+          width: '600px',
+          height: '250px'
+        },
+        events: {
+          onError: function(data) { 
+            console.error("bitdash error: " + data.code + ": " + data.message);
+          },
+          onReady: function(obj)  { 
+            console.log(this.getVersion() + ' onReady: ', obj);
+          }
+        }
+      };
+
+      var player = bitdash("player").setup(conf);
+    </script>
+  </body>
+</html>

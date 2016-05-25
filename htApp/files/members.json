@@ -1,0 +1,22 @@
+{
+	"_id": "",
+	"member": {
+		"bio": {
+			"userid": 0,
+			"lastname": "",
+			"firstname": "",
+			"userpsw": "",
+			"email": "",
+			"gender": "",
+			"age": 0,
+			"race": "",
+			"churchname": "",
+			"churchid": 0,
+			"churchadmin": 0,
+			"placeid": "",
+			"created_on": "",
+			"updated_at": ""
+		},
+		"ratings": []
+	}
+}
